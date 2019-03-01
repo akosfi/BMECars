@@ -18,8 +18,6 @@ namespace BMECars.Dal.Entities
         [PersonalData]
         public string FullName { get; set; }
 
-        /*[ForeignKey("BillingData")]
-        public int? BillingDataId { get; set; }*/
         public BillingData BillingData { get; set; }
 
 
