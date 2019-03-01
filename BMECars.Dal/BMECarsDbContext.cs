@@ -4,19 +4,19 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using BMECars.Dal.Entities;
 using System.Linq;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace BMECars.Dal
 {
-    public class BMECarsDbContext : DbContext
+    public class BMECarsDbContext : IdentityDbContext<User>
     {
         public BMECarsDbContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Car> Cars { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<CompanyAdmin> CompanyAdmins { get; set; }
-        public DbSet<Location> PickUpLocations { get; set; }
+        public DbSet<Location> Locations { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<BillingData> BillingDatas { get; set; }
         public DbSet<CarExtra> CarExtras { get; set; }
         public DbSet<Extra> Extras { get; set; }
@@ -31,6 +31,7 @@ namespace BMECars.Dal
                 .HasOne(o => o.DropDownLocation)
                 .WithMany(o => o.ReservationsDropDown);
 
+           // modelBuilder.Entity<BillingData>().HasOne(o => o.User).WithOne(o => o.BillingData);
 
 
             var cascadeFKs = modelBuilder.Model.GetEntityTypes()

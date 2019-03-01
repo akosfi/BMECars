@@ -11,7 +11,7 @@ namespace BMECars.Dal.Entities
 
         public ICollection<Location> PickUpLocations { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public User Owner { get; set; }
 
         public ICollection<Car> Cars { get; set; }

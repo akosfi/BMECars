@@ -16,7 +16,7 @@ namespace BMECars.Dal.Entities
         public string State { get; set; }
         public string Postal { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
     }
 }

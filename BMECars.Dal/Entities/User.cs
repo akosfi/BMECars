@@ -1,19 +1,25 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace BMECars.Dal.Entities
 {
-    public class User
+    public class User : IdentityUser
     {
-        public int Id { get; set; }
-        public string Email { get; set; }
+
+        //public override string Id { get; set; }
+
+        [PersonalData]
         public string Password { get; set; }
+        [PersonalData]
         public DateTime BirthDate { get; set; }
-        public string PhoneNumber { get; set; }
+        [PersonalData]
         public string FullName { get; set; }
 
-
+        /*[ForeignKey("BillingData")]
+        public int? BillingDataId { get; set; }*/
         public BillingData BillingData { get; set; }
 
 

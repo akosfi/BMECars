@@ -11,7 +11,7 @@ namespace BMECars.Dal.Entities
         public DateTime ReserveFrom { get; set; }
         public DateTime ReserveTo { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
 
         public int CarId { get; set; }
