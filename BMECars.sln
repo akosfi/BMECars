@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2041
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMECars.Web", "BMECars.Web\BMECars.Web.csproj", "{3EF89205-D7F5-460A-86E4-85AC5194CA60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMECars.Dal", "BMECars.Dal\BMECars.Dal.csproj", "{E0F23358-BAC9-471B-A820-A0C7872397DC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3EF89205-D7F5-460A-86E4-85AC5194CA60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EF89205-D7F5-460A-86E4-85AC5194CA60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EF89205-D7F5-460A-86E4-85AC5194CA60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EF89205-D7F5-460A-86E4-85AC5194CA60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0F23358-BAC9-471B-A820-A0C7872397DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0F23358-BAC9-471B-A820-A0C7872397DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0F23358-BAC9-471B-A820-A0C7872397DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0F23358-BAC9-471B-A820-A0C7872397DC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0C269BB8-9CD5-4C30-B0C4-EC3039FADD4C}
+	EndGlobalSection
+EndGlobal
