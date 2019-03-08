@@ -31,16 +31,27 @@ namespace BMECars.Dal
                 .HasOne(o => o.DropDownLocation)
                 .WithMany(o => o.ReservationsDropDown);
 
-           // modelBuilder.Entity<BillingData>().HasOne(o => o.User).WithOne(o => o.BillingData);
-
-
+            //Foregin keys
             var cascadeFKs = modelBuilder.Model.GetEntityTypes()
             .SelectMany(t => t.GetForeignKeys())
             .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
             
             foreach (var fk in cascadeFKs)
                 fk.DeleteBehavior = DeleteBehavior.Restrict;
+
+
+            //Seed
             
+            modelBuilder.Entity<Company>().HasData(new Company { Id = 1, Name = "Bardi auto", UserId = "26ed8a02-70ff-497c-9c68-ee7913225c7e" });
+
+            modelBuilder.Entity<Car>().HasData(new Car { Id = 1, Brand = "Audi", Bag = 2, Category = Category.Coupe, Climate = true, Door = 2, Price = 15000, Seat = 2, IsFuelFull = true, Transmission = Transmission.Automatic, Year = 2000, CompanyId = 1, PickUpLocationId = 1 });
+            modelBuilder.Entity<Car>().HasData(new Car { Id = 2, Brand = "BMW", Bag = 2, Category = Category.Coupe, Climate = true, Door = 2, Price = 15000, Seat = 2, IsFuelFull = true, Transmission = Transmission.Automatic, Year = 2000, CompanyId = 1, PickUpLocationId = 1 });
+            modelBuilder.Entity<Car>().HasData(new Car { Id = 3, Brand = "Audi", Bag = 2, Category = Category.Coupe, Climate = true, Door = 2, Price = 15000, Seat = 2, IsFuelFull = true, Transmission = Transmission.Automatic, Year = 2000, CompanyId = 1, PickUpLocationId = 1 });
+            modelBuilder.Entity<Car>().HasData(new Car { Id = 4, Brand = "Toyota", Bag = 2, Category = Category.SUV, Climate = true, Door = 2, Price = 15000, Seat = 2, IsFuelFull = true, Transmission = Transmission.Automatic, Year = 2000, CompanyId = 1, PickUpLocationId = 1 });
+            modelBuilder.Entity<Car>().HasData(new Car { Id = 5, Brand = "Tesla", Bag = 2, Category = Category.Coupe, Climate = true, Door = 2, Price = 15000, Seat = 2, IsFuelFull = true, Transmission = Transmission.Automatic, Year = 2000, CompanyId = 1, PickUpLocationId = 1 });
+
+            modelBuilder.Entity<Location>().HasData(new Location { Id = 1, Address = "asdas street.", City = "Budapest", Country = "Hungary", IsGlobal = true, CompanyId = 1 });
+
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2041
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMECars.Web", "BMECars.Web\BMECars.Web.csproj", "{3EF89205-D7F5-460A-86E4-85AC5194CA60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BMECars.Web", "BMECars.Web\BMECars.Web.csproj", "{3EF89205-D7F5-460A-86E4-85AC5194CA60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMECars.Dal", "BMECars.Dal\BMECars.Dal.csproj", "{E0F23358-BAC9-471B-A820-A0C7872397DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BMECars.Dal", "BMECars.Dal\BMECars.Dal.csproj", "{E0F23358-BAC9-471B-A820-A0C7872397DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

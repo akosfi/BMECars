@@ -7,7 +7,7 @@ namespace BMECars.Dal.Entities
     public class Company
     {
         public int Id { get; set; }
-        public int Name { get; set; }
+        public string Name { get; set; }
 
         public ICollection<Location> PickUpLocations { get; set; }
 

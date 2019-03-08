@@ -18,7 +18,7 @@ namespace BMECars.Web.Areas.Identity
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<BMECarsDbContext>(options =>
                     options.UseSqlServer(
-                        context.Configuration.GetConnectionString("BMECarsWebContextConnection")));
+                        context.Configuration.GetConnectionString(nameof(BMECarsDbContext))));
 
                 services.AddDefaultIdentity<User>()
                     .AddEntityFrameworkStores<BMECarsDbContext>();

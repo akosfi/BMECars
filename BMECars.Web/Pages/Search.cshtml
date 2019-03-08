@@ -1,0 +1,14 @@
+﻿@page
+@model SearchModel
+@{
+}
+
+<div>
+    @foreach (var car in Model.Cars)
+    {
+        <div>
+            <p>Brand:@car.Brand</p>
+            <p>Category:@car.Category</p>
+        </div>
+    }
+</div>
