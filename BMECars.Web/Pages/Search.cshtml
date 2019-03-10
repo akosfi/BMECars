@@ -3,12 +3,63 @@
 @{
 }
 
-<div>
+
+<div class="container" style="padding: 50px 0px; background: pink;">
+    <div class="row">
+        <form>
+            <div class="col-sm-2 form-group">
+                <label for="exampleInputEmail1">Country</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="col-sm-2 form-group">
+                <label for="exampleInputEmail1">City</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="col-sm-2 form-group">
+                <label for="exampleInputEmail1">Location</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="col-sm-2 form-group">
+                <label for="exampleInputEmail1">Date of Pick Up</label>
+                <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="col-sm-2 form-group">
+                <label for="exampleInputEmail1">Date of Drop Down</label>
+                <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="col-sm-2"><button type="submit" class="btn btn-primary">Submit</button></div>
+        </form>
+    </div>
+    <div style="position: relative;"><a>Drop off at different location</a><a style="position: absolute; right: 0;">Detailed Search</a></div>
+</div>
+
+<div style="width: 80%; position: relative; left: 50%; transform: translateX(-50%);">
     @foreach (var car in Model.Cars)
     {
-        <div>
-            <p>Brand:@car.Brand</p>
-            <p>Category:@car.Category</p>
+        <div style="border: 1px solid gray; margin: 20px 0px;">
+            <div class="row" style="height: 200px;">
+                <div style="height: 100%;" class="col-sm-4">
+                    <img style="width: 100%; height: auto" src="https://cdn.vox-cdn.com/thumbor/NoZ_GaynRm6M58u6fd2Hp7Vjo9k=/0x434:4218x3400/1200x800/filters:focal(881x1518:1697x2334)/cdn.vox-cdn.com/uploads/chorus_image/image/57809677/216716_New_Volvo_XC40_exterior.0.jpg" />
+
+                </div>
+                <div class="col-sm-4">
+                    <h1>@car.Brand</h1>
+                    <h5>@car.Year<span style="padding-left: 50px;">@car.Category</span></h5>
+                    <h5>@car.Seat seat<span style="padding-left: 50px;">@car.Transmission transmission</span></h5>
+                    <h5>@car.Bag bag<span style="padding-left: 50px;">@(car.IsFuelFull ? "Full tank" : "Empty tank")</span></h5>
+                    <h5>@car.Door door<span style="padding-left: 50px;">@(car.Climate ? "Climate" : "No Climate")</span></h5>
+                </div>
+                <div style="height: 100%; text-align: right;" class="col-sm-4">
+                    <h4 style="padding-right: 10px;">@car.Price Ft / day</h4>
+
+                </div>
+            </div>
+            <div style="position: relative; height: 50px;">
+                <img style="position: absolute; left: 10px; height: 100%; width: auto" src="https://www.designmantic.com/logo-images/9.png?company=Company+Name&slogan=&verify=1" />
+                <button type="button" class="btn btn-success" style="position: absolute; bottom: 10px; right: 10px;">Reserve</button>
+            </div>
         </div>
+
     }
+
 </div>
