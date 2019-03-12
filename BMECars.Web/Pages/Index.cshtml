@@ -5,3 +5,21 @@
 }
 
 <partial name="_SearchForm" />
+
+
+<div class="row mt-3">
+    @foreach (var car in Model.CarHeaders)
+    {
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="https://cdn.vox-cdn.com/thumbor/NoZ_GaynRm6M58u6fd2Hp7Vjo9k=/0x434:4218x3400/1200x800/filters:focal(881x1518:1697x2334)/cdn.vox-cdn.com/uploads/chorus_image/image/57809677/216716_New_Volvo_XC40_exterior.0.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">@car.Brand</h5>
+                    <p class="card-text">@car.Price Ft / year</p>
+                    <a href="#" class="btn btn-success">Reserve</a>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

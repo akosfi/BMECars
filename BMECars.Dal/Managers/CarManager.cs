@@ -1,4 +1,5 @@
 ﻿using BMECars.Dal.DTOs;
+using BMECars.Dal.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,19 @@ namespace BMECars.Dal.Managers
         {
             _context = BMECarsDbContext;
         }
+
+
+        public CarHeaderDTO GetCarHeader(int id)
+        {
+            var car = _context.Cars.Select(c => new CarHeaderDTO {
+                Id = c.Id,
+                Brand = c.Brand,
+                Price = c.Price
+            }).SingleOrDefault(c=> c.Id == id);
+            
+            return car;
+        }
+
         public IQueryable<CarDTO> GetCars()
         {
             var cars = from c in _context.Cars
