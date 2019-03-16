@@ -1,4 +1,4 @@
-﻿<form style="position: relative; padding: 50px 0px;">
+﻿<form method="get" action="/search" style="position: relative; padding: 50px 0px;">
     <div class="row">
         <div class="col-md-2 form-group">
             <label for="exampleInputEmail1">Country</label>
@@ -97,64 +97,73 @@
         <div class="row">
             <div class="col form-group">
                 <label for="exampleInputEmail1">Brand</label>
-                <select class="form-control" id="exampleInputEmail1">
-                    <option value="volvo">Volvo</option>
-                    <option value="saab">Saab</option>
-                    <option value="mercedes">Mercedes</option>
+                <select name="brand" class="form-control" id="exampleInputEmail1">
+                    <option value="" selected>Choose Brand</option>
+                    <option value="BMW">BMW</option>
+                    <option value="toyota">Toyota</option>
+                    <option value="tesla">Tesla</option>
                     <option value="audi">Audi</option>
                 </select>
             </div>
+
             <div class="col form-group">
                 <label for="exampleInputEmail1">Year</label>
-                <input type="number" value="2019" min="1990" max="2019" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter year">
+                <input name="year" type="number" min="1990" max="2019" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter year">
             </div>
+
             <div class="col form-group">
                 <label for="exampleInputEmail1">Seat</label>
-                <input type="number" min="1" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter seats">
+                <input name="seat" type="number" min="1" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter seats">
             </div>
+
             <div class="col form-group">
                 <label for="exampleInputEmail1">Bags</label>
-                <input type="number" min="1" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter bags">
+                <input name="bag" type="number" min="1" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter bags">
             </div>
+
             <div class="col form-group">
                 <label for="exampleInputEmail1">Gas</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <input name="isFuelFull" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
             </div>
 
             <div class="w-100"></div>
 
             <div class="col form-group">
                 <label for="exampleInputEmail1">Dealer</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <input name="dealershipname" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
             </div>
             <div class="col form-group">
                 <label for="exampleInputEmail1">Category</label>
-                <select class="form-control" id="exampleInputEmail1">
+                <select name="category" class="form-control" id="exampleInputEmail1">
                     <option value="">All</option>
-                    <option value="volvo">SUV</option>
-                    <option value="saab">MRV</option>
-                    <option value="mercedes">Sedan</option>
+                    <option value="Hatchback">Hatchback</option>
+                    <option value="Sedan">Sedan</option>
+                    <option value="MPV">MPV</option>
+                    <option value="SUV">SUV</option>
+                    <option value="Crossover">Crossover</option>
+                    <option value="Coupe">Coupe</option>
+                    <option value="Convertible">Convertible</option>
                 </select>
             </div>
             <div class="col form-group">
                 <label for="exampleInputEmail1">Transmission</label>
-                <select class="form-control" id="exampleInputEmail1">
+                <select name="transmission" class="form-control" id="exampleInputEmail1">
                     <option value="">All</option>
-                    <option value="volvo">Automatic</option>
-                    <option value="saab">Manual</option>
+                    <option value="Automatic">Automatic</option>
+                    <option value="Manual">Manual</option>
                 </select>
             </div>
             <div class="col form-group">
                 <label for="exampleInputEmail1">Climate</label>
-                <select class="form-control" id="exampleInputEmail1">
+                <select name="climate" class="form-control" id="exampleInputEmail1">
                     <option value="">All</option>
-                    <option value="volvo">Yes</option>
-                    <option value="saab">No</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
                 </select>
             </div>
-            <div class="col form-group">
+            <div name="door" class="col form-group">
                 <label for="exampleInputEmail1">Door</label>
-                <input type="number" min="2" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter doors">
+                <input name="door" type="number" min="2" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter doors">
             </div>
         </div>
     </div>

@@ -94,10 +94,17 @@ namespace BMECars.Dal.Migrations
 
                     b.HasData(
                         new { Id = 1, Bag = 2, Brand = "Audi", Category = 5, Climate = true, CompanyId = 1, Door = 2, IsFuelFull = true, PickUpLocationId = 1, Price = 15000, Seat = 2, Transmission = 0, Year = 2000 },
-                        new { Id = 2, Bag = 2, Brand = "BMW", Category = 5, Climate = true, CompanyId = 1, Door = 2, IsFuelFull = true, PickUpLocationId = 1, Price = 15000, Seat = 2, Transmission = 0, Year = 2000 },
-                        new { Id = 3, Bag = 2, Brand = "Audi", Category = 5, Climate = true, CompanyId = 1, Door = 2, IsFuelFull = true, PickUpLocationId = 1, Price = 15000, Seat = 2, Transmission = 0, Year = 2000 },
-                        new { Id = 4, Bag = 2, Brand = "Toyota", Category = 3, Climate = true, CompanyId = 1, Door = 2, IsFuelFull = true, PickUpLocationId = 1, Price = 15000, Seat = 2, Transmission = 0, Year = 2000 },
-                        new { Id = 5, Bag = 2, Brand = "Tesla", Category = 5, Climate = true, CompanyId = 1, Door = 2, IsFuelFull = true, PickUpLocationId = 1, Price = 15000, Seat = 2, Transmission = 0, Year = 2000 }
+                        new { Id = 2, Bag = 2, Brand = "Audi", Category = 3, Climate = true, CompanyId = 1, Door = 3, IsFuelFull = true, PickUpLocationId = 1, Price = 15000, Seat = 2, Transmission = 0, Year = 2000 },
+                        new { Id = 3, Bag = 2, Brand = "Audi", Category = 5, Climate = false, CompanyId = 1, Door = 2, IsFuelFull = false, PickUpLocationId = 1, Price = 20000, Seat = 2, Transmission = 0, Year = 2000 },
+                        new { Id = 4, Bag = 4, Brand = "BMW", Category = 3, Climate = true, CompanyId = 1, Door = 2, IsFuelFull = false, PickUpLocationId = 1, Price = 15000, Seat = 2, Transmission = 0, Year = 2000 },
+                        new { Id = 5, Bag = 6, Brand = "BMW", Category = 4, Climate = true, CompanyId = 1, Door = 2, IsFuelFull = false, PickUpLocationId = 1, Price = 20000, Seat = 2, Transmission = 1, Year = 2002 },
+                        new { Id = 6, Bag = 2, Brand = "BMW", Category = 2, Climate = true, CompanyId = 2, Door = 4, IsFuelFull = false, PickUpLocationId = 1, Price = 20000, Seat = 2, Transmission = 1, Year = 2012 },
+                        new { Id = 7, Bag = 2, Brand = "BMW", Category = 5, Climate = false, CompanyId = 2, Door = 5, IsFuelFull = true, PickUpLocationId = 1, Price = 20000, Seat = 2, Transmission = 0, Year = 2000 },
+                        new { Id = 8, Bag = 3, Brand = "Jeep", Category = 4, Climate = true, CompanyId = 3, Door = 6, IsFuelFull = true, PickUpLocationId = 1, Price = 15000, Seat = 2, Transmission = 0, Year = 2000 },
+                        new { Id = 9, Bag = 2, Brand = "Tesla", Category = 5, Climate = false, CompanyId = 3, Door = 2, IsFuelFull = false, PickUpLocationId = 1, Price = 15300, Seat = 2, Transmission = 1, Year = 2000 },
+                        new { Id = 10, Bag = 5, Brand = "Tesla", Category = 2, Climate = true, CompanyId = 3, Door = 9, IsFuelFull = true, PickUpLocationId = 1, Price = 15010, Seat = 2, Transmission = 0, Year = 2019 },
+                        new { Id = 11, Bag = 4, Brand = "Toyota", Category = 4, Climate = false, CompanyId = 4, Door = 2, IsFuelFull = true, PickUpLocationId = 1, Price = 15900, Seat = 2, Transmission = 1, Year = 2015 },
+                        new { Id = 12, Bag = 3, Brand = "Toyota", Category = 2, Climate = true, CompanyId = 4, Door = 12, IsFuelFull = false, PickUpLocationId = 1, Price = 150000, Seat = 2, Transmission = 1, Year = 2016 }
                     );
                 });
 
@@ -137,7 +144,10 @@ namespace BMECars.Dal.Migrations
                     b.ToTable("Companies");
 
                     b.HasData(
-                        new { Id = 1, Name = "Bardi auto", UserId = "26ed8a02-70ff-497c-9c68-ee7913225c7e" }
+                        new { Id = 1, Name = "Bardi auto", UserId = "fbc5fe4c-7f97-4969-9937-23a191322bfd" },
+                        new { Id = 2, Name = "Top Cars", UserId = "fbc5fe4c-7f97-4969-9937-23a191322bfd" },
+                        new { Id = 3, Name = "EuroCar", UserId = "fbc5fe4c-7f97-4969-9937-23a191322bfd" },
+                        new { Id = 4, Name = "MyWay", UserId = "fbc5fe4c-7f97-4969-9937-23a191322bfd" }
                     );
                 });
 
@@ -198,7 +208,7 @@ namespace BMECars.Dal.Migrations
                     b.ToTable("Locations");
 
                     b.HasData(
-                        new { Id = 1, Address = "asdas street.", City = "Budapest", CompanyId = 1, Country = "Hungary", IsGlobal = true }
+                        new { Id = 1, Address = "Ferihegy Airport", City = "Budapest", CompanyId = 1, Country = "Hungary", IsGlobal = true }
                     );
                 });
 

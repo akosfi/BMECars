@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BMECars.Dal.DTOs;
+using BMECars.Dal.Entities;
 using BMECars.Dal.Managers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -17,11 +18,11 @@ namespace BMECars.Web.Pages
             _carManager = CarManager;
         }
 
-        public IQueryable<CarDTO> Cars { get; set; }
+        public List<CarDTO> Cars { get; set; }
 
-        public void OnGet()
+        public void OnGet(SearchDTO queryCar)
         {
-            Cars = _carManager.GetCars();
+            Cars = _carManager.GetCars(queryCar);
         }
     }
 }

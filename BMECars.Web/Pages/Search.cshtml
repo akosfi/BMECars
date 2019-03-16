@@ -19,8 +19,8 @@
                     <h1>@car.Brand</h1>
                     <h5>@car.Year<span style="padding-left: 50px;">@car.Category</span></h5>
                     <h5>@car.Seat seat<span style="padding-left: 50px;">@car.Transmission transmission</span></h5>
-                    <h5>@car.Bag bag<span style="padding-left: 50px;">@(car.IsFuelFull ? "Full tank" : "Empty tank")</span></h5>
-                    <h5>@car.Door door<span style="padding-left: 50px;">@(car.Climate ? "Climate" : "No Climate")</span></h5>
+                    <h5>@car.Bag bag<span style="padding-left: 50px;">Fuel: @(car.IsFuelFull)</span></h5>
+                    <h5>@car.Door door<span style="padding-left: 50px;">Climate: @(car.Climate)</span></h5>
                 </div>
                 <div style="height: 100%; text-align: right;" class="col-sm-4">
                     <h4 style="padding-right: 10px;">@car.Price Ft / day</h4>

@@ -11,7 +11,7 @@ namespace BMECars.Dal.Managers
 {
     public interface ICarManager
     {
-        IQueryable<CarDTO> GetCars();
+        List<CarDTO> GetCars(SearchDTO queryCar);
 
         CarHeaderDTO GetCarHeader(int id);
     }

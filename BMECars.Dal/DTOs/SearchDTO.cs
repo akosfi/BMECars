@@ -1,12 +1,11 @@
-﻿using BMECars.Dal.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+using BMECars.Dal.Entities;
 
 namespace BMECars.Dal.DTOs
 {
-    public class CarDTO
+    public class SearchDTO
     {
         public int Id { get; set; }
         public string Brand { get; set; }
@@ -16,10 +15,10 @@ namespace BMECars.Dal.DTOs
         public int Seat { get; set; }
         public int Bag { get; set; }
         public int Door { get; set; }
-        public Category Category { get; set; }
-        public Transmission Transmission { get; set; }
-        public Boolean IsFuelFull { get; set; }
-        public Boolean Climate { get; set; }
+        public Category? Category { get; set; }
+        public Transmission? Transmission { get; set; }
+        public bool? IsFuelFull { get; set; } //nullable because of query
+        public bool? Climate { get; set; }
         public string DealerShipName { get; set; }
     }
 }
