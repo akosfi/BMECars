@@ -27,6 +27,7 @@ namespace BMECars.Web
             
             
             services.AddTransient<ICarManager, CarManager>();
+            services.AddTransient<ILocationManager, LocationManager>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -56,7 +57,10 @@ namespace BMECars.Web
 
             app.UseAuthentication();
 
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

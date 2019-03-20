@@ -20,5 +20,16 @@ namespace BMECars.Dal.DTOs
         public bool? IsFuelFull { get; set; } //nullable because of query
         public bool? Climate { get; set; }
         public string DealerShipName { get; set; }
+
+        public DateTime ReserveFrom { get; set; }
+        public DateTime ReserveTo { get; set; }
+
+        public string CountryPickUp { get; set; }
+        public string CityPickUp { get; set; }
+        public string LocationPickUp { get; set; }
+
+        public string CountryDropDown { get; set; }
+        public string CityDropDown { get; set; }
+        public string LocationDropDown { get; set; }
     }
 }

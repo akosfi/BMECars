@@ -13,7 +13,7 @@ namespace BMECars.Web.Pages
     {
         ICarManager _carManager;
         public List<CarHeaderDTO> CarHeaders { get; set; }
-
+        public SearchDTO SearchCar { get; set; } = new SearchDTO();
         public IndexModel(ICarManager CarManager)
         {
             _carManager = CarManager;

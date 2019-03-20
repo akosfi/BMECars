@@ -1,46 +1,53 @@
-﻿<form method="get" action="/search" style="position: relative; padding: 50px 0px;">
+﻿@using BMECars.Dal.Managers
+@inject ILocationManager _locationManager
+@inject ICarManager _carManager;
+@{ 
+    ViewData["Countries"] = _locationManager.GetAvailableCountries();
+    ViewData["CarBrands"] = _carManager.GetAvailableCarBrands();
+}
+
+<form method="get" action="/search" style="position: relative; padding: 50px 0px;">
     <div class="row">
         <div class="col-md-2 form-group">
-            <label for="exampleInputEmail1">Country</label>
-            <select class="form-control" id="exampleInputEmail1">
+            <label for="country">Country</label>
+            <select name="CountryPickUp" class="form-control" id="country" onchange="onPickUpCountrySelect(this);">
                 <option selected disabled="disabled">Choose Country</option>
-                <option value="volvo">Hungary</option>
-                <option value="saab">Romania</option>
-                <option value="mercedes">Albania</option>
-                <option value="audi">Spain</option>
+                @foreach (string c in (List<String>)ViewData["Countries"])
+                {
+                    if (c == Model.CountryPickUp)
+                    {
+                        <option selected value="@c">@c</option>
+                    }
+                    else
+                    {
+                        <option value="@c">@c</option>
+                    }
+                }
             </select>
         </div>
         <div class="col-md-2 form-group">
-            <label for="exampleInputEmail1">City</label>
-            <select class="form-control" id="exampleInputEmail1">
+            <label for="city">City</label>
+            <select name="CityPickUp" class="form-control" id="city" onchange="onPickUpCitySelect(this);">
                 <option selected disabled="disabled">Choose City</option>
-                <option value="volvo">Hungary</option>
-                <option value="saab">Romania</option>
-                <option value="mercedes">Albania</option>
-                <option value="audi">Spain</option>
             </select>
         </div>
         <div class="col-md-2 form-group">
-            <label for="exampleInputEmail1">Location</label>
-            <select class="form-control" id="exampleInputEmail1">
+            <label for="location">Location</label>
+            <select name="LocationPickUp" class="form-control" id="location">
                 <option selected disabled="disabled">Choose Location</option>
-                <option value="volvo">Hungary</option>
-                <option value="saab">Romania</option>
-                <option value="mercedes">Albania</option>
-                <option value="audi">Spain</option>
             </select>
         </div>
         <div class="col-md-2 form-group">
-            <label for="exampleInputEmail1">Pick Up</label>
-            <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter date">
+            <label for="reservefrom">Pick Up</label>
+            <input name="ReserveFrom" type="date" class="form-control" id="reservefrom">
         </div>
         <div class="col-md-2 form-group">
-            <label for="exampleInputEmail1">Drop Down</label>
-            <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter date">
+            <label for="reserveto">Drop Down</label>
+            <input name="ReserveTo" type="date" class="form-control" id="reserveto">
         </div>
         <div class="col-md-2 form-group">
-            <label for="exampleInputEmail1"></label>
-            <input type="submit" value="Submit" class="form-control btn btn-success" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <label for="submitbtn"></label>
+            <input type="submit" value="Submit" class="form-control btn btn-success" id="submitbtn">
         </div>
     </div>
 
@@ -59,8 +66,8 @@
         <h4 style="padding-top: 20px;">Drop off at different location</h4>
         <div class="row">
             <div class="col-sm-4 col-md-2 form-group">
-                <label for="exampleInputEmail1">Country</label>
-                <select class="form-control" id="exampleInputEmail1">
+                <label for="dropcountry">Country</label>
+                <select name="CountryDropDown" class="form-control" id="dropcountry">
                     <option selected disabled="disabled">Choose Country</option>
                     <option value="volvo">Hungary</option>
                     <option value="saab">Romania</option>
@@ -69,8 +76,8 @@
                 </select>
             </div>
             <div class="col-sm-4 col-md-2 form-group">
-                <label for="exampleInputEmail1">City</label>
-                <select class="form-control" id="exampleInputEmail1">
+                <label for="dropcity">City</label>
+                <select name="CityDropDown" class="form-control" id="dropcity">
                     <option selected disabled="disabled">Choose City</option>
                     <option value="volvo">Hungary</option>
                     <option value="saab">Romania</option>
@@ -79,8 +86,8 @@
                 </select>
             </div>
             <div class="col-sm-4 col-md-2 form-group">
-                <label for="exampleInputEmail1">Location</label>
-                <select class="form-control" id="exampleInputEmail1">
+                <label for="droplocation">Location</label>
+                <select name="LocationDropDown" class="form-control" id="droplocation">
                     <option selected disabled="disabled">Choose Location</option>
                     <option value="volvo">Hungary</option>
                     <option value="saab">Romania</option>
@@ -96,45 +103,56 @@
         <h4 style="padding-top: 20px;">Detailed Search</h4>
         <div class="row">
             <div class="col form-group">
-                <label for="exampleInputEmail1">Brand</label>
-                <select name="brand" class="form-control" id="exampleInputEmail1">
+                <label for="brand">Brand</label>
+                <select name="brand" class="form-control" id="brand">
                     <option value="" selected>Choose Brand</option>
-                    <option value="BMW">BMW</option>
-                    <option value="toyota">Toyota</option>
-                    <option value="tesla">Tesla</option>
-                    <option value="audi">Audi</option>
+                    @foreach (string c in (List<String>)ViewData["CarBrands"])
+                    {
+                        if (c == Model.Brand)
+                        {
+                            <option selected value="@c">@c</option>
+                        }
+                        else
+                        {
+                            <option value="@c">@c</option>
+                        }
+                    }
                 </select>
             </div>
 
             <div class="col form-group">
-                <label for="exampleInputEmail1">Year</label>
-                <input name="year" type="number" min="1990" max="2019" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter year">
+                <label for="year">Year</label>
+                <input name="year" value="@(Model.Year != 0 ? @Model.Year : "")" type="number" min="1990" max="2019" class="form-control" id="year" placeholder="Enter year">
             </div>
 
             <div class="col form-group">
-                <label for="exampleInputEmail1">Seat</label>
-                <input name="seat" type="number" min="1" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter seats">
+                <label for="seat">Seat</label>
+                <input name="seat" value="@(Model.Seat != 0 ? @Model.Seat : "")" type="number" min="1" class="form-control" id="seat" placeholder="Enter seats">
             </div>
 
             <div class="col form-group">
-                <label for="exampleInputEmail1">Bags</label>
-                <input name="bag" type="number" min="1" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter bags">
+                <label for="bag">Bags</label>
+                <input name="bag" value="@(Model.Bag != 0 ? @Model.Bag : "")" type="number" min="1" class="form-control" id="bag" placeholder="Enter bags">
             </div>
 
             <div class="col form-group">
-                <label for="exampleInputEmail1">Gas</label>
-                <input name="isFuelFull" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <label for="isfuelfull">Gas</label>
+                <select name="isFuelFull" class="form-control" id="isfuelfull">
+                    <option value="" selected>All</option>
+                    <option value="true">Full</option>
+                    <option value="false">Empty</option>
+                </select>
             </div>
 
             <div class="w-100"></div>
 
             <div class="col form-group">
-                <label for="exampleInputEmail1">Dealer</label>
-                <input name="dealershipname" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <label for="dealer">Dealer</label>
+                <input name="dealershipname" value="@(Model.DealerShipName != 0 ? @Model.DealerShipName : "")" type="text" class="form-control" id="dealer" placeholder="Enter dealer">
             </div>
             <div class="col form-group">
-                <label for="exampleInputEmail1">Category</label>
-                <select name="category" class="form-control" id="exampleInputEmail1">
+                <label for="category">Category</label>
+                <select name="category" class="form-control" id="category">
                     <option value="">All</option>
                     <option value="Hatchback">Hatchback</option>
                     <option value="Sedan">Sedan</option>
@@ -146,24 +164,24 @@
                 </select>
             </div>
             <div class="col form-group">
-                <label for="exampleInputEmail1">Transmission</label>
-                <select name="transmission" class="form-control" id="exampleInputEmail1">
+                <label for="transmission">Transmission</label>
+                <select name="transmission" class="form-control" id="transmission">
                     <option value="">All</option>
                     <option value="Automatic">Automatic</option>
                     <option value="Manual">Manual</option>
                 </select>
             </div>
             <div class="col form-group">
-                <label for="exampleInputEmail1">Climate</label>
-                <select name="climate" class="form-control" id="exampleInputEmail1">
+                <label for="climate">Climate</label>
+                <select name="climate" class="form-control" id="climate">
                     <option value="">All</option>
                     <option value="true">Yes</option>
                     <option value="false">No</option>
                 </select>
             </div>
             <div name="door" class="col form-group">
-                <label for="exampleInputEmail1">Door</label>
-                <input name="door" type="number" min="2" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter doors">
+                <label for="door">Door</label>
+                <input name="door" value="@(Model.Door != 0 ? @Model.Door: "")" type="number" min="2" class="form-control" id="door" placeholder="Enter doors">
             </div>
         </div>
     </div>

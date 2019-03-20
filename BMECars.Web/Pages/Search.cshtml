@@ -4,7 +4,7 @@
 }
 
 
-<partial name="_SearchForm" />
+<partial name="_SearchForm" model="@Model.SearchCar" />
 
 <div style="width: 80%; position: relative; left: 50%; transform: translateX(-50%);">
     @foreach (var car in Model.Cars)

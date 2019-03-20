@@ -19,9 +19,12 @@ namespace BMECars.Web.Pages
         }
 
         public List<CarDTO> Cars { get; set; }
-
+        public SearchDTO SearchCar { get; set; }
         public void OnGet(SearchDTO queryCar)
         {
+
+
+            SearchCar = queryCar;
             Cars = _carManager.GetCars(queryCar);
         }
     }

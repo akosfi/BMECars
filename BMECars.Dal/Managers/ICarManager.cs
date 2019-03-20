@@ -14,5 +14,8 @@ namespace BMECars.Dal.Managers
         List<CarDTO> GetCars(SearchDTO queryCar);
 
         CarHeaderDTO GetCarHeader(int id);
+
+        List<string> GetAvailableCarBrands();
+
     }
 }
