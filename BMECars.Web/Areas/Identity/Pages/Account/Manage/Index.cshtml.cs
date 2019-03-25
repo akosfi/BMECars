@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using BMECars.Dal.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +14,13 @@ namespace BMECars.Web.Areas.Identity.Pages.Account.Manage
 {
     public partial class IndexModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
 
         public IndexModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
             IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -28,11 +29,7 @@ namespace BMECars.Web.Areas.Identity.Pages.Account.Manage
         }
 
         public string Username { get; set; }
-
-        public bool IsEmailConfirmed { get; set; }
-
-        [TempData]
-        public string StatusMessage { get; set; }
+        
 
         [BindProperty]
         public InputModel Input { get; set; }
@@ -41,11 +38,36 @@ namespace BMECars.Web.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [EmailAddress]
+            [Display(Name = "Email")]
+            [DataType(DataType.EmailAddress)]
             public string Email { get; set; }
 
+            [Required]
             [Phone]
             [Display(Name = "Phone number")]
+            [DataType(DataType.PhoneNumber)]
             public string PhoneNumber { get; set; }
+
+
+            [Display(Name = "Password")]
+            [DataType(DataType.Text)]
+            public string Password { get; set; }
+
+
+            [Display(Name = "Old Password")]
+            [DataType(DataType.Text)]
+            [Compare("Password", ErrorMessage = "The password and old password do not match.")]
+            public string OldPassword { get; set; }
+
+            [Required]
+            [Display(Name = "Birth Date")]
+            [DataType(DataType.DateTime)]
+            public DateTime BirthDate { get; set; }
+
+            [Required]
+            [Display(Name = "Full Name")]
+            [DataType(DataType.Text)]
+            public string FullName { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -59,17 +81,18 @@ namespace BMECars.Web.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var email = await _userManager.GetEmailAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var birthDate = user.BirthDate;
+            var fullName = user.FullName;
 
             Username = userName;
 
             Input = new InputModel
             {
                 Email = email,
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                BirthDate = birthDate,
+                FullName = fullName
             };
-
-            IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
-
             return Page();
         }
 
@@ -108,8 +131,33 @@ namespace BMECars.Web.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+
+            
+            if(Input.Password != Input.OldPassword && Input.OldPassword != "" && Input.Password != "")
+            {
+                
+                var passwordCheck = await _userManager.CheckPasswordAsync(user, Input.OldPassword);
+                if (passwordCheck)
+                {
+                    var setPasswordResult = await _userManager.ChangePasswordAsync(user, Input.OldPassword, Input.Password);
+                    if (!setPasswordResult.Succeeded)
+                    {
+
+                    }
+                }                
+            }
+            
+            if(Input.BirthDate != user.BirthDate)
+            {
+                user.BirthDate = Input.BirthDate;
+                var setBirthDateResult = await _userManager.UpdateAsync(user);
+                if (!setBirthDateResult.Succeeded)
+                {
+
+                }
+            }
+
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
 
@@ -140,7 +188,7 @@ namespace BMECars.Web.Areas.Identity.Pages.Account.Manage
                 "Confirm your email",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-            StatusMessage = "Verification email sent. Please check your email.";
+            //StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();
         }
     }

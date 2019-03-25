@@ -30,6 +30,7 @@ namespace BMECars.Dal.Managers
 
         public List<CarDTO> GetCars(SearchDTO queryCar)
         {
+            var helperLocationId = _context.Locations.Where(l => l.Country == queryCar.CountryPickUp);
 
             var cars = _context.Cars
                 .Include(c => c.Company)
