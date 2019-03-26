@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BMECars.Dal.Managers
 {
@@ -25,6 +24,8 @@ namespace BMECars.Dal.Managers
                 Price = c.Price
             }).SingleOrDefault(c => c.Id == id);
 
+
+            
             return car;
         }
 

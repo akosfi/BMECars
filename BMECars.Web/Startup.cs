@@ -28,6 +28,7 @@ namespace BMECars.Web
             
             services.AddTransient<ICarManager, CarManager>();
             services.AddTransient<ILocationManager, LocationManager>();
+            services.AddTransient<ICompanyManager, CompanyManager>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {

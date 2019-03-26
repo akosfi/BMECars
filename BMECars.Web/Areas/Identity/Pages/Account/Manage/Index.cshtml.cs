@@ -4,7 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using BMECars.Dal.DTOs;
 using BMECars.Dal.Entities;
+using BMECars.Dal.Managers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -17,15 +19,18 @@ namespace BMECars.Web.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly ICompanyManager _companyManager;
 
         public IndexModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ICompanyManager companyManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _companyManager = companyManager;
         }
 
         public string Username { get; set; }
@@ -70,6 +75,8 @@ namespace BMECars.Web.Areas.Identity.Pages.Account.Manage
             public string FullName { get; set; }
         }
 
+        public List<CompanyHeaderDTO> UserCompanies;
+
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -77,6 +84,8 @@ namespace BMECars.Web.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
+
+            UserCompanies = _companyManager.GetCompaniesForUser(user.Id);
 
             var userName = await _userManager.GetUserNameAsync(user);
             var email = await _userManager.GetEmailAsync(user);
