@@ -10,6 +10,7 @@ namespace BMECars.Dal.Entities
         public string Brand { get; set; }
         public string Image { get; set; }
         public int Price { get; set; }
+        public string Plate { get; set; }
         public int Year { get; set; }
         public int Seat { get; set; }
         public int Bag { get; set; }

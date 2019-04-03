@@ -12,6 +12,7 @@ namespace BMECars.Dal.DTOs
     public class CarDTO
     {
         public int Id { get; set; }
+        public string Plate { get; set; }
         public string Brand { get; set; }
         public string Image { get; set; }
         public int Price { get; set; }
@@ -41,7 +42,8 @@ namespace BMECars.Dal.DTOs
             Transmission = c.Transmission,
             IsFuelFull = c.IsFuelFull,
             Climate = c.Climate,
-            DealerShipName = c.Company.Name
+            DealerShipName = c.Company.Name,
+            Plate = c.Plate
         };
     }
 }
