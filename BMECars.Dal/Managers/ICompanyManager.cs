@@ -8,5 +8,7 @@ namespace BMECars.Dal.Managers
     public interface ICompanyManager
     {
         List<CompanyHeaderDTO> GetCompaniesForUser(string userID);
+
+        CompanyHeaderDTO GetCompany(int companyId);
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace BMECars.Dal.Managers
 {
@@ -23,19 +24,24 @@ namespace BMECars.Dal.Managers
                 Brand = c.Brand,
                 Price = c.Price
             }).SingleOrDefault(c => c.Id == id);
-
-
-            
             return car;
+        }
+
+        public List<CarDTO> GetCarsForCompany(int companyId)
+        {
+            return _context.Cars
+                .Where(c => c.CompanyId == companyId)
+                .Select(CarDTO.Selector).ToList();
         }
 
         public List<CarDTO> GetCars(SearchDTO queryCar)
         {
             var helperLocationId = _context.Locations.Where(l => l.Country == queryCar.CountryPickUp);
-
+            
             var cars = _context.Cars
                 .Include(c => c.Company)
                 .Include(c => c.Reservations)
+                .Include("Reservations.PickUpLocation")
                 .Where(c => (queryCar.Brand == null || queryCar.Brand == "" || c.Brand.Contains(queryCar.Brand))
                          && (queryCar.DealerShipName == null || queryCar.DealerShipName == "" || c.Company.Name.Contains(queryCar.DealerShipName))
                          && (queryCar.Year == 0 || c.Year == queryCar.Year)
@@ -48,46 +54,14 @@ namespace BMECars.Dal.Managers
                          && (queryCar.Transmission == null || c.Transmission == queryCar.Transmission))
 
                 .Where(c => CheckDateAvailability(c.Reservations, queryCar))
-
+                //.Where( predicate )
                 //.Where(c => CheckLocationAvailability(c.Reservations, queryCar))
-                .Select(c => new CarDTO()
-                {
-                    Id = c.Id,
-                    Brand = c.Brand,
-                    Image = c.Image,
-                    Price = c.Price,
-                    Year = c.Year,
-                    Seat = c.Seat,
-                    Bag = c.Bag,
-                    Door = c.Door,
-                    Category = c.Category,
-                    Transmission = c.Transmission,
-                    IsFuelFull = c.IsFuelFull,
-                    Climate = c.Climate,
-                    DealerShipName = c.Company.Name
-                });
+                .Select(CarDTO.Selector);
 
             return cars.ToList();
         }
 
-        /*private bool CheckLocationAvailability(ICollection<Reservation> reservations, SearchDTO queryCar)
-        {
-            if (queryCar.CountryPickUp == "" || queryCar.CityPickUp == "") return true;
-            if (!IsDateValid(queryCar.ReserveFrom)) return true;
-            if (reservations == null || reservations.Count() == 0) return true;
-
-            Reservation closest = reservations.OrderBy(r => Math.Abs((queryCar.ReserveFrom - r.ReserveTo).TotalDays)).First();
-
-            /*Location location = _context.Reservations
-                                .Include(l => l.PickUpLocation)
-                                .Select(r => r.DropDownLocation)
-                                .Where(r => r.Id == closest.Id).First();
-                                
-            
-            return true;
-        }*/
-
-
+        private Expression<Func<Car, bool>> predicate = c => c.Reservations.Any();
 
         private bool CheckDateAvailability(ICollection<Reservation> reservations, SearchDTO queryCar)
         {
@@ -100,6 +74,21 @@ namespace BMECars.Dal.Managers
                                         || (queryCar.ReserveFrom < r.ReserveFrom && queryCar.ReserveTo > r.ReserveTo && IsDateValid(queryCar.ReserveFrom) && IsDateValid(queryCar.ReserveTo)))
                                         .Any();
         }
+
+
+        /*private bool CheckLocationAvailability(ICollection<Reservation> reservations, SearchDTO queryCar)
+        {
+            if (queryCar.CountryPickUp == "" || queryCar.CityPickUp == "") return true;
+            if (!IsDateValid(queryCar.ReserveFrom)) return true;
+            if (reservations == null || reservations.Count() == 0) return true;
+
+            Reservation closest = reservations.OrderBy(r => Math.Abs((queryCar.ReserveFrom - r.ReserveTo).TotalDays)).First();
+
+            
+                                
+            
+            return true;
+        }*/
 
         private bool IsDateValid(DateTime dt)
         {

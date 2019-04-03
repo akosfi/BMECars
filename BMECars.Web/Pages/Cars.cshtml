@@ -1,0 +1,68 @@
+﻿@page
+@model BMECars.Web.Pages.CarsModel
+@{
+    ViewData["Title"] = "Cars";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div style="position:relative;" class="my-2">
+    <h2>@(Model.Company.Name)</h2>
+    <a style="position: absolute; top: 0; right: 0;" class="btn btn-success" href="#">Add Car</a>
+</div>
+
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Plate</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Details</th>
+                <th scope="col">Return</th>
+                <th scope="col">Location</th>
+                <th scope="col">Usage</th>
+                <th scope="col">Modify</th>
+                <th scope="col">Return</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var car in Model.Cars)
+            {
+            <tr>
+                <th scope="row">
+                    Plate to DB!
+                </th>
+                <td>
+                    @car.Brand
+                </td>
+                <td>
+                    <a href="#">
+                        <img style="height: 20px; width: 20px;" src="/images/svg/si-glyph-gear.svg" />
+                    </a>
+                </td>
+                <td>
+                    2019. 05. 16.
+                </td>
+                <td>
+                    Now at: <a href="#">fiakos1997@gmail.com</a>
+                </td>
+                <td>
+                    <a href="#">
+                        <img style="height: 20px; width: 20px;" src="/images/svg/si-glyph-calendar-3.svg" />
+                    </a>
+                </td>
+                <td>
+                    <a href="#">
+                        <img style="height: 20px; width: 20px;" src="/images/svg/si-glyph-gear.svg" />
+                    </a>
+                </td>
+                <td>
+                    <a href="#">
+                        <img style="height: 20px; width: 20px;" src="/images/svg/si-glyph-trash.svg" />
+                    </a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

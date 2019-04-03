@@ -16,6 +16,18 @@ namespace BMECars.Dal.Managers
             
         }
 
+        public CompanyHeaderDTO GetCompany(int companyId)
+        {
+            return _context.Companies
+                .Where(c => c.Id == companyId)
+                .Select(c => new CompanyHeaderDTO {
+                    Id = c.Id,
+                    Name = c.Name,
+                    UserId = c.UserId
+                })
+                .First();
+        }
+
         public List<CompanyHeaderDTO> GetCompaniesForUser(string userID)
         {
             return _context.Companies
