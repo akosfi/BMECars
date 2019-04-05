@@ -16,14 +16,22 @@ namespace BMECars.Web.Pages
         public CarsModel(ICarManager CarManager, ICompanyManager CompanyManager)
         {
             _carManager = CarManager;
-            _companyManager = CompanyManager;            
+            _companyManager = CompanyManager;       
         }
         public CompanyHeaderDTO Company { get; set; }
         public List<CarDTO> Cars { get; set; }
+
+        public Dictionary<int, ReservationInfoDTO> ReservationInfo = new Dictionary<int, ReservationInfoDTO>();
+
         public void OnGet(int companyId)
         {
             Cars = _carManager.GetCarsForCompany(companyId);
             Company = _companyManager.GetCompany(companyId);
+
+            foreach(var car in Cars)
+            {
+                ReservationInfo.Add(car.Id, _carManager.GetReservationInfoForCar(car.Id));
+            }
         }
     }
 }

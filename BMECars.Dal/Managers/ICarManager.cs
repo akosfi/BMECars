@@ -18,5 +18,7 @@ namespace BMECars.Dal.Managers
         List<string> GetAvailableCarBrands();
 
         List<CarDTO> GetCarsForCompany(int companyId);
+
+        ReservationInfoDTO GetReservationInfoForCar(int carId);
     }
 }

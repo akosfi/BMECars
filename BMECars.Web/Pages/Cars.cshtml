@@ -28,41 +28,78 @@
         <tbody>
             @foreach (var car in Model.Cars)
             {
-            <tr>
-                <th scope="row">
-                    @car.Plate
-                </th>
-                <td>
-                    @car.Brand
-                </td>
-                <td>
-                    <a href="#">
-                        <img style="height: 20px; width: 20px;" src="/images/svg/si-glyph-gear.svg" />
-                    </a>
-                </td>
-                <td>
-                    2019. 05. 16.
-                </td>
-                <td>
-                    Now at: <a href="#">fiakos1997@gmail.com</a>
-                </td>
-                <td>
-                    <a href="#">
-                        <img style="height: 20px; width: 20px;" src="/images/svg/si-glyph-calendar-3.svg" />
-                    </a>
-                </td>
-                <td>
-                    <a href="#">
-                        <img style="height: 20px; width: 20px;" src="/images/svg/si-glyph-gear.svg" />
-                    </a>
-                </td>
-                <td>
-                    <a href="#">
-                        <img style="height: 20px; width: 20px;" src="/images/svg/si-glyph-trash.svg" />
-                    </a>
-                </td>
-            </tr>
+                <tr>
+                    <th scope="row">
+                        @car.Plate
+                    </th>
+                    <td>
+                        @car.Brand
+                    </td>
+                    <td>
+                        <a href="#" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">
+                            <img style="height: 20px; width: 20px;" src="/images/svg/si-glyph-gear.svg" />
+                        </a>
+                    </td>
+                    <td>
+                        @if (Model.ReservationInfo[car.Id].AtClient)
+                        {
+                            @Model.ReservationInfo[car.Id].CurrentReservationReturnDate
+                        }
+                        else
+                        {
+                            <span>-</span>
+                        }
+                    </td>
+                    <td>
+                        @if (Model.ReservationInfo[car.Id].AtClient)
+                        {
+                            <p>Now at: <a href="#">@Model.ReservationInfo[car.Id].ClientEmail</a></p>
+                        }
+                        else
+                        {
+                            <span>Mi legyen a location?</span>
+                        }
+                    </td>
+                    <td>
+                        <a onclick="setCalendarDates(@car.Id)" href="#" data-toggle="modal" data-target="#calendarModal">
+                            <img style="height: 20px; width: 20px;" src="/images/svg/si-glyph-calendar-3.svg" />
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#">
+                            <img style="height: 20px; width: 20px;" src="/images/svg/si-glyph-gear.svg" />
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#">
+                            <img style="height: 20px; width: 20px;" src="/images/svg/si-glyph-trash.svg" />
+                        </a>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
+
 </div>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailsModal">
+    Launch demo modal
+</button>
+
+
+<div class="modal fade" id="calendarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">            
+            <div class="modal-body" stlye="position: relative;">
+                <div id="calendarHolder">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

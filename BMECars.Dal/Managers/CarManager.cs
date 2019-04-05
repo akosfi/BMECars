@@ -27,6 +27,11 @@ namespace BMECars.Dal.Managers
             return car;
         }
 
+        public List<string> GetAvailableCarBrands()
+        {
+            return _context.Cars.Select(c => c.Brand).Distinct().ToList();
+        }
+
         public List<CarDTO> GetCarsForCompany(int companyId)
         {
             return _context.Cars
@@ -90,14 +95,69 @@ namespace BMECars.Dal.Managers
             return true;
         }*/
 
+        
+
+        public ReservationInfoDTO GetReservationInfoForCar(int carId)
+        {
+            var reservationsForCar = _context.Cars
+                .Include(c => c.Reservations)
+                .Include("Reservations.DropDownLocation")
+                .Where(c => c.Id == carId)
+                .Select(c => new ReservationInfoDTO {
+                    CarId = c.Id,
+                    Reservations = c.Reservations.ToList()
+                })
+                .First();
+
+            int currentReservationId = GetCurrentReservationId(reservationsForCar.Reservations);
+
+            if(currentReservationId == 0)
+                reservationsForCar.AtClient = false;
+            else
+            {
+                reservationsForCar = _context.Reservations
+                                .Include(r => r.DropDownLocation)
+                                .Where(r => r.Id == currentReservationId)
+                                .Select(r => new ReservationInfoDTO
+                                {
+                                    CarId = reservationsForCar.CarId,
+                                    Reservations = reservationsForCar.Reservations,
+                                    CurrentReservationReturnDate = r.ReserveTo,
+                                    CurrentReservationReturnLocation = r.DropDownLocation,
+                                    AtClient = true
+                                })
+                                .First();
+
+                reservationsForCar.ClientEmail = _context
+                    .Reservations
+                    .Include(r => r.User)
+                    .Where(r => r.Id == currentReservationId).Select(r => r.User.Email).First();
+
+            }
+                
+            
+
+            return reservationsForCar;
+        }
+
+        private int GetCurrentReservationId (ICollection<Reservation> reservations)
+        {
+            foreach(Reservation r in reservations)
+            {
+                if(DateTime.Now < r.ReserveTo && DateTime.Now > r.ReserveFrom)
+                {
+                    return r.Id;
+                }
+            }
+            
+            return 0;
+        }
+
         private bool IsDateValid(DateTime dt)
         {
             return !(dt.Year == 1 && dt.Month == 1 && dt.Day == 1);
         }
 
-        public List<string> GetAvailableCarBrands()
-        {
-            return _context.Cars.Select(c => c.Brand).Distinct().ToList();
-        }
+        
     }
 }

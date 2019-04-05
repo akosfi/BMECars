@@ -1,0 +1,38 @@
+﻿
+#calendar{
+    width: 200px;
+    height: 200px;
+}
+
+.ui-datepicker-header {
+    position: relative;
+}
+
+.ui-datepicker-prev {
+
+    padding: 5px;
+    background: green;
+    color: white;
+    border-radius: 10%;
+}
+.ui-datepicker-next {
+    float: right;
+    padding: 5px;
+    background: green;
+    color: white;
+    border-radius: 10%;
+}
+.ui-datepicker-title{
+    text-align: center;
+}
+.ui-datepicker-calendar {
+    width: 100%;
+}
+.event {
+    background-color: #42B373 !important;
+}
+.event a {
+    background-image: none !important;
+    color: #ffffff !important;
+}
+
