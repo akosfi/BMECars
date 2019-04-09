@@ -15,35 +15,36 @@
     <table class="table">
         <thead>
             <tr>
+                <th scope="col"></th>
                 <th scope="col">Plate</th>
-                <th scope="col">Brand</th>
-                <th scope="col">Details</th>
-                <th scope="col">Return</th>
-                <th scope="col">Location</th>
-                <th scope="col">Usage</th>
-                <th scope="col">Modify</th>
-                <th scope="col">Return</th>
+                <th scope="col">Return(time + location)</th>
+                <th scope="col">Now at</th>
+                <th scope="col">Next reservation</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var car in Model.Cars)
             {
                 <tr>
-                    <th scope="row">
-                        @car.Plate
-                    </th>
                     <td>
-                        @car.Brand
-                    </td>
-                    <td>
-                        <a href="#" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">
-                            <img style="height: 20px; width: 20px;" src="/images/svg/si-glyph-gear.svg" />
+                        <a href="#">
+                            <img style="height: 20px; width: 20px;" src="~/images/svg/si-glyph-pencil.svg" />
+                        </a>
+                        <a href="#">
+                            <img style="height: 20px; width: 20px;" src="~/images/svg/si-glyph-trash.svg" />
+                        </a>
+                        <a onclick="setCalendarDates(@car.Id)" href="#" data-toggle="modal" data-target="#calendarModal">
+                            <img style="height: 20px; width: 20px;" src="/images/svg/si-glyph-calendar-3.svg" />
                         </a>
                     </td>
+                    <th scope="row">
+                        <a href="#">@car.Plate</a>
+                    </th>
                     <td>
                         @if (Model.ReservationInfo[car.Id].AtClient)
                         {
-                            @Model.ReservationInfo[car.Id].CurrentReservationReturnDate
+                            <p>@Model.ReservationInfo[car.Id].CurrentReservationReturnDate</p>
+                            <p>@Model.ReservationInfo[car.Id].CurrentReservationReturnLocation.Address (@Model.ReservationInfo[car.Id].CurrentReservationReturnLocation.Country, @Model.ReservationInfo[car.Id].CurrentReservationReturnLocation.City)</p>
                         }
                         else
                         {
@@ -53,27 +54,26 @@
                     <td>
                         @if (Model.ReservationInfo[car.Id].AtClient)
                         {
-                            <p>Now at: <a href="#">@Model.ReservationInfo[car.Id].ClientEmail</a></p>
+                            <p><a href="#">@Model.ReservationInfo[car.Id].ClientEmail</a></p>
                         }
                         else
                         {
-                            <span>Mi legyen a location?</span>
+                            @if (Model.ReservationInfo[car.Id].NowAt != null)
+                            {
+                                <p>@Model.ReservationInfo[car.Id].NowAt.Address (@Model.ReservationInfo[car.Id].NowAt.Country, @Model.ReservationInfo[car.Id].NowAt.City)</p>
+                            }
                         }
                     </td>
                     <td>
-                        <a onclick="setCalendarDates(@car.Id)" href="#" data-toggle="modal" data-target="#calendarModal">
-                            <img style="height: 20px; width: 20px;" src="/images/svg/si-glyph-calendar-3.svg" />
-                        </a>
-                    </td>
-                    <td>
-                        <a href="#">
-                            <img style="height: 20px; width: 20px;" src="/images/svg/si-glyph-gear.svg" />
-                        </a>
-                    </td>
-                    <td>
-                        <a href="#">
-                            <img style="height: 20px; width: 20px;" src="/images/svg/si-glyph-trash.svg" />
-                        </a>
+                        @if (@Model.ReservationInfo[car.Id].NextReservationPickUpLocation != null)
+                        {
+                            <p>@Model.ReservationInfo[car.Id].NextReservationStartDate</p>
+                            <p>@Model.ReservationInfo[car.Id].NextReservationPickUpLocation.Address (@Model.ReservationInfo[car.Id].NextReservationPickUpLocation.Country, @Model.ReservationInfo[car.Id].NextReservationPickUpLocation.City)</p>
+                        }
+                        else
+                        {
+                            <span>-</span>
+                        }
                     </td>
                 </tr>
             }

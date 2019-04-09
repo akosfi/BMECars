@@ -72,7 +72,7 @@ namespace BMECars.Dal.Managers
                 .Include(c => c.Reservations)
                 .Where(c => carsIdByDateAvailability.Contains(c.Id)
                             && (c.Reservations == null || c.Reservations.Count() == 0
-                            || dropDownLocationIds.Contains(GetLastDropDownLocationId(c.Reservations, queryCar))))
+                            || dropDownLocationIds.Contains(GetLastDropDownLocationIdFromDate(c.Reservations, queryCar))))
                 .Select(c => c.Id).ToList();
 
 
@@ -82,10 +82,55 @@ namespace BMECars.Dal.Managers
             
         }
 
+        public ReservationInfoDTO GetReservationInfoForCar(int carId)
+        {
+            var reservationsForCar = new ReservationInfoDTO { CarId = carId };
 
+            int currentReservationId = GetCurrentReservationId(carId);
+            int nextReservationId = GetNextReservationId(carId, currentReservationId);
 
+            if (currentReservationId == 0)
+            {
+                reservationsForCar.AtClient = false;
+                reservationsForCar.NowAt = _context.Reservations.Include(r => r.DropDownLocation)
+                                .Where(r => r.CarId == carId)
+                                .OrderBy(r => Math.Abs((DateTime.Now - r.ReserveTo).TotalDays))
+                                .Select(r => r.DropDownLocation)
+                                .FirstOrDefault();
+            }                
 
-        private Expression<Func<Car, bool>> predicate = c => c.Reservations.Any();
+            if (currentReservationId != 0)
+            {
+                Reservation current = _context.Reservations
+                                .Include(r => r.DropDownLocation)
+                                .Where(r => r.Id == currentReservationId)
+                                .First();
+
+                reservationsForCar.CurrentReservationReturnDate = current.ReserveTo;
+                reservationsForCar.CurrentReservationReturnLocation = current.DropDownLocation;
+
+                reservationsForCar.AtClient = true;
+                reservationsForCar.ClientEmail = _context
+                                .Reservations
+                                .Include(r => r.User)
+                                .Where(r => r.Id == currentReservationId).Select(r => r.User.Email).First();
+            }
+
+            if(nextReservationId != 0)
+            {
+                Reservation next = _context
+                                .Reservations
+                                .Include(r => r.PickUpLocation)
+                                .Where(r => r.Id == nextReservationId)
+                                .First();
+
+                reservationsForCar.NextReservationStartDate = next.ReserveFrom;
+                reservationsForCar.NextReservationPickUpLocation = next.PickUpLocation;
+            }
+            
+            return reservationsForCar;
+        }
+
 
         private bool CheckDateAvailability(ICollection<Reservation> reservations, SearchDTO queryCar)
         {
@@ -99,68 +144,36 @@ namespace BMECars.Dal.Managers
                                         .Any();
         }
 
-
-        private int GetLastDropDownLocationId(ICollection<Reservation> reservations, SearchDTO queryCar)
+        private int GetLastDropDownLocationIdFromDate(ICollection<Reservation> reservations, SearchDTO queryCar)
         {
             return reservations
                 .OrderBy(r => Math.Abs((queryCar.ReserveFrom - r.ReserveTo).TotalDays))
                 .First()
                 .DropDownLocationId;
-        }        
-
-        public ReservationInfoDTO GetReservationInfoForCar(int carId)
-        {
-            var reservationsForCar = _context.Cars
-                .Include(c => c.Reservations)
-                .Include("Reservations.DropDownLocation")
-                .Where(c => c.Id == carId)
-                .Select(c => new ReservationInfoDTO {
-                    CarId = c.Id,
-                    Reservations = c.Reservations.ToList()
-                })
-                .First();
-
-            int currentReservationId = GetCurrentReservationId(reservationsForCar.Reservations);
-
-            if(currentReservationId == 0)
-                reservationsForCar.AtClient = false;
-            else
-            {
-                reservationsForCar = _context.Reservations
-                                .Include(r => r.DropDownLocation)
-                                .Where(r => r.Id == currentReservationId)
-                                .Select(r => new ReservationInfoDTO
-                                {
-                                    CarId = reservationsForCar.CarId,
-                                    Reservations = reservationsForCar.Reservations,
-                                    CurrentReservationReturnDate = r.ReserveTo,
-                                    CurrentReservationReturnLocation = r.DropDownLocation,
-                                    AtClient = true
-                                })
-                                .First();
-
-                reservationsForCar.ClientEmail = _context
-                    .Reservations
-                    .Include(r => r.User)
-                    .Where(r => r.Id == currentReservationId).Select(r => r.User.Email).First();
-
-            }
-                
-            
-
-            return reservationsForCar;
         }
 
-        private int GetCurrentReservationId (ICollection<Reservation> reservations)
+        private int GetCurrentReservationId(int carId)
         {
-            foreach(Reservation r in reservations)
-            {
-                if(DateTime.Now < r.ReserveTo && DateTime.Now > r.ReserveFrom)
-                {
-                    return r.Id;
-                }
-            }
-            
+            Reservation reservation = _context
+                .Reservations
+                .Where(r => r.CarId == carId && DateTime.Now < r.ReserveTo && DateTime.Now > r.ReserveFrom)
+                .FirstOrDefault();
+
+            if (reservation != null) return reservation.Id;
+
+            return 0;
+        }
+
+        private int GetNextReservationId(int carId, int currentReservationId)
+        {
+            Reservation reservation = _context
+                .Reservations
+                .Where(r => r.CarId == carId && r.Id != currentReservationId && r.ReserveFrom > DateTime.Now)
+                .OrderBy(r => DateTime.Now - r.ReserveFrom)
+                .FirstOrDefault();
+
+            if (reservation != null) return reservation.Id;
+
             return 0;
         }
 
@@ -169,6 +182,5 @@ namespace BMECars.Dal.Managers
             return !(dt.Year == 1 && dt.Month == 1 && dt.Day == 1);
         }
 
-        
     }
 }

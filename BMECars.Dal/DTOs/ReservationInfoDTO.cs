@@ -12,6 +12,8 @@ namespace BMECars.Dal.DTOs
         public string ClientEmail { get; set; }
         public DateTime? CurrentReservationReturnDate { get; set; }
         public Location CurrentReservationReturnLocation { get; set; }
-        public List<Reservation> Reservations { get; set; }
+        public DateTime? NextReservationStartDate { get; set; }
+        public Location NextReservationPickUpLocation { get; set; }
+        public Location NowAt { get; set; }
     }
 }
