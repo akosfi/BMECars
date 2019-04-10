@@ -7,6 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using BMECars.Dal;
 using BMECars.Dal.Managers;
+using BMECars.Dal.Entities;
+using BMECars.Dal.EntityConfigurations;
+using System;
+using BMECars.Dal.SeedService;
 
 namespace BMECars.Web
 {
@@ -29,6 +33,20 @@ namespace BMECars.Web
             services.AddTransient<ICarManager, CarManager>();
             services.AddTransient<ILocationManager, LocationManager>();
             services.AddTransient<ICompanyManager, CompanyManager>();
+
+            services.AddScoped<IEntityTypeConfiguration<Company>, CompanyEntityConfiguration>()
+                .AddScoped(provider => new Lazy<IEntityTypeConfiguration<Company>>(() => provider.GetService<IEntityTypeConfiguration<Company>>()))
+                .AddScoped<IEntityTypeConfiguration<Car>, CarEntityConfiguration>()
+                .AddScoped(provider => new Lazy<IEntityTypeConfiguration<Car>>(() => provider.GetService<IEntityTypeConfiguration<Car>>()))
+                .AddScoped<IEntityTypeConfiguration<Location>, LocationEntityConfiguration>()
+                .AddScoped(provider => new Lazy<IEntityTypeConfiguration<Location>>(() => provider.GetService<IEntityTypeConfiguration<Location>>()))
+                .AddScoped<IEntityTypeConfiguration<User>, UserEntityConfiguration>()
+                .AddScoped(provider => new Lazy<IEntityTypeConfiguration<User>>(() => provider.GetService<IEntityTypeConfiguration<User>>()))
+                .AddScoped<IEntityTypeConfiguration<Reservation>, ReservationEntityConfiguration>()
+                .AddScoped(provider => new Lazy<IEntityTypeConfiguration<Reservation>>(() => provider.GetService<IEntityTypeConfiguration<Reservation>>())); ;
+
+            services.AddScoped<ISeedService, SeedService>()
+                .AddScoped(provider => new Lazy<ISeedService>(() => provider.GetService<ISeedService>()));
 
             services.Configure<CookiePolicyOptions>(options =>
             {

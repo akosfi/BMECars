@@ -10,7 +10,27 @@ namespace BMECars.Dal
 {
     public class BMECarsDbContext : IdentityDbContext<User>
     {
-        public BMECarsDbContext(DbContextOptions options) : base(options) { }
+        private readonly Lazy<IEntityTypeConfiguration<User>> _userConfiguration;
+        private readonly Lazy<IEntityTypeConfiguration<Company>> _companyConfiguration;
+        private readonly Lazy<IEntityTypeConfiguration<Location>> _locationConfiguration;
+        private readonly Lazy<IEntityTypeConfiguration<Car>> _carConfiguration;
+        private readonly Lazy<IEntityTypeConfiguration<Reservation>> _reservationConfiguration;
+
+        public BMECarsDbContext(
+            DbContextOptions options,
+            Lazy<IEntityTypeConfiguration<User>> userConfiguration,
+            Lazy<IEntityTypeConfiguration<Company>> companyConfiguration,
+            Lazy<IEntityTypeConfiguration<Location>> locationConfiguration,
+            Lazy<IEntityTypeConfiguration<Car>> carConfiguration,
+            Lazy<IEntityTypeConfiguration<Reservation>> reservationConfiguration
+            ) : base(options)
+        {
+            _userConfiguration = userConfiguration;
+            _companyConfiguration = companyConfiguration;
+            _locationConfiguration = locationConfiguration;
+            _carConfiguration = carConfiguration;
+            _reservationConfiguration = reservationConfiguration;
+        }
 
         public DbSet<Car> Cars { get; set; }
         public DbSet<Company> Companies { get; set; }
@@ -41,8 +61,13 @@ namespace BMECars.Dal
 
 
             //Seed
-            
-            modelBuilder.Entity<Company>().HasData(new Company { Id = 1, Name = "Bardi auto", UserId = "fbc5fe4c-7f97-4969-9937-23a191322bfd" });
+            modelBuilder.ApplyConfiguration(_userConfiguration.Value);
+            modelBuilder.ApplyConfiguration(_companyConfiguration.Value);
+            modelBuilder.ApplyConfiguration(_locationConfiguration.Value);
+            modelBuilder.ApplyConfiguration(_carConfiguration.Value);
+            modelBuilder.ApplyConfiguration(_reservationConfiguration.Value);
+
+            /*modelBuilder.Entity<Company>().HasData(new Company { Id = 1, Name = "Bardi auto", UserId = "fbc5fe4c-7f97-4969-9937-23a191322bfd" });
             modelBuilder.Entity<Company>().HasData(new Company { Id = 2, Name = "Top Cars", UserId = "fbc5fe4c-7f97-4969-9937-23a191322bfd" });
             modelBuilder.Entity<Company>().HasData(new Company { Id = 3, Name = "EuroCar", UserId = "fbc5fe4c-7f97-4969-9937-23a191322bfd" });
             modelBuilder.Entity<Company>().HasData(new Company { Id = 4, Name = "MyWay", UserId = "fbc5fe4c-7f97-4969-9937-23a191322bfd" });
@@ -62,7 +87,7 @@ namespace BMECars.Dal
             modelBuilder.Entity<Car>().HasData(new Car { Id = 11, Brand = "Toyota", Bag = 4, Category = Category.Crossover, Climate = false, Door = 2, Price = 15900, Seat = 2, IsFuelFull = true, Transmission = Transmission.Manual, Year = 2015, CompanyId = 4, PickUpLocationId = 1 });
             modelBuilder.Entity<Car>().HasData(new Car { Id = 12, Brand = "Toyota", Bag = 3, Category = Category.MPV, Climate = true, Door = 12, Price = 150000, Seat = 2, IsFuelFull = false, Transmission = Transmission.Manual, Year = 2016, CompanyId = 4, PickUpLocationId = 1 });
 
-            
+            */
 
             base.OnModelCreating(modelBuilder);
         }

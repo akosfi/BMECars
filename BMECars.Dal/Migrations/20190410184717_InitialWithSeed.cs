@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BMECars.Dal.Migrations
 {
-    public partial class initial : Migration
+    public partial class InitialWithSeed : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -275,6 +275,7 @@ namespace BMECars.Dal.Migrations
                     Brand = table.Column<string>(nullable: true),
                     Image = table.Column<string>(nullable: true),
                     Price = table.Column<int>(nullable: false),
+                    Plate = table.Column<string>(nullable: true),
                     Year = table.Column<int>(nullable: false),
                     Seat = table.Column<int>(nullable: false),
                     Bag = table.Column<int>(nullable: false),
@@ -371,6 +372,56 @@ namespace BMECars.Dal.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "BirthDate", "ConcurrencyStamp", "Email", "EmailConfirmed", "FullName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "Password", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "fbc5fe4c-7f97-4969-9937-23a191322bfd", 0, new DateTime(1997, 11, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "c1992773-b941-40af-87f3-9991892bae19", "fiakos1997@gmail.com", false, "Ákos Fi", true, null, "FIAKOS1997@GMAIL.COM", "FIAKOS1997@GMAIL.COM", null, "AQAAAAEAACcQAAAAEHEccHu8dGLfeafq8WjGtG0F8F0LB9v0VOgzHkOmHawqpk6CECLVSzW4KrnZshyddQ==", "+232323232", false, "GKE4DV6AXE77LQKJ46VVDCQBJFO63FKT", false, "fiakos1997@gmail.com" });
+
+            migrationBuilder.InsertData(
+                table: "Companies",
+                columns: new[] { "Id", "Name", "UserId" },
+                values: new object[] { 1, "Avis Cars", "fbc5fe4c-7f97-4969-9937-23a191322bfd" });
+
+            migrationBuilder.InsertData(
+                table: "Companies",
+                columns: new[] { "Id", "Name", "UserId" },
+                values: new object[] { 2, "Bárdi Autó", "fbc5fe4c-7f97-4969-9937-23a191322bfd" });
+
+            migrationBuilder.InsertData(
+                table: "Locations",
+                columns: new[] { "Id", "Address", "City", "CompanyId", "Country", "IsGlobal" },
+                values: new object[] { 1, "Ferihegy Repülőtér", "Budapest", 1, "Hungary", true });
+
+            migrationBuilder.InsertData(
+                table: "Locations",
+                columns: new[] { "Id", "Address", "City", "CompanyId", "Country", "IsGlobal" },
+                values: new object[] { 2, "Vasútállomás", "Gyor", 2, "Hungary", true });
+
+            migrationBuilder.InsertData(
+                table: "Cars",
+                columns: new[] { "Id", "Bag", "Brand", "Category", "Climate", "CompanyId", "Door", "Image", "IsFuelFull", "PickUpLocationId", "Plate", "Price", "Seat", "Transmission", "Year" },
+                values: new object[] { 1, 2, "Audi", 5, true, 1, 2, null, true, 1, "MBD-234", 10000, 2, 0, 2018 });
+
+            migrationBuilder.InsertData(
+                table: "Cars",
+                columns: new[] { "Id", "Bag", "Brand", "Category", "Climate", "CompanyId", "Door", "Image", "IsFuelFull", "PickUpLocationId", "Plate", "Price", "Seat", "Transmission", "Year" },
+                values: new object[] { 2, 3, "BMW", 3, true, 1, 4, null, true, 1, "XAD-113", 15000, 5, 0, 2019 });
+
+            migrationBuilder.InsertData(
+                table: "Cars",
+                columns: new[] { "Id", "Bag", "Brand", "Category", "Climate", "CompanyId", "Door", "Image", "IsFuelFull", "PickUpLocationId", "Plate", "Price", "Seat", "Transmission", "Year" },
+                values: new object[] { 3, 5, "Toyota", 2, true, 2, 6, null, false, 2, "AEF-532", 6000, 7, 1, 2006 });
+
+            migrationBuilder.InsertData(
+                table: "Reservations",
+                columns: new[] { "Id", "CarId", "DropDownLocationId", "PickUpLocationId", "ReservationPrice", "ReserveFrom", "ReserveTo", "UserId" },
+                values: new object[] { 1, 1, 1, 1, 10000, new DateTime(2019, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2019, 4, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), "fbc5fe4c-7f97-4969-9937-23a191322bfd" });
+
+            migrationBuilder.InsertData(
+                table: "Reservations",
+                columns: new[] { "Id", "CarId", "DropDownLocationId", "PickUpLocationId", "ReservationPrice", "ReserveFrom", "ReserveTo", "UserId" },
+                values: new object[] { 2, 1, 1, 1, 10000, new DateTime(2019, 4, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2019, 4, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "fbc5fe4c-7f97-4969-9937-23a191322bfd" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
