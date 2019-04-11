@@ -61,21 +61,37 @@ namespace BMECars.Dal.Managers
                 .Select(c=>c.Id).ToList();
             
             if ((!String.IsNullOrEmpty(queryCar.CountryPickUp) || !String.IsNullOrEmpty(queryCar.CityPickUp) || !String.IsNullOrEmpty(queryCar.LocationPickUp)) && IsDateValid(queryCar.ReserveFrom)) {
-                List<int> dropDownLocationIds = _context.Locations
+                List<int> availableLocationIdsByUser = _context.Locations
                     .Where(l => (String.IsNullOrEmpty(queryCar.CountryPickUp) || l.Country == queryCar.CountryPickUp)
                                 && (String.IsNullOrEmpty(queryCar.CityPickUp) || l.City == queryCar.CityPickUp)
                                 && (String.IsNullOrEmpty(queryCar.LocationPickUp) || l.Address == queryCar.LocationPickUp))
                     .Select(c => c.Id).ToList();
 
 
-                List<int> carsIdByLocationAvailability = _context.Cars
-                .Include(c => c.Reservations)
-                .Where(c => carsIdByDateAvailability.Contains(c.Id)
-                            && (c.Reservations == null || c.Reservations.Count() == 0
-                            || dropDownLocationIds.Contains(GetLastDropDownLocationIdFromDate(c.Reservations, queryCar))))
-                .Select(c => c.Id).ToList();
+                var carsByLocationAvailability = _context.Cars
+                    .Include(c => c.Reservations)
+                    .Select(c => new
+                    {
+                        c.Id,
+                        c.Reservations,
+                        c.PickUpLocationId
+                    });
+                List<int> carsIdByLocationAvailability = new List<int>();
 
-
+                foreach (var car in carsByLocationAvailability)
+                {
+                    //if car has no reservation, check if the default pickuplocation is ok for user
+                    if(car.Reservations == null || car.Reservations.Count() == 0)
+                    {
+                        if (availableLocationIdsByUser.Contains(car.PickUpLocationId))
+                            carsIdByLocationAvailability.Add(car.Id);
+                    }
+                    //if car has reservation, check if last dropdown before user reservation is ok for user
+                    else
+                    {
+                        availableLocationIdsByUser.Contains(GetLastDropDownLocationIdFromDate(car.Reservations, queryCar));
+                    }
+                }
                 return _context.Cars.Where(c => carsIdByLocationAvailability.Contains(c.Id)).Select(CarDTO.Selector).ToList();
             }
             return _context.Cars.Where(c => carsIdByDateAvailability.Contains(c.Id)).Select(CarDTO.Selector).ToList();
@@ -148,7 +164,7 @@ namespace BMECars.Dal.Managers
         {
             return reservations
                 .OrderBy(r => Math.Abs((queryCar.ReserveFrom - r.ReserveTo).TotalDays))
-                .First()
+                .FirstOrDefault()
                 .DropDownLocationId;
         }
 

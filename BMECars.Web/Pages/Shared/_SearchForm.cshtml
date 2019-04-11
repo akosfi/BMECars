@@ -10,8 +10,8 @@
     <div class="row">
         <div class="col-md-2 form-group">
             <label for="country">Country</label>
-            <select name="CountryPickUp" class="form-control" id="country" onchange="onPickUpCountrySelect(this);">
-                <option selected disabled="disabled">Choose Country</option>
+            <select name="CountryPickUp" required class="form-control" id="country" onchange="onPickUpCountrySelect(this);">
+                <option value="" selected disabled="disabled">Choose Country</option>
                 @foreach (string c in (List<String>)ViewData["Countries"])
                 {
                     if (c == Model.CountryPickUp)
@@ -27,23 +27,23 @@
         </div>
         <div class="col-md-2 form-group">
             <label for="city">City</label>
-            <select name="CityPickUp" class="form-control" id="city" onchange="onPickUpCitySelect(this);">
+            <select disabled name="CityPickUp" required class="form-control" id="city" onchange="onPickUpCitySelect(this);">
                 <option selected disabled="disabled">Choose City</option>
             </select>
         </div>
         <div class="col-md-2 form-group">
             <label for="location">Location</label>
-            <select name="LocationPickUp" class="form-control" id="location">
+            <select disabled name="LocationPickUp" class="form-control" id="location">
                 <option selected disabled="disabled">Choose Location</option>
             </select>
         </div>
         <div class="col-md-2 form-group">
             <label for="reservefrom">Pick Up</label>
-            <input name="ReserveFrom" type="date" class="form-control" id="reservefrom">
+            <input name="ReserveFrom" required type="date" class="form-control" id="reservefrom">
         </div>
         <div class="col-md-2 form-group">
             <label for="reserveto">Drop Down</label>
-            <input name="ReserveTo" type="date" class="form-control" id="reserveto">
+            <input name="ReserveTo" required type="date" class="form-control" id="reserveto">
         </div>
         <div class="col-md-2 form-group">
             <label for="submitbtn"></label>
