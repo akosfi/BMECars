@@ -1,35 +1,59 @@
-﻿
+﻿/*#calendarholder{
+}
 #calendar{
     width: 200px;
     height: 200px;
-}
+    margin: 0 auto;
 
+}
+    */
 .ui-datepicker-header {
     position: relative;
+    height: 80px;
+    width: 100%;
 }
-
-.ui-datepicker-prev {
-
-    padding: 5px;
+.ui-datepicker-prev, .ui-datepicker-next {
+    padding: 10px;
     background: green;
     color: white;
     border-radius: 10%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
 }
-.ui-datepicker-next {
-    float: right;
-    padding: 5px;
-    background: green;
+.ui-datepicker-prev span, .ui-datepicker-next span {
+    font-size: 18px;
     color: white;
-    border-radius: 10%;
 }
-.ui-datepicker-title{
+.ui-datepicker-prev {    
+    left: 0;
+}
+
+.ui-datepicker-next {    
+    right: 0;
+}
+
+.ui-datepicker-title {
     text-align: center;
+    height: 80px;
+    line-height: 80px;
+    font-size: 20px;
 }
 .ui-datepicker-calendar {
     width: 100%;
 }
+.ui-datepicker-calendar td {
+    text-align: center;
+    padding: 5px 0px;
+}
+.ui-datepicker-calendar th {
+    text-align: center;
+    padding: 10px 0px;
+    font-size: 20px;
+}
 .event {
-    background-color: #42B373 !important;
+    background-color: #42B373 !important;    
 }
 .event a {
     background-image: none !important;

@@ -32,7 +32,8 @@
                     } else {
                         return [true, '', ''];
                     }
-                }
+                },
+                dayNamesMin: ["V", "H", "K", "SZe", "CS", "P", "SZo"]
             });
         });
 }
