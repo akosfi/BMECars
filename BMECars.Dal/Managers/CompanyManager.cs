@@ -4,6 +4,8 @@ using System.Text;
 using BMECars.Dal.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using BMECars.Dal.Entities;
+using System.Threading.Tasks;
 
 namespace BMECars.Dal.Managers
 {
@@ -16,7 +18,7 @@ namespace BMECars.Dal.Managers
             
         }
 
-        public CompanyHeaderDTO GetCompany(int companyId)
+        public CompanyHeaderDTO GetCompanyHeader(int companyId)
         {
             return _context.Companies
                 .Where(c => c.Id == companyId)
@@ -26,6 +28,13 @@ namespace BMECars.Dal.Managers
                     UserId = c.UserId
                 })
                 .First();
+        }
+
+        public async Task<Company> GetCompany(int companyId)
+        {
+            return await _context.Companies
+                .Where(c => c.Id == companyId)
+                .FirstOrDefaultAsync();
         }
 
         public List<CompanyHeaderDTO> GetCompaniesForUser(string userID)

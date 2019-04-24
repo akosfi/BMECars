@@ -1,6 +1,6 @@
 ﻿@using BMECars.Dal.Managers
 @inject ILocationManager _locationManager
-@inject ICarManager _carManager;
+@inject ICarManager _carManager
 @{ 
     ViewData["Countries"] = _locationManager.GetAvailableCountries();
     ViewData["CarBrands"] = _carManager.GetAvailableCarBrands();

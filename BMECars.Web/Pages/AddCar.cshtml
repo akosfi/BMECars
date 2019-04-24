@@ -1,0 +1,138 @@
+﻿@page
+@model BMECars.Web.Pages.AddCarModel
+@using BMECars.Dal.DTOs
+@using BMECars.Dal.Entities
+@{
+    ViewData["Title"] = "AddCar";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h2 style="padding: 25px 0px;">Add New Cars</h2>
+<form method="post">
+    <div class="row">
+        <div class="col-lg-6">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.Brand">Brand</label>
+                        <select asp-for="InputCar.Brand" asp-items="Model.AllCarBrandList" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.Price">Price</label>
+                        <input asp-for="InputCar.Price" class="form-control">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.Category">Category</label>
+                        <select asp-for="InputCar.Category" asp-items="Model.AvailableCategories" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.Seat">Seat</label>
+                        <input asp-for="InputCar.Seat" type="number" min="2" class="form-control">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.Bag">Bags</label>
+                        <input asp-for="InputCar.Bag" type="number" min="1" class="form-control" placeholder="Enter bags">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.Transmission">Transmission</label>
+                        <select asp-for="InputCar.Transmission" class="form-control">
+                            <option value="">All</option>
+                            <option value="Automatic">Automatic</option>
+                            <option value="Manual">Manual</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.IsFuelFull">Gas</label>
+                        <select asp-for="InputCar.IsFuelFull" class="form-control">
+                            <option value="" selected>All</option>
+                            <option value="true">Full</option>
+                            <option value="false">Empty</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.Year">Year</label>
+                        <input asp-for="InputCar.Year" type="number" min="1990" max="2019" class="form-control" placeholder="Enter year">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div name="door" class="form-group">
+                        <label asp-for="InputCar.Door">Door</label>
+                        <input asp-for="InputCar.Door" type="number" min="2" class="form-control" id="door" placeholder="Enter doors">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.Climate">Climate</label>
+                        <select asp-for="InputCar.Climate" class="form-control" id="climate">
+                            <option value="">All</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label for="customFile">Car Picture</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.CompanyId">Company</label>
+                        <select asp-for="InputCar.CompanyId" class="form-control" asp-items="Model.CompaniesForUser">
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="row" style="padding-bottom: 10px;">
+                <div class="col-6 col-md-3"><b>Plate</b></div>
+                <div class="col-6 col-md-3"><b>Country</b></div>
+                <div class="col-6 col-md-3"><b>City</b></div>
+                <div class="col-6 col-md-3"><b>Pick-Up</b></div>
+            </div>
+            <div id="inputGroupContainer">
+                <div class="inputGroup row" name="inputGroup0">
+                    <div class="col-6 col-md-3">
+                        <input type="text" class="form-control" name="inviduals[0].Plate">
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <select id="countrySelect0" name="inviduals[0].Country" class="form-control" asp-items="Model.AllCountries">
+                        </select>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <select name="inviduals[0].City" class="form-control"><option value="Teszt">Teszt</option></select>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <select name="inviduals[0].PickUp" class="form-control"><option value="Teszt">Teszt</option></select>
+                    </div>
+                </div>
+            </div>
+
+            <span class="btn btn-success" onclick="AddNewCarInvidualFields()">Add</span>
+            <input type="submit" class="btn btn-success float-right" value="Submit" />
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+
+</form>

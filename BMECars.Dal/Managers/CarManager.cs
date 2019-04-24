@@ -3,8 +3,10 @@ using BMECars.Dal.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace BMECars.Dal.Managers
 {
@@ -30,6 +32,15 @@ namespace BMECars.Dal.Managers
         public List<string> GetAvailableCarBrands()
         {
             return _context.Cars.Select(c => c.Brand).Distinct().ToList();
+        }
+
+        public async Task<List<string>> GetAllCarBrands()
+        {
+            using (var reader = File.OpenText("../BMECars.DAL/Static/CarBrandList.txt"))
+            {
+                var fileText = await reader.ReadToEndAsync();
+                return fileText.Split('\n').Select(p => p.Trim()).ToList();
+            }
         }
 
         public List<CarDTO> GetCarsForCompany(int companyId)
@@ -147,6 +158,11 @@ namespace BMECars.Dal.Managers
             return reservationsForCar;
         }
 
+        public async Task AddNewCarAsync(Car c)
+        {
+            await _context.Cars.AddAsync(c);
+            await _context.SaveChangesAsync();
+        }
 
         private bool CheckDateAvailability(ICollection<Reservation> reservations, SearchDTO queryCar)
         {

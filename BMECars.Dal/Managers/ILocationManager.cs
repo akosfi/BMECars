@@ -6,7 +6,9 @@ namespace BMECars.Dal.Managers
 {
     public interface ILocationManager
     {
-        List<String> GetAvailableCountries();
+        List<string> GetAvailableCountries();
+
+        List<string> GetAllCountries();
 
         List<string> GetAvailableCities(string qCountry);
 

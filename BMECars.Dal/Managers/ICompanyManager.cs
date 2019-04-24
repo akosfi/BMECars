@@ -1,7 +1,9 @@
 ﻿using BMECars.Dal.DTOs;
+using BMECars.Dal.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BMECars.Dal.Managers
 {
@@ -9,6 +11,8 @@ namespace BMECars.Dal.Managers
     {
         List<CompanyHeaderDTO> GetCompaniesForUser(string userID);
 
-        CompanyHeaderDTO GetCompany(int companyId);
+        CompanyHeaderDTO GetCompanyHeader(int companyId);
+
+        Task<Company> GetCompany(int companyId);
     }
 }

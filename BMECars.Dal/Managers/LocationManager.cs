@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -13,11 +14,22 @@ namespace BMECars.Dal.Managers
             _context = BMECarsDbContext;
         }
 
+
+
         public List<string> GetAvailableCountries()
         {
             return _context.Locations.Select(l => l.Country).Distinct().ToList();
         }
 
+        public List<string> GetAllCountries()
+        {
+            using (var reader = File.OpenText("../BMECars.DAL/Static/CountryList.txt"))
+            {
+                var fileText = reader.ReadToEnd();
+                return fileText.Split('\n').Select(p => p.Trim()).ToList();
+            }
+        }
+        
         public List<string> GetAvailableCities(string qCountry)
         {
             return _context.Locations

@@ -17,8 +17,12 @@ namespace BMECars.Dal.Managers
 
         List<string> GetAvailableCarBrands();
 
+        Task<List<string>> GetAllCarBrands();
+
         List<CarDTO> GetCarsForCompany(int companyId);
 
         ReservationInfoDTO GetReservationInfoForCar(int carId);
+
+        Task AddNewCarAsync(Car c);
     }
 }

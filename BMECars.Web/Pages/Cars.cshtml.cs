@@ -26,7 +26,7 @@ namespace BMECars.Web.Pages
         public void OnGet(int companyId)
         {
             Cars = _carManager.GetCarsForCompany(companyId);
-            Company = _companyManager.GetCompany(companyId);
+            Company = _companyManager.GetCompanyHeader(companyId);
 
             foreach(var car in Cars)
             {
