@@ -8,7 +8,7 @@
 }
 
 <h2 style="padding: 25px 0px;">Add New Cars</h2>
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <div class="row">
         <div class="col-lg-6">
             <div asp-validation-summary="All" class="text-danger"></div>
@@ -89,8 +89,8 @@
                 </div>
                 <div class="col-6">
                     <label for="customFile">Car Picture</label>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="customFile">
+                    <div>
+                        <input type="file" asp-for="ImageOfCar" required>
                         <label class="custom-file-label" for="customFile">Choose file</label>
                     </div>
                 </div>

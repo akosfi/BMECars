@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BMECars.Dal.DTOs;
 using BMECars.Dal.Entities;
 using BMECars.Dal.Managers;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -22,22 +25,29 @@ namespace BMECars.Web.Pages
 
         [BindProperty]
         public InputCar InputCar { get; set; }
+        [BindProperty]
+        public IFormFile ImageOfCar { get; set; }
+
 
         ICarManager carManager;
         ICompanyManager companyManager;
         UserManager<User> userManager;
         ILocationManager locationManager;
 
+        private IHostingEnvironment environment;
+
         public AddCarModel(
             ICarManager _carManager, 
             UserManager<User> _userManager, 
             ICompanyManager _companyManager,
-            ILocationManager _locationManager)
+            ILocationManager _locationManager,
+            IHostingEnvironment _environment)
         {
             carManager = _carManager;
             userManager = _userManager;
             companyManager = _companyManager;
             locationManager = _locationManager;
+            environment = _environment;
         }
 
         public async void OnGet() {
@@ -68,6 +78,12 @@ namespace BMECars.Web.Pages
 
         public async Task<IActionResult> OnPostAsync(IList<CarInvidual> inviduals)
         {
+            var file = Path.Combine("uploads", ImageOfCar.FileName);
+            using (var fileStream = new FileStream(Path.Combine(environment.ContentRootPath, "wwwroot\\", file), FileMode.Create))
+            {
+                await ImageOfCar.CopyToAsync(fileStream);
+            }
+
             foreach (CarInvidual ci in inviduals)
             {
                 Console.WriteLine(ci.Plate);
@@ -86,6 +102,7 @@ namespace BMECars.Web.Pages
                     {
                         Brand = InputCar.Brand,
                         Price = (int)InputCar.Price,
+                        Image = file,
                         IsFuelFull = (bool)InputCar.IsFuelFull,
                         Seat = (int)InputCar.Seat,
                         Year = (int)InputCar.Year,
