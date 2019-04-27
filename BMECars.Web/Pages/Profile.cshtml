@@ -1,7 +1,9 @@
 ﻿@page
-@model IndexModel
-
-
+@model BMECars.Web.Pages.ProfileModel
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
 
 
 <div style="margin-top: 30px;">
@@ -48,7 +50,7 @@
                 <div class="col-3">
                     @company.Name
                 </div>
-                <div class="col-9">
+                <div class="col-9" style="text-align: right">
                     <a href="/cars/?companyId=@(company.Id)" class="btn btn-success">Cars</a>
                     <button class="btn btn-success">Admins</button>
                     <button class="btn btn-danger">Remove</button>
@@ -58,6 +60,3 @@
     </div>
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

@@ -27,9 +27,10 @@ namespace BMECars.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<BMECarsDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString(nameof(BMECarsDbContext))));
+            
+            services.AddDefaultIdentity<User>().AddEntityFrameworkStores<BMECarsDbContext>();
 
-            
-            
+
             services.AddTransient<ICarManager, CarManager>();
             services.AddTransient<ILocationManager, LocationManager>();
             services.AddTransient<ICompanyManager, CompanyManager>();
