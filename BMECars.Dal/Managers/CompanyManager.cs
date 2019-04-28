@@ -62,5 +62,14 @@ namespace BMECars.Dal.Managers
                     UserId = userID
                 }).ToList();
         }
+
+
+        public async Task AddAdminForCompany(int companyId, string userId)
+        {
+            await _context.CompanyAdmins
+                          .AddAsync(new CompanyAdmin { UserId = userId, CompanyId = companyId });
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

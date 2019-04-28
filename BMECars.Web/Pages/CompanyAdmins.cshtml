@@ -32,7 +32,8 @@
 <form class="form-inline"  method="post">
     <div class="form-group">
         <label style="margin-right: 20px;" for="emailInput">Email address</label>
-        <input style="margin-right: 20px;" type="email" class="form-control" id="emailInput" placeholder="name@example.com">
+        <input style="margin-right: 20px;" type="email" class="form-control" asp-for="EmailInput" placeholder="name@example.com">
+        <input type="hidden" value="@Model.Company.Id" name="companyId" />
         <input type="submit" value="Add" class="form-control btn btn-success" id="submitbtn">
     </div>
 </form>

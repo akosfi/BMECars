@@ -16,5 +16,7 @@ namespace BMECars.Dal.Managers
         Task<List<UserHeaderDTO>> GetCompanyAdmins(int companyId);
 
         Task<Company> GetCompany(int companyId);
+
+        Task AddAdminForCompany(int companyId, string userId);
     }
 }
