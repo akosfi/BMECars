@@ -1,0 +1,38 @@
+﻿@page
+@model BMECars.Web.Pages.CompanyAdminsModel
+@using BMECars.Dal.DTOs
+@{
+    ViewData["Title"] = "CompanyAdmins";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h2 style="padding-top: 30px">@Model.Company.Name 's Admins</h2>
+<div class="companyAdmins">
+    <div class="row">
+        <div class="col-3"><b>Email</b></div>
+        <div class="col-3"><b>Full Name</b></div>
+        <div class="col-3"><b>Phone Number</b></div>
+        <div class="col-3"></div>
+    </div>
+    @foreach (UserHeaderDTO u in Model.CompanyAdmins)
+    {
+        <div class="row">
+            <div class="col-3"><span>@u.Email</span></div>
+            <div class="col-3"><span>@u.FullName</span></div>
+            <div class="col-3"><span>@u.PhoneNumber</span></div>
+            <div class="col-3">
+                <button class="btn btn-danger float-right">Remove</button>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    }
+</div>
+
+<h2 style="padding-top: 30px">Add Admin</h2>
+<form class="form-inline"  method="post">
+    <div class="form-group">
+        <label style="margin-right: 20px;" for="emailInput">Email address</label>
+        <input style="margin-right: 20px;" type="email" class="form-control" id="emailInput" placeholder="name@example.com">
+        <input type="submit" value="Add" class="form-control btn btn-success" id="submitbtn">
+    </div>
+</form>

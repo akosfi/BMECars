@@ -23,10 +23,10 @@ namespace BMECars.Web.Pages
 
         public Dictionary<int, ReservationInfoDTO> ReservationInfo = new Dictionary<int, ReservationInfoDTO>();
 
-        public void OnGet(int companyId)
+        public async void OnGet(int companyId)
         {
             Cars = _carManager.GetCarsForCompany(companyId);
-            Company = _companyManager.GetCompanyHeader(companyId);
+            Company = await _companyManager.GetCompanyHeader(companyId);
 
             foreach(var car in Cars)
             {

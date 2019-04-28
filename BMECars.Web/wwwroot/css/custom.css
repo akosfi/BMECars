@@ -63,3 +63,19 @@
 .inputGroup{
     margin-top: 10px;
 }
+
+
+
+
+.companyAdmins {
+    padding-top: 20px;
+}
+.companyAdmins b{
+    font-size: 20px;
+}
+.companyAdmins span{
+    font-size: 18px;
+}
+.companyAdmins .row{
+    margin: 10px 0px;
+}

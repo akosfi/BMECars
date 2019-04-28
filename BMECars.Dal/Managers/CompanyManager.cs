@@ -18,16 +18,16 @@ namespace BMECars.Dal.Managers
             
         }
 
-        public CompanyHeaderDTO GetCompanyHeader(int companyId)
+        public async Task<CompanyHeaderDTO> GetCompanyHeader(int companyId)
         {
-            return _context.Companies
+            return await _context.Companies
                 .Where(c => c.Id == companyId)
                 .Select(c => new CompanyHeaderDTO {
                     Id = c.Id,
                     Name = c.Name,
                     UserId = c.UserId
                 })
-                .First();
+                .FirstOrDefaultAsync();
         }
 
         public async Task<Company> GetCompany(int companyId)
@@ -35,6 +35,20 @@ namespace BMECars.Dal.Managers
             return await _context.Companies
                 .Where(c => c.Id == companyId)
                 .FirstOrDefaultAsync();
+        }
+
+        
+        public async Task<List<UserHeaderDTO>> GetCompanyAdmins(int companyId)
+        {
+            return await _context.CompanyAdmins
+                                 .Include(c => c.User)
+                                 .Where(c => c.CompanyId == companyId)
+                                 .Select(u => new UserHeaderDTO {
+                                     Email = u.User.Email,
+                                     FullName = u.User.FullName,
+                                     PhoneNumber = u.User.PhoneNumber
+                                 })
+                                 .ToListAsync();
         }
 
         public List<CompanyHeaderDTO> GetCompaniesForUser(string userID)
