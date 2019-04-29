@@ -50,7 +50,7 @@ namespace BMECars.Web.Pages
             environment = _environment;
         }
 
-        public async void OnGet() {
+        public async Task OnGet() {
             User user = await userManager.GetUserAsync(HttpContext.User);
             CompaniesForUser = companyManager.GetCompaniesForUser(user.Id).Select(c => new SelectListItem
             {

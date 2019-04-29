@@ -18,6 +18,14 @@ namespace BMECars.Dal.Managers
             _context = BMECarsDbContext;
         }
 
+        public async Task<CarDTO> GetCar (int id)
+        {
+            return await _context.Cars
+                                 .Where(c => c.Id == id)
+                                 .Select(CarDTO.Selector)
+                                 .FirstOrDefaultAsync();
+        }
+
         public CarHeaderDTO GetCarHeader(int id)
         {
             var car = _context.Cars.Select(c => new CarHeaderDTO
@@ -116,7 +124,18 @@ namespace BMECars.Dal.Managers
             int currentReservationId = GetCurrentReservationId(carId);
             int nextReservationId = GetNextReservationId(carId, currentReservationId);
 
-            if (currentReservationId == 0)
+            int reservationCount = _context.Reservations.Where(r => r.CarId == carId).Count();
+            if(reservationCount == 0)
+            {
+                
+                reservationsForCar.AtClient = false;
+                reservationsForCar.NowAt = _context.Cars
+                                                   .Include(c => c.PickUpLocation)
+                                                   .Where(c => c.Id == carId)
+                                                   .Select(c => c.PickUpLocation)
+                                                   .FirstOrDefault();
+            }
+            else if (currentReservationId == 0)
             {
                 reservationsForCar.AtClient = false;
                 reservationsForCar.NowAt = _context.Reservations.Include(r => r.DropDownLocation)
@@ -125,8 +144,7 @@ namespace BMECars.Dal.Managers
                                 .Select(r => r.DropDownLocation)
                                 .FirstOrDefault();
             }                
-
-            if (currentReservationId != 0)
+            else if (currentReservationId != 0)
             {
                 Reservation current = _context.Reservations
                                 .Include(r => r.DropDownLocation)
@@ -163,6 +181,9 @@ namespace BMECars.Dal.Managers
             await _context.Cars.AddAsync(c);
             await _context.SaveChangesAsync();
         }
+
+
+
 
         private bool CheckDateAvailability(ICollection<Reservation> reservations, SearchDTO queryCar)
         {
