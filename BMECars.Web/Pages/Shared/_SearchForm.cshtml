@@ -6,11 +6,15 @@
     ViewData["CarBrands"] = _carManager.GetAvailableCarBrands();
 }
 
+<input hidden id="countrySelected" value="@Model.CountryPickUp" />
+<input hidden id="citySelected" value="@Model.CityPickUp" />
+<input hidden id="locationSelected" value="@Model.LocationPickUp" />
+
 <form method="get" action="/search" style="position: relative; padding: 50px 0px;">
     <div class="row">
         <div class="col-md-2 form-group">
             <label for="country">Country</label>
-            <select name="CountryPickUp" required class="form-control" id="country" onchange="onPickUpCountrySelect(this);">
+            <select name="CountryPickUp" required class="form-control" id="Country" onchange="onPickUpCountrySelect(this);">
                 <option value="" selected disabled="disabled">Choose Country</option>
                 @foreach (string c in (List<String>)ViewData["Countries"])
                 {
@@ -27,13 +31,13 @@
         </div>
         <div class="col-md-2 form-group">
             <label for="city">City</label>
-            <select disabled name="CityPickUp" required class="form-control" id="city" onchange="onPickUpCitySelect(this);">
+            <select disabled name="CityPickUp" required class="form-control" id="City" onchange="onPickUpCitySelect(this);">
                 <option selected disabled="disabled">Choose City</option>
             </select>
         </div>
         <div class="col-md-2 form-group">
             <label for="location">Location</label>
-            <select disabled name="LocationPickUp" class="form-control" id="location">
+            <select disabled name="LocationPickUp" class="form-control" id="Location">
                 <option selected disabled="disabled">Choose Location</option>
             </select>
         </div>
@@ -67,32 +71,24 @@
         <div class="row">
             <div class="col-sm-4 col-md-2 form-group">
                 <label for="dropcountry">Country</label>
-                <select name="CountryDropDown" class="form-control" id="dropcountry">
-                    <option selected disabled="disabled">Choose Country</option>
-                    <option value="volvo">Hungary</option>
-                    <option value="saab">Romania</option>
-                    <option value="mercedes">Albania</option>
-                    <option value="audi">Spain</option>
+                <select name="CountryDropDown" class="form-control" id="CountryDropDown" onchange="onDropDownCountrySelect(this);">
+                    <option value="" selected disabled="disabled">Choose Country</option>
+                    @foreach (string c in (List<String>)ViewData["Countries"])
+                    {                        
+                        <option value="@c">@c</option>                        
+                    }
                 </select>
             </div>
             <div class="col-sm-4 col-md-2 form-group">
                 <label for="dropcity">City</label>
-                <select name="CityDropDown" class="form-control" id="dropcity">
+                <select disabled name="CityDropDown" class="form-control" id="CityDropDown" onchange="onDropDownCitySelect(this);">
                     <option selected disabled="disabled">Choose City</option>
-                    <option value="volvo">Hungary</option>
-                    <option value="saab">Romania</option>
-                    <option value="mercedes">Albania</option>
-                    <option value="audi">Spain</option>
                 </select>
             </div>
             <div class="col-sm-4 col-md-2 form-group">
                 <label for="droplocation">Location</label>
-                <select name="LocationDropDown" class="form-control" id="droplocation">
+                <select disabled name="LocationDropDown" class="form-control" id="LocationDropDown">
                     <option selected disabled="disabled">Choose Location</option>
-                    <option value="volvo">Hungary</option>
-                    <option value="saab">Romania</option>
-                    <option value="mercedes">Albania</option>
-                    <option value="audi">Spain</option>
                 </select>
             </div>
         </div>
