@@ -79,42 +79,51 @@ namespace BMECars.Dal.Managers
                 .Where(c => carsIdByFilter.Contains(c.Id) && CheckDateAvailability(c.Reservations, queryCar))
                 .Select(c=>c.Id).ToList();
             
-            if ((!String.IsNullOrEmpty(queryCar.CountryPickUp) || !String.IsNullOrEmpty(queryCar.CityPickUp) || !String.IsNullOrEmpty(queryCar.LocationPickUp)) && IsDateValid(queryCar.ReserveFrom)) {
-                List<int> availableLocationIdsByUser = _context.Locations
-                    .Where(l => (String.IsNullOrEmpty(queryCar.CountryPickUp) || l.Country == queryCar.CountryPickUp)
-                                && (String.IsNullOrEmpty(queryCar.CityPickUp) || l.City == queryCar.CityPickUp)
-                                && (String.IsNullOrEmpty(queryCar.LocationPickUp) || l.Address == queryCar.LocationPickUp))
-                    .Select(c => c.Id).ToList();
+            
+            
+            List<int> availableLocationIdsByUser = _context.Locations
+                .Where(l => l.Country == queryCar.CountryPickUp
+                            && l.City == queryCar.CityPickUp
+                            && l.Address == queryCar.LocationPickUp)
+                .Select(c => c.Id).ToList();
 
 
-                var carsByLocationAvailability = _context.Cars
-                    .Include(c => c.Reservations)
-                    .Select(c => new
-                    {
-                        c.Id,
-                        c.Reservations,
-                        c.PickUpLocationId
-                    });
-                List<int> carsIdByLocationAvailability = new List<int>();
-
-                foreach (var car in carsByLocationAvailability)
+            var carsByLocationAvailability = _context.Cars
+                .Include(c => c.Reservations)
+                .Where(c => carsIdByDateAvailability.Contains(c.Id))
+                .Select(c => new
                 {
-                    //if car has no reservation, check if the default pickuplocation is ok for user
-                    if(car.Reservations == null || car.Reservations.Count() == 0)
+                    c.Id,
+                    c.Reservations,
+                    c.PickUpLocationId
+                });
+
+            
+
+            List<int> carsIdByLocationAvailability = new List<int>();
+
+            foreach (var car in carsByLocationAvailability)
+            {
+                //if car has no reservation, check if the default pickuplocation is ok for user
+                if(car.Reservations == null || car.Reservations.Count() == 0)
+                {
+                    if (availableLocationIdsByUser.Contains(car.PickUpLocationId))
+                        carsIdByLocationAvailability.Add(car.Id);
+                }
+                //if car has reservation, check if last dropdown before user reservation is ok for user
+                else
+                {
+                    if (availableLocationIdsByUser.Contains(GetLastDropDownLocationIdFromDate(car.Reservations, queryCar)))
                     {
-                        if (availableLocationIdsByUser.Contains(car.PickUpLocationId))
-                            carsIdByLocationAvailability.Add(car.Id);
-                    }
-                    //if car has reservation, check if last dropdown before user reservation is ok for user
-                    else
-                    {
-                        availableLocationIdsByUser.Contains(GetLastDropDownLocationIdFromDate(car.Reservations, queryCar));
+                        carsIdByLocationAvailability.Add(car.Id);
                     }
                 }
-                return _context.Cars.Where(c => carsIdByLocationAvailability.Contains(c.Id)).Select(CarDTO.Selector).ToList();
             }
-            return _context.Cars.Where(c => carsIdByDateAvailability.Contains(c.Id)).Select(CarDTO.Selector).ToList();
-            
+            foreach (int c in carsIdByLocationAvailability)
+            {
+                Console.WriteLine(c + "...........................");
+            }
+            return _context.Cars.Where(c => carsIdByLocationAvailability.Contains(c.Id)).Select(CarDTO.Selector).ToList();
         }
 
         public ReservationInfoDTO GetReservationInfoForCar(int carId)

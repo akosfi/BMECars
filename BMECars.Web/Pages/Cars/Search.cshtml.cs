@@ -31,9 +31,7 @@ namespace BMECars.Web.Pages.Cars
             Cars = carManager.GetCars(queryCar);
             PickUpLocation = await locationManager.GetLocationByAddress(queryCar.CountryPickUp, queryCar.CityPickUp, queryCar.LocationPickUp);
             DropDownLocation = await locationManager.GetLocationByAddress(queryCar.CountryDropDown, queryCar.CityDropDown, queryCar.LocationDropDown);
-
-            Console.WriteLine("++++++++++++++++++++++++"+(new DateTime()).ToString());
-
+            
             if (DropDownLocation == null)
                 DropDownLocation = PickUpLocation;
         }

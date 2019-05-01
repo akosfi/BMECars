@@ -16,8 +16,7 @@
                 <div class="col-6">
                     <div class="form-group">
                         <label asp-for="InputCar.Brand">Brand</label>
-                        <select asp-for="InputCar.Brand" asp-items="Model.AllCarBrandList" class="form-control">
-                        </select>
+                        <select asp-for="InputCar.Brand" asp-items="Model.AllCarBrandList" class="form-control"></select>
                     </div>
                 </div>
                 <div class="col-6">
@@ -29,8 +28,7 @@
                 <div class="col-6">
                     <div class="form-group">
                         <label asp-for="InputCar.Category">Category</label>
-                        <select asp-for="InputCar.Category" asp-items="Model.AvailableCategories" class="form-control">
-                        </select>
+                        <select asp-for="InputCar.Category" asp-items="Model.AvailableCategories" class="form-control"></select>
                     </div>
                 </div>
                 <div class="col-6">
@@ -96,35 +94,30 @@
                 <div class="col-6">
                     <div class="form-group">
                         <label asp-for="InputCar.CompanyId">Company</label>
-                        <select asp-for="InputCar.CompanyId" class="form-control" asp-items="Model.CompaniesForUser">
-                        </select>
+                        <select asp-for="InputCar.CompanyId" class="form-control" asp-items="Model.CompaniesForUser"></select>
                     </div>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="InputCar.Country">Country</label>
+                    <select asp-for="InputCar.Country" class="form-control" asp-items="Model.AllCountries"></select>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="InputCar.City">City</label>
+                    <select asp-for="InputCar.City" class="form-control"><option value="Teszt">Teszt</option></select>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="InputCar.Address">Address</label>
+                    <select asp-for="InputCar.Address" class="form-control"><option value="Teszt">Teszt</option></select>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
-            <div class="row" style="padding-bottom: 10px;">
-                <div class="col-6 col-md-3"><b>Plate</b></div>
-                <div class="col-6 col-md-3"><b>Country</b></div>
-                <div class="col-6 col-md-3"><b>City</b></div>
-                <div class="col-6 col-md-3"><b>Pick-Up</b></div>
-            </div>
-            <div id="inputGroupContainer">
-                <div class="inputGroup row" name="inputGroup0">
-                    <div class="col-6 col-md-3">
-                        <input type="text" class="form-control" name="inviduals[0].Plate">
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <select id="countrySelect0" name="inviduals[0].Country" class="form-control" asp-items="Model.AllCountries">
-                        </select>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <select name="inviduals[0].City" class="form-control"><option value="Teszt">Teszt</option></select>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <select name="inviduals[0].PickUp" class="form-control"><option value="Teszt">Teszt</option></select>
-                    </div>
-                </div>
+            <h3>Plates</h3>
+            <div class="row" id="plateContainer">                
+                <div class="col-6 form-inline py-2">
+                    <span>1.: </span>
+                    <input type="text" class="form-control" name="inviduals[0].Plate">
+                </div>   
             </div>
 
             <span class="btn btn-success" onclick="AddNewCarInvidualFields()">Add</span>

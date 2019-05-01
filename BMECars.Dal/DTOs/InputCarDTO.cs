@@ -46,6 +46,17 @@ namespace BMECars.Dal.DTOs
 
         [Required(ErrorMessage = "'Company' can't be empty.")]
         public int CompanyId { get; set; }
+        
+        [Required(ErrorMessage = "'Country' can't be empty.")]
+        public string Country { get; set; }
+
+        [Required(ErrorMessage = "'City' can't be empty.")]
+        public string City { get; set; }
+
+        [Required(ErrorMessage = "'Pick Up' can't be empty.")]
+        public string Address { get; set; }
+
+
 
         public string Image { get; set; }
     }

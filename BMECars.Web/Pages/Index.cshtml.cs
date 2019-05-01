@@ -23,9 +23,6 @@ namespace BMECars.Web.Pages
 
         public void OnGet()
         {
-            CarHeaders.Add(_carManager.GetCarHeader(1));
-            CarHeaders.Add(_carManager.GetCarHeader(2001));
-            CarHeaders.Add(_carManager.GetCarHeader(3));
         }
     }
 }

@@ -89,7 +89,7 @@ namespace BMECars.Web.Pages.Cars
 
             foreach (CarInvidual ci in inviduals)
             {
-                Console.WriteLine(ci.Plate);
+                Console.WriteLine("!!!!!!!!!!!!!!!!!!!!" + ci.Plate);
             }
             if (ModelState.IsValid)
             {
@@ -117,9 +117,9 @@ namespace BMECars.Web.Pages.Cars
                         Company = selectedCompany,
                         Plate = ci.Plate,
                         PickUpLocation = new Location {
-                            Country = ci.Country,
-                            City = ci.City,
-                            Address = ci.PickUp,
+                            Country = InputCar.Country,
+                            City = InputCar.City,
+                            Address = InputCar.Address,
                             Company = selectedCompany,
                             IsGlobal = false
                         }
@@ -134,15 +134,6 @@ namespace BMECars.Web.Pages.Cars
         {
             [Required(ErrorMessage = "'Plate' can't be empty.")]
             public string Plate { get; set; }
-
-            [Required(ErrorMessage = "'Country' can't be empty.")]
-            public string Country { get; set; }
-
-            [Required(ErrorMessage = "'City' can't be empty.")]
-            public string City { get; set; }
-
-            [Required(ErrorMessage = "'Pick Up' can't be empty.")]
-            public string PickUp { get; set; }
         }
     }
     
