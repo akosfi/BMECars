@@ -7,7 +7,7 @@ using BMECars.Dal.Managers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace BMECars.Web.Pages
+namespace BMECars.Web.Pages.Companies
 {
     public class CarsModel : PageModel
     {

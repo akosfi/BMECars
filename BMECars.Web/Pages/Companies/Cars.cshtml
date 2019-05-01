@@ -1,5 +1,5 @@
 ﻿@page
-@model BMECars.Web.Pages.CarsModel
+@model BMECars.Web.Pages.Companies.CarsModel
 @{
     ViewData["Title"] = "Cars";
     Layout = "~/Pages/Shared/_Layout.cshtml";
@@ -7,7 +7,7 @@
 
 <div style="position:relative;" class="my-2">
     <h2>@(Model.Company.Name)</h2>
-    <a style="position: absolute; top: 0; right: 0;" class="btn btn-success" href="/addcar">Add Car</a>
+    <a style="position: absolute; top: 0; right: 0;" class="btn btn-success" href="/cars/addcar">Add Car</a>
 </div>
 
 

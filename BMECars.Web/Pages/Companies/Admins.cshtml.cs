@@ -10,9 +10,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace BMECars.Web.Pages
+namespace BMECars.Web.Pages.Companies
 {
-    public class CompanyAdminsModel : PageModel
+    public class AdminsModel : PageModel
     {
         public ICompanyManager companyManager;
         public UserManager<User> userManager;
@@ -23,7 +23,7 @@ namespace BMECars.Web.Pages
         [BindProperty]
         public List<UserHeaderDTO> CompanyAdmins { get; set; }
 
-        public CompanyAdminsModel(
+        public AdminsModel(
             ICompanyManager _companyManager,
             UserManager<User> _userManager)
         {

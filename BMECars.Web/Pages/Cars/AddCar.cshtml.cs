@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace BMECars.Web.Pages
+namespace BMECars.Web.Pages.Cars
 {
     public class AddCarModel : PageModel
     {

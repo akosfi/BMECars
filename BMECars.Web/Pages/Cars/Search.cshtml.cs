@@ -8,7 +8,7 @@ using BMECars.Dal.Managers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace BMECars.Web.Pages
+namespace BMECars.Web.Pages.Cars
 {
     public class SearchModel : PageModel
     {
