@@ -6,32 +6,34 @@
 
 <partial name="_SearchForm" model="@Model.SearchCar" />
 
-<div style="width: 80%; position: relative; left: 50%; transform: translateX(-50%);">
+<div style="margin: 0 auto;">
     @foreach (var car in Model.Cars)
     {
         <div style="border: 1px solid gray; margin: 20px 0px;">
-            <div class="row" style="height: 200px;">
-                <div style="height: 100%;" class="col-sm-4">
-                    <img style="width: 100%; height: auto" src="@car.Image" alt="Image of car"/>
+            <div class="row">
+                <div style="overflow: hidden;" class="col-sm-4">
+                    <img style="height: 300px; width: auto;" src="@car.Image" alt="Image of car"/>
 
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <h1>@car.Brand</h1>
                     <h5>@car.Year<span style="padding-left: 50px;">@car.Category</span></h5>
                     <h5>@car.Seat seat<span style="padding-left: 50px;">@car.Transmission transmission</span></h5>
                     <h5>@car.Bag bag<span style="padding-left: 50px;">Fuel: @(car.IsFuelFull)</span></h5>
                     <h5>@car.Door door<span style="padding-left: 50px;">Climate: @(car.Climate)</span></h5>
                 </div>
-                <div style="height: 100%; text-align: right;" class="col-sm-4">
-                    <h4 style="padding-right: 10px;">@car.Price Ft / day</h4>
+                <div style="height: 100%; text-align: right;" class="col-sm-2">
+                    <h4 style="padding-right: 10px;">@car.Price Eur / day</h4>
 
                 </div>
             </div>
-            <div style="position: relative; height: 50px;">
-                <img style="position: absolute; left: 10px; height: 100%; width: auto" src="https://www.designmantic.com/logo-images/9.png?company=Company+Name&slogan=&verify=1" />
-                <a href="/cars/reservation/@car.Id?pickUp=@Model.PickUpLocation.Id&dropDown=@Model.DropDownLocation.Id&reserveFrom=@Model.SearchCar.ReserveFrom&reserveTo=@Model.SearchCar.ReserveTo" 
-                   class="btn btn-success" style="position: absolute; bottom: 10px; right: 10px;">Reserve</a>
+            <div style="padding: 10px">
+                <span style="font-size: 20px;"><i>@car.DealerShipName</i></span>
+                <a href="/cars/reservation/@car.Id?pickUp=@Model.PickUpLocation.Id&dropDown=@Model.DropDownLocation.Id&reserveFrom=@Model.SearchCar.ReserveFrom&reserveTo=@Model.SearchCar.ReserveTo"
+                   class="btn btn-success float-right">Reserve</a>
+                <div class="clearfix"></div>
             </div>
+            
         </div>
 
     }

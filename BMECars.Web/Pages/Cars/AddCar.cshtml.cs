@@ -79,10 +79,13 @@ namespace BMECars.Web.Pages.Cars
         public async Task<IActionResult> OnPostAsync(IList<CarInvidual> inviduals)
         {
             var file = Path.Combine("uploads", ImageOfCar.FileName);
+
             using (var fileStream = new FileStream(Path.Combine(environment.ContentRootPath, "wwwroot\\", file), FileMode.Create))
             {
                 await ImageOfCar.CopyToAsync(fileStream);
             }
+            file = "/" + file;
+
 
             foreach (CarInvidual ci in inviduals)
             {
