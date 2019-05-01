@@ -50,30 +50,8 @@ namespace BMECars.Web.Pages.Cars
             environment = _environment;
         }
 
-        public async Task OnGet() {
-            User user = await userManager.GetUserAsync(HttpContext.User);
-            CompaniesForUser = companyManager.GetCompaniesForUser(user.Id).Select(c => new SelectListItem
-            {
-                Text = c.Name,
-                Value = c.Id.ToString()
-            });
-
-            AllCarBrandList = (await carManager.GetAllCarBrands()).Select(b => new SelectListItem {
-                Text = b,
-                Value = b
-            });
-
-            AvailableCategories = Enum.GetValues(typeof(Category)).OfType<Category>().ToList().Select(c => new SelectListItem {
-                Text = c.ToString(),
-                Value = c.ToString()
-            });
-            
-            AllCountries = locationManager.GetAllCountries().Select(c => new SelectListItem
-            {
-                Text = c.ToString(),
-                Value = c.ToString()
-            });
-
+        public async Task OnGet() {            
+            await setDropDowns();
         }
 
         public async Task<IActionResult> OnPostAsync(IList<CarInvidual> inviduals)
@@ -85,18 +63,16 @@ namespace BMECars.Web.Pages.Cars
                 await ImageOfCar.CopyToAsync(fileStream);
             }
             file = "/" + file;
+            
 
-
-            foreach (CarInvidual ci in inviduals)
-            {
-                Console.WriteLine("!!!!!!!!!!!!!!!!!!!!" + ci.Plate);
-            }
             if (ModelState.IsValid)
             {
                 Company selectedCompany = await companyManager.GetCompany(InputCar.CompanyId);
                 if(selectedCompany == null)
                 {
                     ModelState.AddModelError("NoCompany", "Company not found.");
+
+                    await setDropDowns();
                     return Page();
                 }
                 foreach(CarInvidual ci in inviduals)
@@ -128,8 +104,40 @@ namespace BMECars.Web.Pages.Cars
                 
                 return RedirectToPage("/");
             }
+            await setDropDowns();
             return Page();
         }
+
+
+        private async Task setDropDowns()
+        {
+            User user = await userManager.GetUserAsync(HttpContext.User);
+            CompaniesForUser = companyManager.GetCompaniesForUser(user.Id).Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = c.Id.ToString()
+            });
+
+            AllCarBrandList = (await carManager.GetAllCarBrands()).Select(b => new SelectListItem
+            {
+                Text = b,
+                Value = b
+            });
+
+            AvailableCategories = Enum.GetValues(typeof(Category)).OfType<Category>().ToList().Select(c => new SelectListItem
+            {
+                Text = c.ToString(),
+                Value = c.ToString()
+            });
+
+            AllCountries = locationManager.GetAllCountries().Select(c => new SelectListItem
+            {
+                Text = c.ToString(),
+                Value = c.ToString()
+            });
+        }
+
+
         public class CarInvidual
         {
             [Required(ErrorMessage = "'Plate' can't be empty.")]
