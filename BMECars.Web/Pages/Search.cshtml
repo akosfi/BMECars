@@ -29,7 +29,8 @@
             </div>
             <div style="position: relative; height: 50px;">
                 <img style="position: absolute; left: 10px; height: 100%; width: auto" src="https://www.designmantic.com/logo-images/9.png?company=Company+Name&slogan=&verify=1" />
-                <button type="button" class="btn btn-success" style="position: absolute; bottom: 10px; right: 10px;">Reserve</button>
+                <a href="/cars/reservation/@car.Id?pickUp=@Model.PickUpLocation.Id&dropDown=@Model.DropDownLocation.Id&reserveFrom=@Model.SearchCar.ReserveFrom&reserveTo=@Model.SearchCar.ReserveTo" 
+                   class="btn btn-success" style="position: absolute; bottom: 10px; right: 10px;">Reserve</a>
             </div>
         </div>
 

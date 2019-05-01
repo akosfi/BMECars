@@ -1,11 +1,17 @@
-﻿using System;
+﻿using BMECars.Dal.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BMECars.Dal.Managers
 {
     public interface ILocationManager
     {
+        Task<LocationDTO> GetLocation(int id);
+
+        Task<LocationDTO> GetLocationByAddress(string country, string city, string address);
+
         List<string> GetAvailableCountries();
 
         List<string> GetAllCountries();

@@ -12,20 +12,27 @@ namespace BMECars.Web.Pages
 {
     public class SearchModel : PageModel
     {
-        ICarManager _carManager;
-        public SearchModel(ICarManager CarManager)
+        ICarManager carManager;
+        ILocationManager locationManager;
+        public SearchModel(ICarManager _carManager, ILocationManager _locationManager)
         {
-            _carManager = CarManager;
+            carManager = _carManager;
+            locationManager = _locationManager;
         }
 
         public List<CarDTO> Cars { get; set; }
         public SearchDTO SearchCar { get; set; }
-        public void OnGet(SearchDTO queryCar)
+        public LocationDTO PickUpLocation { get; set; }
+        public LocationDTO DropDownLocation { get; set; }
+        public async Task OnGet(SearchDTO queryCar)
         {
-
-
             SearchCar = queryCar;
-            Cars = _carManager.GetCars(queryCar);
+            Cars = carManager.GetCars(queryCar);
+            PickUpLocation = await locationManager.GetLocationByAddress(queryCar.CountryPickUp, queryCar.CityPickUp, queryCar.LocationPickUp);
+            DropDownLocation = await locationManager.GetLocationByAddress(queryCar.CountryDropDown, queryCar.CityDropDown, queryCar.LocationDropDown);
+
+            if (DropDownLocation == null)
+                DropDownLocation = PickUpLocation;
         }
     }
 }

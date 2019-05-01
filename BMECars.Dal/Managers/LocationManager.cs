@@ -1,8 +1,11 @@
-﻿using System;
+﻿using BMECars.Dal.DTOs;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BMECars.Dal.Managers
 {
@@ -14,7 +17,33 @@ namespace BMECars.Dal.Managers
             _context = BMECarsDbContext;
         }
 
-
+        public async Task<LocationDTO> GetLocation(int id)
+        {
+            return await _context.Locations
+                                 .Where(l => l.Id == id)
+                                 .Select(l => new LocationDTO {
+                                     Id = l.Id,
+                                     Address = l.Address,
+                                     City = l.City,
+                                     Country = l.Country,
+                                     IsGlobal = l.IsGlobal
+                                 })
+                                 .FirstOrDefaultAsync();
+        }
+        public async Task<LocationDTO> GetLocationByAddress(string country, string city, string address)
+        {
+            return await _context.Locations
+                                 .Where(l => l.Country == country && l.City == city && l.Address == address)
+                                 .Select(l => new LocationDTO
+                                 {
+                                     Id = l.Id,
+                                     Address = l.Address,
+                                     City = l.City,
+                                     Country = l.Country,
+                                     IsGlobal = l.IsGlobal
+                                 })
+                                 .FirstOrDefaultAsync();
+        }
 
         public List<string> GetAvailableCountries()
         {
