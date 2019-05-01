@@ -1,0 +1,77 @@
+﻿@page "{id:int?}"
+@model BMECars.Web.Pages.Cars.PaymentModel
+@{
+    ViewData["Title"] = "Payment";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="padding: 40px;">
+    <div class="col-8">
+        <h3>Payment information</h3>
+        <h5 style="padding-top: 20px; ">Billing details</h5>
+        <form>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="firstname">Firstname</label>
+                        <input type="text" class="form-control" id="firstname" placeholder="Firstname">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="lastname">Lastname</label>
+                        <input type="text" class="form-control" id="lastname" placeholder="Lastname">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="companyname">Company name</label>
+                        <input type="text" class="form-control" id="companyname" placeholder="Company name">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" class="form-control" id="country" placeholder="Country">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" id="address" placeholder="Address">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" class="form-control" id="city" placeholder="City">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <input type="text" class="form-control" id="state" placeholder="State">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="postal">ZIP/Postal</label>
+                        <input type="text" class="form-control" id="postal" placeholder="Postal">
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-success float-right">Reserve Car</button>
+        </form>
+    </div>
+    <div class="col-4">
+        <img style="width: 100%; height: auto;" src="@Model.Car.Image" alt="Alternate Text" />
+        <h4>@Model.Car.Brand @Model.Car.Year</h4>
+        <p>Plate:<span class="float-right">@Model.Car.Plate</span></p>
+        <p>Price:<span class="float-right">@Model.Car.Price</span></p>
+        <p>Pick-up:<span class="float-right">@Model.ReserveFrom</span></p>
+        <p>Release:<span class="float-right">@Model.ReserveTo</span></p>
+        <p>Total:<span class="float-right">@Model.TotalPrice</span></p>
+    </div>
+</div>
+
