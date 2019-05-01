@@ -1,13 +1,30 @@
 ﻿$(document).ready(async () => {
+    if ($("#countrySelected").val() != "") {
+        $("#Country").val($("#countrySelected").val());
+    }
+
     if ($("#citySelected").val() != "") {
         await this.onPickUpCountrySelect({ value: $("#countrySelected").val() });
-
-        $("#City").val($("#citySelected").val());
+        $("#City").val($("#citySelected").val());        
     }
+
     if ($("#locationSelected").val() != "") {
         await this.onPickUpCitySelect({ value: $("#citySelected").val() });
-
         $("#Location").val($("#locationSelected").val());
+    }
+
+    if ($("#dropDownCountrySelected").val() != "") {
+        $("#CountryDropDown").val($("#dropDownCountrySelected").val());
+    }
+
+    if ($("#dropDownCitySelected").val() != "") {
+        await this.onDropDownCountrySelect({ value: $("#dropDownCountrySelected").val() });
+        $("#CityDropDown").val($("#dropDownCitySelected").val());
+    }
+
+    if ($("#dropDownLocationSelected").val() != "") {
+        await this.onDropDownCitySelect({ value: $("#dropDownCitySelected").val() });
+        $("#LocationDropDown").val($("#dropDownLocationSelected").val());
     }
 });
 
@@ -32,18 +49,22 @@ async function onPickUpCitySelect(e) {
     let countrySelect = document.getElementById('Country');
     let selectedCountry = countrySelect.options[countrySelect.selectedIndex].value;
 
-    await fetch("ajax/GetLocations?country=" + selectedCountry + "&city=" + e.value)
+
+    await fetch("/ajax/GetLocations?country=" + selectedCountry + "&city=" + e.value)
         .then(response => response.json())
         .then(res => {
+            console.log(JSON.stringify(res, null, 4));
             changeDropDownValues('Location', res, "Choose Location");
-        });
+        })
+        .catch(err => console.log("ASD"+ err));
 }
 
 async function onDropDownCitySelect(e) {
     let countrySelect = document.getElementById('CountryDropDown');
     let selectedCountry = countrySelect.options[countrySelect.selectedIndex].value;
 
-    await fetch("ajax/GetLocations?country=" + selectedCountry + "&city=" + e.value)
+    
+    await fetch("/ajax/GetLocations?country=" + selectedCountry + "&city=" + e.value)
         .then(response => response.json())
         .then(res => {
             changeDropDownValues('LocationDropDown', res, "Choose Location");

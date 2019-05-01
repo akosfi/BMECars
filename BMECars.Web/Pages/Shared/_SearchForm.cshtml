@@ -1,7 +1,7 @@
 ﻿@using BMECars.Dal.Managers
 @inject ILocationManager _locationManager
 @inject ICarManager _carManager
-@{ 
+@{
     ViewData["Countries"] = _locationManager.GetAvailableCountries();
     ViewData["CarBrands"] = _carManager.GetAvailableCarBrands();
 }
@@ -9,6 +9,9 @@
 <input hidden id="countrySelected" value="@Model.CountryPickUp" />
 <input hidden id="citySelected" value="@Model.CityPickUp" />
 <input hidden id="locationSelected" value="@Model.LocationPickUp" />
+<input hidden id="dropDownCountrySelected" value="@Model.CountryDropDown" />
+<input hidden id="dropDownCitySelected" value="@Model.CityDropDown" />
+<input hidden id="dropDownLocationSelected" value="@Model.LocationDropDown" />
 
 <form method="get" action="/cars/search" style="position: relative; padding: 50px 0px;">
     <div class="row">
@@ -18,14 +21,7 @@
                 <option value="" selected disabled="disabled">Choose Country</option>
                 @foreach (string c in (List<String>)ViewData["Countries"])
                 {
-                    if (c == Model.CountryPickUp)
-                    {
-                        <option selected value="@c">@c</option>
-                    }
-                    else
-                    {
-                        <option value="@c">@c</option>
-                    }
+                    <option value="@c">@c</option>
                 }
             </select>
         </div>
@@ -43,11 +39,29 @@
         </div>
         <div class="col-md-2 form-group">
             <label for="reservefrom">Pick Up</label>
-            <input name="ReserveFrom" required type="date" class="form-control" id="reservefrom">
+            @if (Model.ReserveFrom == new DateTime())
+            {
+                <input name="ReserveFrom" required type="date" class="form-control" id="reservefrom">
+            }
+            else
+            {
+                <input name="ReserveFrom" required type="date" class="form-control" id="reservefrom"
+                       value="@Model.ReserveFrom.ToString("yyyy-MM-dd")">
+            }
+
         </div>
         <div class="col-md-2 form-group">
             <label for="reserveto">Drop Down</label>
-            <input name="ReserveTo" required type="date" class="form-control" id="reserveto">
+            @if (Model.ReserveTo == new DateTime())
+            {
+                <input name="ReserveTo" required type="date" class="form-control" id="reserveto">
+            }
+            else
+            {
+                <input name="ReserveTo" required type="date" class="form-control" id="reserveto"
+                       value="@Model.ReserveTo.ToString("yyyy-MM-dd")">
+            }
+
         </div>
         <div class="col-md-2 form-group">
             <label for="submitbtn"></label>
@@ -74,8 +88,8 @@
                 <select name="CountryDropDown" class="form-control" id="CountryDropDown" onchange="onDropDownCountrySelect(this);">
                     <option value="" selected disabled="disabled">Choose Country</option>
                     @foreach (string c in (List<String>)ViewData["Countries"])
-                    {                        
-                        <option value="@c">@c</option>                        
+                    {
+                        <option value="@c">@c</option>
                     }
                 </select>
             </div>

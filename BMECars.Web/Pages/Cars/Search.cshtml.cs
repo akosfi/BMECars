@@ -27,9 +27,12 @@ namespace BMECars.Web.Pages.Cars
         public async Task OnGet(SearchDTO queryCar)
         {
             SearchCar = queryCar;
+
             Cars = carManager.GetCars(queryCar);
             PickUpLocation = await locationManager.GetLocationByAddress(queryCar.CountryPickUp, queryCar.CityPickUp, queryCar.LocationPickUp);
             DropDownLocation = await locationManager.GetLocationByAddress(queryCar.CountryDropDown, queryCar.CityDropDown, queryCar.LocationDropDown);
+
+            Console.WriteLine("++++++++++++++++++++++++"+(new DateTime()).ToString());
 
             if (DropDownLocation == null)
                 DropDownLocation = PickUpLocation;
