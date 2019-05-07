@@ -21,7 +21,9 @@ namespace BMECars.Dal.SeedService
             Companies = new List<Company>()
             {
                 new Company { Id = 1, Name = "Avis Cars", UserId = userId },
-                new Company { Id = 2, Name = "Bárdi Autó", UserId = userId }
+                new Company { Id = 2, Name = "Bárdi Autó", UserId = userId },
+                new Company { Id = 3, Name = "Hertz", UserId = userId },
+                new Company { Id = 4, Name = "Europcar", UserId = userId }
             };
 
             Locations = new List<Location>()
@@ -41,6 +43,22 @@ namespace BMECars.Dal.SeedService
                     Address = "Vasútállomás",
                     IsGlobal = true,
                     CompanyId = 2
+                },
+                new Location {
+                    Id = 3,
+                    Country = "Hungary",
+                    City = "Szeged",
+                    Address = "Vasútállomás",
+                    IsGlobal = true,
+                    CompanyId = 3
+                },
+                new Location {
+                    Id = 4,
+                    Country = "Hungary",
+                    City = "Pécs",
+                    Address = "Vasútállomás",
+                    IsGlobal = true,
+                    CompanyId = 4
                 }
             };
 
@@ -96,6 +114,57 @@ namespace BMECars.Dal.SeedService
                     Seat = 7,
                     Transmission = Transmission.Manual,
                     Year = 2006
+                },
+                new Car
+                {
+                    Id = 4,
+                    Brand = "BMW",
+                    Bag = 5,
+                    Climate = true,
+                    Category = Category.MPV,
+                    CompanyId = 2,
+                    Door = 6,
+                    IsFuelFull = false,
+                    PickUpLocationId = 2,
+                    Plate = "XVF-532",
+                    Price = 6000,
+                    Seat = 7,
+                    Transmission = Transmission.Manual,
+                    Year = 2006
+                },
+                new Car
+                {
+                    Id = 5,
+                    Brand = "Porsche",
+                    Bag = 5,
+                    Climate = true,
+                    Category = Category.Coupe,
+                    CompanyId = 1,
+                    Door = 6,
+                    IsFuelFull = false,
+                    PickUpLocationId = 2,
+                    Plate = "XXX-532",
+                    Price = 6000,
+                    Seat = 7,
+                    Transmission = Transmission.Manual,
+                    Year = 2006
+                },
+                new Car
+                {
+                    Id = 6,
+                    Brand = "Mercedes",
+                    Bag = 5,
+                    Climate = true,
+                    Category = Category.Sedan,
+                    CompanyId = 2,
+                    Door = 6,
+                    IsFuelFull = false,
+                    PickUpLocationId = 2,
+                    Plate = "AAA-111",
+                    Price = 6000,
+                    Seat = 7,
+                    Transmission = Transmission.Manual,
+                    Year = 2006
                 }
             };
 
@@ -131,8 +200,8 @@ namespace BMECars.Dal.SeedService
                     DropDownLocationId = 1,
                     PickUpLocationId = 1,
                     ReservationPrice = 10000,
-                    ReserveFrom = new DateTime(2019, 4, 1),
-                    ReserveTo = new DateTime(2019, 4, 8),
+                    ReserveFrom = new DateTime(2019, 5, 3),
+                    ReserveTo = new DateTime(2019, 5, 5),
                     UserId = userId
                 },
                 new Reservation
@@ -142,8 +211,8 @@ namespace BMECars.Dal.SeedService
                     DropDownLocationId = 1,
                     PickUpLocationId = 1,
                     ReservationPrice = 10000,
-                    ReserveFrom = new DateTime(2019, 4, 20),
-                    ReserveTo = new DateTime(2019, 4, 25),
+                    ReserveFrom = new DateTime(2019, 5, 10),
+                    ReserveTo = new DateTime(2019, 5, 15),
                     UserId = userId
                 }
             };

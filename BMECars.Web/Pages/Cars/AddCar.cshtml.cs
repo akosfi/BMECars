@@ -75,7 +75,15 @@ namespace BMECars.Web.Pages.Cars
                     await setDropDowns();
                     return Page();
                 }
-                foreach(CarInvidual ci in inviduals)
+                LocationDTO selectedLocation = await locationManager.GetLocationByAddress(InputCar.Country, InputCar.City, InputCar.Address);
+                if (selectedCompany == null)
+                {
+                    ModelState.AddModelError("NoLocation", "Location not found.");
+
+                    await setDropDowns();
+                    return Page();
+                }
+                foreach (CarInvidual ci in inviduals)
                 {
                     await carManager.AddNewCarAsync(new Car
                     {
@@ -92,13 +100,7 @@ namespace BMECars.Web.Pages.Cars
                         Bag = (int)InputCar.Bag,
                         Company = selectedCompany,
                         Plate = ci.Plate,
-                        PickUpLocation = new Location {
-                            Country = InputCar.Country,
-                            City = InputCar.City,
-                            Address = InputCar.Address,
-                            Company = selectedCompany,
-                            IsGlobal = false
-                        }
+                        PickUpLocationId = selectedLocation.Id
                     });
                 }
                 

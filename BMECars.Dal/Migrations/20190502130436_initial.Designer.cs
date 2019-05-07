@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BMECars.Dal.Migrations
 {
     [DbContext(typeof(BMECarsDbContext))]
-    [Migration("20190410184717_InitialWithSeed")]
-    partial class InitialWithSeed
+    [Migration("20190502130436_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -99,7 +99,10 @@ namespace BMECars.Dal.Migrations
                     b.HasData(
                         new { Id = 1, Bag = 2, Brand = "Audi", Category = 5, Climate = true, CompanyId = 1, Door = 2, IsFuelFull = true, PickUpLocationId = 1, Plate = "MBD-234", Price = 10000, Seat = 2, Transmission = 0, Year = 2018 },
                         new { Id = 2, Bag = 3, Brand = "BMW", Category = 3, Climate = true, CompanyId = 1, Door = 4, IsFuelFull = true, PickUpLocationId = 1, Plate = "XAD-113", Price = 15000, Seat = 5, Transmission = 0, Year = 2019 },
-                        new { Id = 3, Bag = 5, Brand = "Toyota", Category = 2, Climate = true, CompanyId = 2, Door = 6, IsFuelFull = false, PickUpLocationId = 2, Plate = "AEF-532", Price = 6000, Seat = 7, Transmission = 1, Year = 2006 }
+                        new { Id = 3, Bag = 5, Brand = "Toyota", Category = 2, Climate = true, CompanyId = 2, Door = 6, IsFuelFull = false, PickUpLocationId = 2, Plate = "AEF-532", Price = 6000, Seat = 7, Transmission = 1, Year = 2006 },
+                        new { Id = 4, Bag = 5, Brand = "BMW", Category = 2, Climate = true, CompanyId = 2, Door = 6, IsFuelFull = false, PickUpLocationId = 2, Plate = "XVF-532", Price = 6000, Seat = 7, Transmission = 1, Year = 2006 },
+                        new { Id = 5, Bag = 5, Brand = "Porsche", Category = 5, Climate = true, CompanyId = 1, Door = 6, IsFuelFull = false, PickUpLocationId = 2, Plate = "XXX-532", Price = 6000, Seat = 7, Transmission = 1, Year = 2006 },
+                        new { Id = 6, Bag = 5, Brand = "Mercedes", Category = 1, Climate = true, CompanyId = 2, Door = 6, IsFuelFull = false, PickUpLocationId = 2, Plate = "AAA-111", Price = 6000, Seat = 7, Transmission = 1, Year = 2006 }
                     );
                 });
 
@@ -140,7 +143,9 @@ namespace BMECars.Dal.Migrations
 
                     b.HasData(
                         new { Id = 1, Name = "Avis Cars", UserId = "fbc5fe4c-7f97-4969-9937-23a191322bfd" },
-                        new { Id = 2, Name = "Bárdi Autó", UserId = "fbc5fe4c-7f97-4969-9937-23a191322bfd" }
+                        new { Id = 2, Name = "Bárdi Autó", UserId = "fbc5fe4c-7f97-4969-9937-23a191322bfd" },
+                        new { Id = 3, Name = "Hertz", UserId = "fbc5fe4c-7f97-4969-9937-23a191322bfd" },
+                        new { Id = 4, Name = "Europcar", UserId = "fbc5fe4c-7f97-4969-9937-23a191322bfd" }
                     );
                 });
 
@@ -202,7 +207,9 @@ namespace BMECars.Dal.Migrations
 
                     b.HasData(
                         new { Id = 1, Address = "Ferihegy Repülőtér", City = "Budapest", CompanyId = 1, Country = "Hungary", IsGlobal = true },
-                        new { Id = 2, Address = "Vasútállomás", City = "Gyor", CompanyId = 2, Country = "Hungary", IsGlobal = true }
+                        new { Id = 2, Address = "Vasútállomás", City = "Gyor", CompanyId = 2, Country = "Hungary", IsGlobal = true },
+                        new { Id = 3, Address = "Vasútállomás", City = "Szeged", CompanyId = 3, Country = "Hungary", IsGlobal = true },
+                        new { Id = 4, Address = "Vasútállomás", City = "Pécs", CompanyId = 4, Country = "Hungary", IsGlobal = true }
                     );
                 });
 
@@ -239,8 +246,8 @@ namespace BMECars.Dal.Migrations
                     b.ToTable("Reservations");
 
                     b.HasData(
-                        new { Id = 1, CarId = 1, DropDownLocationId = 1, PickUpLocationId = 1, ReservationPrice = 10000, ReserveFrom = new DateTime(2019, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), ReserveTo = new DateTime(2019, 4, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), UserId = "fbc5fe4c-7f97-4969-9937-23a191322bfd" },
-                        new { Id = 2, CarId = 1, DropDownLocationId = 1, PickUpLocationId = 1, ReservationPrice = 10000, ReserveFrom = new DateTime(2019, 4, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), ReserveTo = new DateTime(2019, 4, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), UserId = "fbc5fe4c-7f97-4969-9937-23a191322bfd" }
+                        new { Id = 1, CarId = 1, DropDownLocationId = 1, PickUpLocationId = 1, ReservationPrice = 10000, ReserveFrom = new DateTime(2019, 5, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), ReserveTo = new DateTime(2019, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), UserId = "fbc5fe4c-7f97-4969-9937-23a191322bfd" },
+                        new { Id = 2, CarId = 1, DropDownLocationId = 1, PickUpLocationId = 1, ReservationPrice = 10000, ReserveFrom = new DateTime(2019, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), ReserveTo = new DateTime(2019, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), UserId = "fbc5fe4c-7f97-4969-9937-23a191322bfd" }
                     );
                 });
 
