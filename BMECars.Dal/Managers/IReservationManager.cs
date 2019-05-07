@@ -9,5 +9,11 @@ namespace BMECars.Dal.Managers
     public interface IReservationManager
     {
         Task MakeReservation(SearchDTO car);
+
+        Task<List<ReservationDTO>> GetPendingReservationsForCompany(int id);
+
+        Task ApproveReservation(int id, bool approve = false);
+
+
     }
 }

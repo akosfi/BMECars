@@ -6,16 +6,27 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using BMECars.Dal.Entities;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace BMECars.Dal.Managers
 {
     public class CompanyManager : ICompanyManager
     {
         BMECarsDbContext _context;
-        public CompanyManager(BMECarsDbContext BMECarsDbContext)
+        UserManager<User> userManager;
+        readonly IHttpContextAccessor httpContextAccessor;
+
+        public CompanyManager(
+            BMECarsDbContext BMECarsDbContext,
+            UserManager<User> _userManager,
+            IHttpContextAccessor _httpContextAccessor
+        )
         {
             _context = BMECarsDbContext;
-            
+            userManager = _userManager;
+            httpContextAccessor = _httpContextAccessor;
         }
 
         public async Task<CompanyHeaderDTO> GetCompanyHeader(int companyId)
@@ -63,6 +74,18 @@ namespace BMECars.Dal.Managers
                 }).ToList();
         }
 
+        public async Task<bool> IsUserAdminAtCompany(int companyId)
+        {
+            string userId = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+            return await _context.Companies
+                                 .Include(c => c.CompanyAdmins)
+                                 .Where(c => 
+                                    c.UserId == userId ||
+                                    c.CompanyAdmins.Where(ca => ca.UserId == userId).Any()
+                                  )
+                                 .AnyAsync();
+        }
 
         public async Task AddAdminForCompany(int companyId, string userId)
         {

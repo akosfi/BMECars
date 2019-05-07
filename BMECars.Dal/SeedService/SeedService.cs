@@ -193,28 +193,7 @@ namespace BMECars.Dal.SeedService
 
             Reservations = new List<Reservation>()
             {
-                new Reservation
-                {
-                    Id = 1,
-                    CarId = 1,
-                    DropDownLocationId = 1,
-                    PickUpLocationId = 1,
-                    ReservationPrice = 10000,
-                    ReserveFrom = new DateTime(2019, 5, 3),
-                    ReserveTo = new DateTime(2019, 5, 5),
-                    UserId = userId
-                },
-                new Reservation
-                {
-                    Id = 2,
-                    CarId = 1,
-                    DropDownLocationId = 1,
-                    PickUpLocationId = 1,
-                    ReservationPrice = 10000,
-                    ReserveFrom = new DateTime(2019, 5, 10),
-                    ReserveTo = new DateTime(2019, 5, 15),
-                    UserId = userId
-                }
+               
             };
         }
     }

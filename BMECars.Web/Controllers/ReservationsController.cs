@@ -41,5 +41,12 @@ namespace BMECars.Web.Controllers
             });
             return Redirect("/Index");
         }
+
+        [HttpGet("reservations/ApproveReservation/{id}")]
+        public async Task<IActionResult> ApproveReservation(int id, bool approve = false)
+        {
+            await reservationManager.ApproveReservation(id, approve);
+            return Redirect("/Index");
+        }
     }
 }

@@ -1,0 +1,50 @@
+﻿@page "{id:int?}"
+@model BMECars.Web.Pages.Companies.PendingReservationsModel
+@{
+    ViewData["Title"] = "PendingReservations";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h2>Pending Reservations</h2>
+
+
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reservation in Model.PendingReservations)
+            {
+            <tr>
+                <td>
+                    @reservation.CarId
+                </td>
+                <td>
+                    @reservation.ReserveFrom.ToString("yyyy-MM-dd")
+                </td>
+                <td>
+                    @reservation.ReserveTo.ToString("yyyy-MM-dd")
+                </td>
+                <td>
+                    @reservation.PickUpLocation.Country, @reservation.PickUpLocation.City, @reservation.PickUpLocation.Address
+                </td>
+                <td>
+                    @reservation.DropDownLocation.Country, @reservation.DropDownLocation.City, @reservation.DropDownLocation.Address
+                </td>
+                <td><a href="/reservations/ApproveReservation/@reservation.Id?approve=true">Accept</a></td>
+                <td><a href="/reservations/ApproveReservation/@reservation.Id?approve=false">Decline</a></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

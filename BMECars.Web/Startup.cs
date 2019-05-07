@@ -30,6 +30,7 @@ namespace BMECars.Web
             
             services.AddDefaultIdentity<User>().AddEntityFrameworkStores<BMECarsDbContext>();
 
+            services.AddHttpContextAccessor();
 
             services.AddTransient<ICarManager, CarManager>();
             services.AddTransient<ILocationManager, LocationManager>();
