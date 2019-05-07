@@ -80,7 +80,6 @@ namespace BMECars.Dal.Managers
                 .Select(c=>c.Id).ToList();
             
             
-            
             List<int> availableLocationIdsByUser = _context.Locations
                 .Where(l => l.Country == queryCar.CountryPickUp
                             && l.City == queryCar.CityPickUp
@@ -118,10 +117,6 @@ namespace BMECars.Dal.Managers
                         carsIdByLocationAvailability.Add(car.Id);
                     }
                 }
-            }
-            foreach (int c in carsIdByLocationAvailability)
-            {
-                Console.WriteLine(c + "...........................");
             }
             return _context.Cars.Where(c => carsIdByLocationAvailability.Contains(c.Id)).Select(CarDTO.Selector).ToList();
         }
@@ -196,13 +191,13 @@ namespace BMECars.Dal.Managers
 
         private bool CheckDateAvailability(ICollection<Reservation> reservations, SearchDTO queryCar)
         {
-
             if (reservations == null) return true;
 
-            return !reservations.Where(r => (queryCar.ReserveFrom > r.ReserveFrom && queryCar.ReserveFrom < r.ReserveTo && IsDateValid(queryCar.ReserveFrom))
-                                        || (queryCar.ReserveTo > r.ReserveFrom && queryCar.ReserveTo < r.ReserveTo && IsDateValid(queryCar.ReserveTo))
-                                        || (queryCar.ReserveFrom > r.ReserveFrom && queryCar.ReserveTo < r.ReserveTo && IsDateValid(queryCar.ReserveTo) && IsDateValid(queryCar.ReserveTo))
-                                        || (queryCar.ReserveFrom < r.ReserveFrom && queryCar.ReserveTo > r.ReserveTo && IsDateValid(queryCar.ReserveFrom) && IsDateValid(queryCar.ReserveTo)))
+            return !reservations.Where(r => (queryCar.ReserveFrom >= r.ReserveFrom && queryCar.ReserveFrom <= r.ReserveTo && IsDateValid(queryCar.ReserveFrom))
+                                        || (queryCar.ReserveTo >= r.ReserveFrom && queryCar.ReserveTo <= r.ReserveTo && IsDateValid(queryCar.ReserveTo))
+                                        || (queryCar.ReserveFrom >= r.ReserveFrom && queryCar.ReserveTo <= r.ReserveTo && IsDateValid(queryCar.ReserveTo) && IsDateValid(queryCar.ReserveTo))
+                                        || (queryCar.ReserveFrom <= r.ReserveFrom && queryCar.ReserveTo >= r.ReserveTo && IsDateValid(queryCar.ReserveFrom) && IsDateValid(queryCar.ReserveTo))
+                                        || (queryCar.ReserveFrom == r.ReserveFrom && queryCar.ReserveTo == r.ReserveTo && IsDateValid(queryCar.ReserveFrom) && IsDateValid(queryCar.ReserveTo)))
                                         .Any();
         }
 

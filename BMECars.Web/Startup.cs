@@ -34,6 +34,7 @@ namespace BMECars.Web
             services.AddTransient<ICarManager, CarManager>();
             services.AddTransient<ILocationManager, LocationManager>();
             services.AddTransient<ICompanyManager, CompanyManager>();
+            services.AddTransient<IReservationManager, ReservationManager>();
 
             services.AddScoped<IEntityTypeConfiguration<Company>, CompanyEntityConfiguration>()
                 .AddScoped(provider => new Lazy<IEntityTypeConfiguration<Company>>(() => provider.GetService<IEntityTypeConfiguration<Company>>()))

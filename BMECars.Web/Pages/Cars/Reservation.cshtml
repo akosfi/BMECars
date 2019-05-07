@@ -55,7 +55,7 @@
     </div>
     <div class="col-md-4">
         <img style="width: 100%; height: auto;" src="@Model.Car.Image" alt="Alternate Text" />
-        <a href="/cars/payment/@Model.Car.Id?pickUp=@Model.PickUpLocation.Id&dropDown=@Model.DropDownLocation.Id&reserveFrom=@Model.ReserveFrom&reserveTo=@Model.ReserveTo"
+        <a href="/reservations/MakeReservation/@Model.Car.Id?pickUp=@Model.PickUpLocation.Id&dropDown=@Model.DropDownLocation.Id&reserveFrom=@Model.ReserveFrom&reserveTo=@Model.ReserveTo"
            class="btn btn-success float-right">Payment</a>
     </div>
 </div>
