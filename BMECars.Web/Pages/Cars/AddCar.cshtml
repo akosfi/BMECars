@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id:int?}"
 @model BMECars.Web.Pages.Cars.AddCarModel
 @using BMECars.Dal.DTOs
 @using BMECars.Dal.Entities
@@ -113,11 +113,11 @@
         </div>
         <div class="col-lg-6">
             <h3>Plates</h3>
-            <div class="row" id="plateContainer">                
+            <div class="row" id="plateContainer">
                 <div class="col-6 form-inline py-2">
                     <span>1.: </span>
                     <input type="text" class="form-control" name="inviduals[0].Plate">
-                </div>   
+                </div>
             </div>
 
             <span class="btn btn-success" onclick="AddNewCarInvidualFields()">Add</span>

@@ -31,10 +31,10 @@ namespace BMECars.Web.Pages.Companies
             this.userManager = _userManager;
         }
 
-        public async Task OnGet(int companyId)
+        public async Task OnGet(int id)
         {
-            Company = await companyManager.GetCompanyHeader(companyId);
-            CompanyAdmins = await companyManager.GetCompanyAdmins(companyId);
+            Company = await companyManager.GetCompanyHeader(id);
+            CompanyAdmins = await companyManager.GetCompanyAdmins(id);
             
         }
 

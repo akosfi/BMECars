@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id:int?}"
 @model BMECars.Web.Pages.Companies.AdminsModel
 @using BMECars.Dal.DTOs
 @{
@@ -29,7 +29,7 @@
 </div>
 
 <h2 style="padding-top: 30px">Add Admin</h2>
-<form class="form-inline"  method="post">
+<form class="form-inline" method="post">
     <div class="form-group">
         <label style="margin-right: 20px;" for="emailInput">Email address</label>
         <input style="margin-right: 20px;" type="email" class="form-control" asp-for="EmailInput" placeholder="name@example.com">
