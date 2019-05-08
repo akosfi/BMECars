@@ -11,5 +11,6 @@ namespace BMECars.Dal.DTOs
         public string Country { get; set; }
         public string City { get; set; }
         public string Address { get; set; }
+        public int CompanyId { get; set; }
     }
 }

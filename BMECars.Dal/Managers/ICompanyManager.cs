@@ -13,6 +13,8 @@ namespace BMECars.Dal.Managers
 
         Task<CompanyHeaderDTO> GetCompanyHeader(int companyId);
 
+        Task<List<LocationDTO>> GetLocations(int id);
+
         Task<List<UserHeaderDTO>> GetCompanyAdmins(int companyId);
 
         Task<Company> GetCompany(int companyId);

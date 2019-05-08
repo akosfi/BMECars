@@ -1,0 +1,97 @@
+﻿@page "{id:int?}"
+@model BMECars.Web.Pages.Companies.LocationsModel
+@{
+    ViewData["Title"] = "Locations";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h2>Company Global Locations</h2>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Country</th>
+                <th scope="col">City</th>
+                <th scope="col">Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var location in Model.CompanyLocations)
+            {
+                if (location.IsGlobal)
+                {
+                    <tr>
+                        <td>@location.Country</td>
+                        <td>@location.City</td>
+                        <td>@location.Address</td>
+                    </tr>
+                }
+                
+            }
+        </tbody>
+    </table>
+</div>
+
+<h2>Company Private Locations</h2>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Country</th>
+                <th scope="col">City</th>
+                <th scope="col">Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var location in Model.CompanyLocations)
+            {
+                if (!location.IsGlobal)
+                {
+                    <tr>
+                        <td>@location.Country</td>
+                        <td>@location.City</td>
+                        <td>@location.Address</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>   
+
+<h2>Add Location</h2>
+
+<form method="post">
+    <div class="row">
+        <div class="col-3">
+            <div class="form-group">
+                <label asp-for="InputLocation.Country">Country</label>
+                <input class="form-control" asp-for="InputLocation.Country" required>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label asp-for="InputLocation.City">City</label>
+                <input class="form-control" asp-for="InputLocation.City" required>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label asp-for="InputLocation.Address">Address</label>
+                <input class="form-control" asp-for="InputLocation.Address" required>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-check">
+                <input type="checkbox" asp-for="InputLocation.IsGlobal" class="form-check-input">
+                <label class="form-check-label" asp-for="InputLocation.IsGlobal">Global location?</label>
+            </div>
+        </div>
+        <input type="hidden" asp-for="InputLocation.CompanyId" value="@Model.CompanyId" />
+
+        <button type="submit" class="btn btn-success float-right">Add</button>
+        <div class="clearfix"></div>
+    </div>
+    
+</form>

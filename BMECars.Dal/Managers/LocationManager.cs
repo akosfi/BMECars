@@ -1,4 +1,5 @@
 ﻿using BMECars.Dal.DTOs;
+using BMECars.Dal.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace BMECars.Dal.Managers
                                  })
                                  .FirstOrDefaultAsync();
         }
+
         public async Task<LocationDTO> GetLocationByAddress(string country, string city, string address)
         {
             return await _context.Locations
@@ -78,6 +80,21 @@ namespace BMECars.Dal.Managers
         public List<string> GetDealerName(string partOfName)
         {
             return _context.Companies.Where(c => c.Name.Contains(partOfName)).Select(c => c.Name).ToList();
+        }
+
+        public async Task AddLocation(LocationDTO location)
+        {
+            await _context.Locations
+                           .AddAsync(new Location
+                           {
+                               Country = location.Country,
+                               City = location.City,
+                               Address = location.Address,
+                               IsGlobal = location.IsGlobal,
+                               CompanyId = location.CompanyId                  
+                           });
+
+            await _context.SaveChangesAsync();
         }
     }
 }

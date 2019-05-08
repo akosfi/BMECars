@@ -21,5 +21,7 @@ namespace BMECars.Dal.Managers
         List<string> GetAvaiableLocations(string country, string qCity);
 
         List<string> GetDealerName(string partOfName);
+
+        Task AddLocation(LocationDTO location);
     }
 }
