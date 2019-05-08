@@ -6,6 +6,7 @@ using BMECars.Dal.DTOs;
 using BMECars.Dal.Managers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BMECars.Web.Pages.Companies
 {
@@ -13,6 +14,7 @@ namespace BMECars.Web.Pages.Companies
     {
         public List<LocationDTO> CompanyLocations { get; set; }
         public int CompanyId { get; set; }
+        public IEnumerable<SelectListItem> AllCountries { get; set; }
 
         [BindProperty]
         public LocationDTO InputLocation { get; set; }
@@ -26,6 +28,11 @@ namespace BMECars.Web.Pages.Companies
         {
             companyManager = _companyManager;
             locationManager = _locationManager;
+            AllCountries = locationManager.GetAllCountries().Select(c => new SelectListItem
+            {
+                Text = c.ToString(),
+                Value = c.ToString()
+            });
         }
 
         public async Task OnGet(int id)

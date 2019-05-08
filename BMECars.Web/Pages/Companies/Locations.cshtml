@@ -67,7 +67,7 @@
         <div class="col-3">
             <div class="form-group">
                 <label asp-for="InputLocation.Country">Country</label>
-                <input class="form-control" asp-for="InputLocation.Country" required>
+                <select asp-for="InputLocation.Country" class="form-control" asp-items="Model.AllCountries"></select>
             </div>
         </div>
         <div class="col-3">
