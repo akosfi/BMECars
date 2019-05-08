@@ -76,9 +76,6 @@ namespace BMECars.Dal.Managers
 
         public async Task<bool> IsUserAdminAtCompany(string userId, int companyId)
         {
-            //current user
-            //string userId = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            
             return await _context.Companies
                                  .Include(c => c.CompanyAdmins)
                                  .Where(c => 
@@ -90,6 +87,12 @@ namespace BMECars.Dal.Managers
 
         public async Task AddAdminForCompany(int companyId, string userId)
         {
+            CompanyAdmin companyAdmin = await _context.CompanyAdmins
+                                                .Where(ca => ca.CompanyId == companyId && ca.UserId == userId)
+                                                .FirstOrDefaultAsync();
+
+            if (companyAdmin != null) return;
+
             await _context.CompanyAdmins
                           .AddAsync(new CompanyAdmin { UserId = userId, CompanyId = companyId });
 

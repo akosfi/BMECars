@@ -44,16 +44,15 @@ namespace BMECars.Web.Pages.Companies
 
         public async Task<IActionResult> OnPost(string companyId)
         {
-            if (!ModelState.IsValid) return Redirect("/companyAdmins/?companyId=" + companyId);
+            if (!ModelState.IsValid) return Redirect("/companies/admins/" + companyId);
             User userToAdd = await userManager.FindByEmailAsync(EmailInput);
-            Console.WriteLine("++++++++++++++++");
             if(userToAdd == null)
             {
-                return Redirect("/companyAdmins/?companyId=" + companyId);
+                return Redirect("/companies/admins/" + companyId);
             }
 
             await companyManager.AddAdminForCompany(Int32.Parse(companyId), userToAdd.Id);
-            return Redirect("/companyAdmins/?companyId=" + companyId);
+            return Redirect("/companies/admins/" + companyId);
         }
     }
 }
