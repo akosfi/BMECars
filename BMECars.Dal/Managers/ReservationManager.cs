@@ -94,9 +94,10 @@ namespace BMECars.Dal.Managers
                                           .Where(r => r.Id == reservation.Id)
                                           .Select(r => r.Car.CompanyId)
                                           .FirstOrDefaultAsync();
-            
 
-            bool authorized = await companyManager.IsUserAdminAtCompany(companyId);
+
+            string userId = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            bool authorized = await companyManager.IsUserAdminAtCompany(userId, companyId);
 
             if (!authorized) return;
 

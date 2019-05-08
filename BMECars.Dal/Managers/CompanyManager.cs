@@ -74,9 +74,10 @@ namespace BMECars.Dal.Managers
                 }).ToList();
         }
 
-        public async Task<bool> IsUserAdminAtCompany(int companyId)
+        public async Task<bool> IsUserAdminAtCompany(string userId, int companyId)
         {
-            string userId = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //current user
+            //string userId = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             
             return await _context.Companies
                                  .Include(c => c.CompanyAdmins)
