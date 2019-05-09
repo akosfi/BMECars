@@ -3,10 +3,10 @@
 function AddNewCarInvidualFields() {
     fieldGroupCounter++;
     $("#plateContainer").append(
-        "<div class='col-6 form-inline py-2'>" +
-            "<span>" + fieldGroupCounter + ".:  </span >" +
-            "<input type='text' class='form-control' name='inviduals[" + fieldGroupCounter + "].Plate'>" + 
-        "</div>"  
+        "<div class='form-inline py-3' style='position: relative;'>" + 
+            "<span>" + (fieldGroupCounter + 1) + ". Plate: </span>" + 
+            "<input type='text' class='form-control float-right' name='inviduals[" + fieldGroupCounter + "].Plate' style='position: absolute; right: 0;'>" + 
+        "</div>"
     );
     document.getElementById("countrySelect" + fieldGroupCounter).innerHTML =
         document.getElementById("countrySelect" + fieldGroupCounter).innerHTML

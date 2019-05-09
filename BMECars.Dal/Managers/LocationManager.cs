@@ -96,5 +96,21 @@ namespace BMECars.Dal.Managers
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<LocationDTO>> GetAvaiableLocationsForCompany(int id)
+        {
+            return await _context.Locations
+                                 .Where(l => l.CompanyId == id || l.IsGlobal == true)
+                                 .Select(l => new LocationDTO
+                                 {
+                                     Id = l.Id,
+                                     Country = l.Country,
+                                     City = l.City,
+                                     Address = l.Address,
+                                     IsGlobal = l.IsGlobal,
+                                     CompanyId = (int)l.CompanyId
+                                 })
+                                 .ToListAsync();
+        }
     }
 }

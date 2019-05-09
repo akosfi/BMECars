@@ -23,11 +23,14 @@ namespace BMECars.Web.Pages.Cars
         public IEnumerable<SelectListItem> AvailableCategories { get; set; }
         public IEnumerable<SelectListItem> AllCountries { get; set; }
 
+        public IEnumerable<SelectListItem> Locations { get; set; }
+
         [BindProperty]
         public InputCar InputCar { get; set; }
         [BindProperty]
         public IFormFile ImageOfCar { get; set; }
 
+        public int CompanyId { get; set; }
 
         ICarManager carManager;
         ICompanyManager companyManager;
@@ -50,8 +53,11 @@ namespace BMECars.Web.Pages.Cars
             environment = _environment;
         }
 
-        public async Task OnGet() {            
+        public async Task<IActionResult> OnGet(int? companyId) {
+            if (companyId == null) return Redirect("/profile");
+            CompanyId = (int)companyId;
             await setDropDowns();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(IList<CarInvidual> inviduals)
@@ -75,14 +81,6 @@ namespace BMECars.Web.Pages.Cars
                     await setDropDowns();
                     return Page();
                 }
-                LocationDTO selectedLocation = await locationManager.GetLocationByAddress(InputCar.Country, InputCar.City, InputCar.Address);
-                if (selectedCompany == null)
-                {
-                    ModelState.AddModelError("NoLocation", "Location not found.");
-
-                    await setDropDowns();
-                    return Page();
-                }
                 foreach (CarInvidual ci in inviduals)
                 {
                     await carManager.AddNewCarAsync(new Car
@@ -100,7 +98,7 @@ namespace BMECars.Web.Pages.Cars
                         Bag = (int)InputCar.Bag,
                         Company = selectedCompany,
                         Plate = ci.Plate,
-                        PickUpLocationId = selectedLocation.Id
+                        PickUpLocationId = InputCar.LocationId
                     });
                 }
                 
@@ -132,10 +130,10 @@ namespace BMECars.Web.Pages.Cars
                 Value = c.ToString()
             });
 
-            AllCountries = locationManager.GetAllCountries().Select(c => new SelectListItem
+            Locations = (await locationManager.GetAvaiableLocationsForCompany(CompanyId)).Select(c => new SelectListItem
             {
-                Text = c.ToString(),
-                Value = c.ToString()
+                Text = c.Country + ", " + c.City + ", " + c.Address,
+                Value = c.Id.ToString()
             });
         }
 
