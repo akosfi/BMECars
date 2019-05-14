@@ -8,6 +8,8 @@ namespace BMECars.Dal.DTOs
 {
     public class InputCar
     {
+        public int? Id { get; set; }
+
         [Required(ErrorMessage = "'Brand' can't be empty.")]
         [DataType(DataType.Text)]
         public string Brand { get; set; }
@@ -50,7 +52,8 @@ namespace BMECars.Dal.DTOs
         [Required]
         public int LocationId { get; set; }
 
-
+        //When modifying 
+        public string Plate { get; set; }
 
         public string Image { get; set; }
     }

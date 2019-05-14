@@ -186,7 +186,33 @@ namespace BMECars.Dal.Managers
             await _context.SaveChangesAsync();
         }
 
+        public async Task UpdateCar(int id, InputCar inputCar)
+        {
+            Car car = await _context.Cars.Where(c => c.Id == id).FirstOrDefaultAsync();
+            if (car == null) return;
 
+            car.Bag = (int)inputCar.Bag;
+            car.Brand = inputCar.Brand;
+            car.Category = (Category)inputCar.Category;
+            car.Climate = (bool)inputCar.Climate;
+            car.Door = (int)inputCar.Door;
+
+            if (inputCar.Image != "" && inputCar.Image != null)
+            {
+                car.Image = inputCar.Image;
+            }
+
+            car.IsFuelFull = (bool)inputCar.IsFuelFull;
+            car.PickUpLocationId = inputCar.LocationId;
+            car.Plate = inputCar.Plate;
+            car.Seat = (int)inputCar.Seat;
+            car.Transmission = (Transmission)inputCar.Transmission;
+            car.Price = (int)inputCar.Price;
+            car.Year = (int)inputCar.Year;
+
+            _context.Cars.Update(car);
+            await _context.SaveChangesAsync();
+        }
 
 
         private bool CheckDateAvailability(ICollection<Reservation> reservations, SearchDTO queryCar)

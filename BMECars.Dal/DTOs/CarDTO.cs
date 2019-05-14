@@ -25,7 +25,8 @@ namespace BMECars.Dal.DTOs
         public Boolean IsFuelFull { get; set; }
         public Boolean Climate { get; set; }
         public string DealerShipName { get; set; }
-
+        public int PickUpLocationId { get; set; }
+        public int CompanyId { get; set; }
 
 
         public static Expression<Func<Car, CarDTO>> Selector = c => new CarDTO()
@@ -43,7 +44,9 @@ namespace BMECars.Dal.DTOs
             IsFuelFull = c.IsFuelFull,
             Climate = c.Climate,
             DealerShipName = c.Company.Name,
-            Plate = c.Plate
+            Plate = c.Plate,
+            PickUpLocationId = c.PickUpLocationId,
+            CompanyId = c.CompanyId
         };
     }
 }

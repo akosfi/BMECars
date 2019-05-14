@@ -1,0 +1,108 @@
+﻿@page "{id:int}"
+@model BMECars.Web.Pages.Cars.ModifyModel
+@using BMECars.Dal.Entities;
+@{
+    ViewData["Title"] = "Modify";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h2>Modify</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="InputCar.Id" value="@Model.Car.Id" />
+    <div class="row">
+        <div class="col-lg-6">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.Brand">Brand</label>
+                        <select asp-for="InputCar.Brand" asp-items="Model.AllCarBrandList" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.Price">Price</label>
+                        <input asp-for="InputCar.Price" value="@Model.Car.Price" class="form-control">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.Category">Category</label>
+                        <select asp-for="InputCar.Category" asp-items="Model.AvailableCategories" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.Seat">Seat</label>
+                        <input asp-for="InputCar.Seat" value="@Model.Car.Seat" type="number" min="2" class="form-control">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.Bag">Bags</label>
+                        <input asp-for="InputCar.Bag" value="@Model.Car.Bag" type="number" min="1" class="form-control" placeholder="Enter bags">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.Transmission">Transmission</label>
+                        <select asp-for="InputCar.Transmission" class="form-control">
+                            <option selected="@(Model.Car.Transmission == Transmission.Automatic)" value="Automatic">Automatic</option>
+                            <option selected="@(Model.Car.Transmission == Transmission.Manual)" value="Manual">Manual</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.IsFuelFull">Gas</label>
+                        <select asp-for="InputCar.IsFuelFull" class="form-control">
+                            <option selected="@(Model.Car.IsFuelFull == true)" value="true">Full</option>
+                            <option selected="@(Model.Car.IsFuelFull == false)" value="false">Empty</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.Year">Year</label>
+                        <input asp-for="InputCar.Year" value="@Model.Car.Year" type="number" min="1990" max="2019" class="form-control" placeholder="Enter year">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div name="door" class="form-group">
+                        <label asp-for="InputCar.Door">Door</label>
+                        <input asp-for="InputCar.Door" value="@Model.Car.Door" type="number" min="2" class="form-control" id="door" placeholder="Enter doors">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.Climate">Climate</label>
+                        <select asp-for="InputCar.Climate" class="form-control" id="climate">
+                            <option selected="@(Model.Car.Climate == true)" value="true">Yes</option>
+                            <option selected="@(Model.Car.Climate == false)" value="false">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <label asp-for="InputCar.LocationId">Location</label>
+                    <select asp-for="InputCar.LocationId" class="form-control" asp-items="Model.Locations"></select>
+                </div>
+                <div class="col-6">
+                    <label for="customFile">Car Picture</label>
+                    <div>
+                        <input type="file" asp-for="ImageOfCar">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="InputCar.Plate">Plate</label>
+                        <input asp-for="InputCar.Plate" value="@Model.Car.Plate" class="form-control">
+                    </div>
+                </div>
+                <input type="hidden" asp-for="InputCar.CompanyId" value="@Model.Car.CompanyId" />
+            </div>
+        </div>
+
+    </div>      
+        <input class="btn btn-success" type="submit" name="name" value="Modify" />
+</form>
