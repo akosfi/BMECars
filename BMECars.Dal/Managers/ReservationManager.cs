@@ -64,11 +64,13 @@ namespace BMECars.Dal.Managers
 
         public async Task<List<ReservationDTO>> GetPendingReservationsForCompany(int id)
         {
-            return await _context.Reservations
+            List<ReservationDTO> pendingReservations 
+                 = await _context.Reservations
                                  .Include(r => r.Car)
                                  .Where(r => r.Car.CompanyId == id && r.Accepted == false)
                                  .Select(r => new ReservationDTO {
                                      Id = r.Id,
+                                     CarPlate = r.Car.Plate,
                                      Accepted = r.Accepted,
                                      CarId = r.CarId,
                                      DropDownLocation = r.DropDownLocation,
@@ -78,6 +80,45 @@ namespace BMECars.Dal.Managers
                                      ReserveTo = r.ReserveTo
                                  })
                                  .ToListAsync();
+
+
+            foreach(ReservationDTO reservation in pendingReservations)
+            {
+                Reservation beforePendingReservation
+                    = await _context.Reservations.Include(r => r.Car)
+                                    .Where(r => r.CarId == reservation.CarId)
+                                    .Where(r => reservation.ReserveFrom > r.ReserveTo)
+                                    .OrderByDescending(r => r.ReserveTo)
+                                    .FirstOrDefaultAsync();
+
+                if (beforePendingReservation != null)
+                {
+                    reservation.PreviousReservationEnd = await _context.Reservations.Include(r => r.DropDownLocation)
+                                                                                    .Where(r => r.Id == beforePendingReservation.Id)
+                                                                                    .Select(r => r.DropDownLocation)
+                                                                                    .FirstOrDefaultAsync();
+                    reservation.PreviousReservationEndDate = beforePendingReservation.ReserveTo;
+                }
+
+                Reservation afterPendingReservation
+                                    = await _context.Reservations.Include(r => r.Car)
+                                                    .Where(r => r.CarId == reservation.CarId)
+                                                    .Where(r => reservation.ReserveTo < r.ReserveFrom)
+                                                    .OrderBy(r => r.ReserveFrom)
+                                                    .FirstOrDefaultAsync();
+
+                if (afterPendingReservation != null)
+                {
+                    reservation.NextReservationStart = await _context.Reservations.Include(r => r.PickUpLocation)
+                                                                                    .Where(r => r.Id == afterPendingReservation.Id)
+                                                                                    .Select(r => r.PickUpLocation)
+                                                                                    .FirstOrDefaultAsync();
+                    reservation.NextReservationStartDate = afterPendingReservation.ReserveFrom;
+                }
+
+            }
+
+            return pendingReservations;
         }
 
         public async Task ApproveReservation(int id, bool approve = false)

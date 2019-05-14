@@ -5,7 +5,7 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h2>Pending Reservations</h2>
+<h2 class="py-4">Pending Reservations</h2>
 
 
 
@@ -13,11 +13,12 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
+                <th scope="col">Car Plate</th>
+                <th scope="col">Last reservation end</th>
+                <th scope="col">Reservation start</th>
+                <th scope="col">Reservation end</th>
+                <th scope="col">Next reservation start</th>
+
                 <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
@@ -27,19 +28,37 @@
             {
             <tr>
                 <td>
-                    @reservation.CarId
+                    @reservation.CarPlate
                 </td>
                 <td>
-                    @reservation.ReserveFrom.ToString("yyyy-MM-dd")
+                    @if (reservation.PreviousReservationEnd != null && reservation.PreviousReservationEndDate != null)
+                    {
+                        <p>@reservation.PreviousReservationEndDate.ToString("yyyy-MM-dd")</p>
+                        <p>@reservation.PreviousReservationEnd.Country, @reservation.PreviousReservationEnd.City, @reservation.PreviousReservationEnd.Address</p>
+                    }
+                    else
+                    {
+                        <p>-</p>
+                    }
                 </td>
                 <td>
-                    @reservation.ReserveTo.ToString("yyyy-MM-dd")
+                    <p>@reservation.ReserveFrom.ToString("yyyy-MM-dd")</p>
+                    <p>@reservation.PickUpLocation.Country, @reservation.PickUpLocation.City, @reservation.PickUpLocation.Address</p>
                 </td>
                 <td>
-                    @reservation.PickUpLocation.Country, @reservation.PickUpLocation.City, @reservation.PickUpLocation.Address
+                    <p>@reservation.ReserveTo.ToString("yyyy-MM-dd")</p>
+                    <p>@reservation.DropDownLocation.Country, @reservation.DropDownLocation.City, @reservation.DropDownLocation.Address</p>
                 </td>
                 <td>
-                    @reservation.DropDownLocation.Country, @reservation.DropDownLocation.City, @reservation.DropDownLocation.Address
+                    @if (reservation.NextReservationStart != null && reservation.NextReservationStartDate != null)
+                    {
+                        <p>@reservation.NextReservationStartDate.ToString("yyyy-MM-dd")</p>
+                        <p>@reservation.NextReservationStart.Country, @reservation.NextReservationStart.City, @reservation.NextReservationStart.Address</p>
+                    }
+                    else
+                    {
+                        <p>-</p>
+                    }
                 </td>
                 <td><a href="/reservations/ApproveReservation/@reservation.Id?approve=true">Accept</a></td>
                 <td><a href="/reservations/ApproveReservation/@reservation.Id?approve=false">Decline</a></td>

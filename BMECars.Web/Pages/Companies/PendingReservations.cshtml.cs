@@ -27,8 +27,8 @@ namespace BMECars.Web.Pages.Companies
         }
         public async Task OnGet(int id)
         {
+            
             PendingReservations = await reservationManager.GetPendingReservationsForCompany(id);
-            //PickUpLocation = await locationManager.GetLocation()
         }
     }
 }
