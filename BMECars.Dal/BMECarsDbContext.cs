@@ -67,7 +67,8 @@ namespace BMECars.Dal
             modelBuilder.ApplyConfiguration(_carConfiguration.Value);
             modelBuilder.ApplyConfiguration(_reservationConfiguration.Value);
 
-            modelBuilder.Entity<Reservation>().Property(r => r.Accepted).HasDefaultValue(false);
+            modelBuilder.Entity<Reservation>().Property(r => r.Accepted).HasDefaultValue(ReservationStatus.Pending);
+
 
             base.OnModelCreating(modelBuilder);
         }

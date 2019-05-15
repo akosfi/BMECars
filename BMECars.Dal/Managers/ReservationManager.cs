@@ -67,7 +67,7 @@ namespace BMECars.Dal.Managers
             List<ReservationDTO> pendingReservations 
                  = await _context.Reservations
                                  .Include(r => r.Car)
-                                 .Where(r => r.Car.CompanyId == id && r.Accepted == false)
+                                 .Where(r => r.Car.CompanyId == id && r.Accepted == ReservationStatus.Pending)
                                  .Select(r => new ReservationDTO {
                                      Id = r.Id,
                                      CarPlate = r.Car.Plate,
@@ -128,7 +128,7 @@ namespace BMECars.Dal.Managers
                                                     .FirstOrDefaultAsync();
 
             if (reservation == null) return;
-            if (reservation.Accepted) return; //no undo
+            if (reservation.Accepted != ReservationStatus.Pending) return; //no undo
 
             int companyId = await _context.Reservations
                                           .Include(r => r.Car)
@@ -144,10 +144,11 @@ namespace BMECars.Dal.Managers
 
             if (approve)
             {
-                reservation.Accepted = true;
+                reservation.Accepted = ReservationStatus.Accepted;
             }
             else
             {
+                //reservation.Accepted = ReservationStatus.Declined;
                 _context.Reservations.Remove(reservation);
             }            
 

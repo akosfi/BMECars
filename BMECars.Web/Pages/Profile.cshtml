@@ -1,4 +1,5 @@
 ﻿@page
+@using BMECars.Dal.Entities;
 @model BMECars.Web.Pages.ProfileModel
 @{
     ViewData["Title"] = "Profile";
@@ -87,14 +88,23 @@
                 <td>
                     @reservation.DropDownLocation.Country, @reservation.DropDownLocation.City, @reservation.DropDownLocation.Address
                 </td>
-                <td style="background: @(reservation.Accepted ? "green" : "red")">
-                    @if (reservation.Accepted)
+                @{ 
+                    var statusColor = "yellow"; //pending
+                    if (reservation.Accepted == ReservationStatus.Accepted) { statusColor = "green"; }
+                    if (reservation.Accepted == ReservationStatus.Declined) { statusColor = "red"; }
+                }
+                <td style="background: @statusColor">
+                    @if (reservation.Accepted == ReservationStatus.Accepted)
                     {
                         <span>Accepted</span>
                     }
+                    else if (reservation.Accepted == ReservationStatus.Pending)
+                    {
+                        <span>Pending</span>
+                    }
                     else
                     {
-                        <span>Not accepted</span>
+                        <span>Declined</span>
                     }
 
                 </td>

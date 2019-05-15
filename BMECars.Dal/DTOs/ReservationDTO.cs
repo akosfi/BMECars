@@ -12,7 +12,7 @@ namespace BMECars.Dal.DTOs
         public int ReservationPrice { get; set; }
         public DateTime ReserveFrom { get; set; }
         public DateTime ReserveTo { get; set; }
-        public bool Accepted { get; set; }
+        public ReservationStatus Accepted { get; set; }
         public int CarId { get; set; }
         public Location PickUpLocation { get; set; }
         public Location DropDownLocation { get; set; }
