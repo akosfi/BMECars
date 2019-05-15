@@ -14,18 +14,23 @@ namespace BMECars.Web.Pages
 {
     public class ProfileModel : PageModel
     {
+        public List<ReservationDTO> UserReservations;
+
+
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly ICompanyManager _companyManager;
-
+        private ICompanyManager _companyManager;
+        private IReservationManager _reservationManager;
         public ProfileModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            ICompanyManager companyManager)
+            ICompanyManager companyManager,
+            IReservationManager reservationManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _companyManager = companyManager;
+            _reservationManager = reservationManager;
         }
 
         public string Username { get; set; }
@@ -80,6 +85,7 @@ namespace BMECars.Web.Pages
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            UserReservations = await _reservationManager.GetReservationsForUser(user.Id);
             UserCompanies = _companyManager.GetCompaniesForUser(user.Id);
 
             var userName = await _userManager.GetUserNameAsync(user);

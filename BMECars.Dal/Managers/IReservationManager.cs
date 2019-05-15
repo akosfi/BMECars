@@ -14,6 +14,6 @@ namespace BMECars.Dal.Managers
 
         Task ApproveReservation(int id, bool approve = false);
 
-
+        Task<List<ReservationDTO>> GetReservationsForUser(string userId);
     }
 }
