@@ -6,7 +6,7 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h3 style="padding: 20px 0px;">Personal Data</h3>
+<h3>Personal Data</h3>
 <form id="profile-form" method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="row">
@@ -38,7 +38,7 @@
     <button type="submit" class="btn btn-success float-right" style="">Save</button>
     <div class="clearfix"></div>
 </form>
-<h3 style="padding: 20px 0px;">Companies</h3>
+<h3>Companies</h3>
 <div>
     @foreach (var company in Model.UserCompanies)
     {
@@ -56,7 +56,7 @@
         </div>
     }
 </div>
-<h3 style="padding: 20px 0px;">My Reservations</h3>
+<h3>My Reservations</h3>
 <div class="table-responsive">
     <table class="table">
         <thead>
