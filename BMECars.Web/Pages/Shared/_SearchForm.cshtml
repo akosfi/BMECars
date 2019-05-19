@@ -68,12 +68,11 @@
 
 
 
-    <div style="position: relative;">
-
-        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    <div style="position: relative;" class="my-2" >
+        <a style="color: blue;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
             Drop off at different location
         </a>
-        <a style="position: absolute; right: 0;" class="btn btn-primary" data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample">
+        <a style="color: blue; position: absolute; right: 0;" data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample">
             Detailed Search
         </a>
     </div>
@@ -117,7 +116,7 @@
 
     <div class="collapse" id="collapseExample2">
         <div class="row">
-            <div class="col form-group">
+            <div class="col-6 col-md-4 form-group">
                 <label for="brand">Brand</label>
                 <select name="brand" class="form-control" id="brand">
                     <option value="" selected>Choose Brand</option>
@@ -135,22 +134,22 @@
                 </select>
             </div>
 
-            <div class="col form-group">
+            <div class="col-6 col-md-4 form-group">
                 <label for="year">Year</label>
                 <input name="year" value="@(Model.Year != 0 ? @Model.Year : "")" type="number" min="1990" max="2019" class="form-control" id="year" placeholder="Enter year">
             </div>
 
-            <div class="col form-group">
+            <div class="col-6 col-md-4 form-group">
                 <label for="seat">Seat</label>
                 <input name="seat" value="@(Model.Seat != 0 ? @Model.Seat : "")" type="number" min="1" class="form-control" id="seat" placeholder="Enter seats">
             </div>
 
-            <div class="col form-group">
+            <div class="col-6 col-md-4 form-group">
                 <label for="bag">Bags</label>
                 <input name="bag" value="@(Model.Bag != 0 ? @Model.Bag : "")" type="number" min="1" class="form-control" id="bag" placeholder="Enter bags">
             </div>
 
-            <div class="col form-group">
+            <div class="col-6 col-md-4 form-group">
                 <label for="isfuelfull">Gas</label>
                 <select name="isFuelFull" class="form-control" id="isfuelfull">
                     <option value="" selected>All</option>
@@ -159,13 +158,12 @@
                 </select>
             </div>
 
-            <div class="w-100"></div>
 
-            <div class="col form-group">
+            <div class="col-6 col-md-4 form-group">
                 <label for="dealer">Dealer</label>
                 <input name="dealershipname" value="@(Model.DealerShipName != 0 ? @Model.DealerShipName : "")" type="text" class="form-control" id="dealer" placeholder="Enter dealer">
             </div>
-            <div class="col form-group">
+            <div class="col-6 col-md-4 form-group">
                 <label for="category">Category</label>
                 <select name="category" class="form-control" id="category">
                     <option value="">All</option>
@@ -178,7 +176,7 @@
                     <option value="Convertible">Convertible</option>
                 </select>
             </div>
-            <div class="col form-group">
+            <div class="col-6 col-md-4 form-group">
                 <label for="transmission">Transmission</label>
                 <select name="transmission" class="form-control" id="transmission">
                     <option value="">All</option>
@@ -186,7 +184,7 @@
                     <option value="Manual">Manual</option>
                 </select>
             </div>
-            <div class="col form-group">
+            <div class="col-6 col-md-4 form-group">
                 <label for="climate">Climate</label>
                 <select name="climate" class="form-control" id="climate">
                     <option value="">All</option>
@@ -194,7 +192,7 @@
                     <option value="false">No</option>
                 </select>
             </div>
-            <div name="door" class="col form-group">
+            <div class="col-6 col-md-4 form-group">
                 <label for="door">Door</label>
                 <input name="door" value="@(Model.Door != 0 ? @Model.Door: "")" type="number" min="2" class="form-control" id="door" placeholder="Enter doors">
             </div>
@@ -202,7 +200,7 @@
     </div>
 
     <div style="position: relative;">
-        <input type="submit" value="Submit" class="btn btn-danger float-right" id="submitbtn">
+        <input type="submit" value="Submit" class="btn btn-danger float-right my-2" id="submitbtn">
         <div class="clearfix"></div>
     </div>
 </form>
