@@ -40,18 +40,32 @@ namespace BMECars.Dal.Managers
             httpContextAccessor = _httpContextAccessor;
         }
 
-        public async Task MakeReservation(SearchDTO car)
+        public async Task MakeReservation(PaymentDTO car)
         {
-            List<int> avaibleCarIds = carManager.GetCars(car).Select(c => c.Id).ToList();
+            LocationDTO pickUpLocation = await locationManager.GetLocation(car.PickUpLocationId);
+            LocationDTO dropDownLocation = await locationManager.GetLocation(car.DropDownLocationId);
+            SearchDTO selectedCar = new SearchDTO
+            {
+                Id = car.Id,
+                ReserveFrom = car.ReserveFrom,
+                ReserveTo = car.ReserveTo,
+                CountryPickUp = pickUpLocation.Country,
+                CityPickUp = pickUpLocation.City,
+                LocationPickUp = pickUpLocation.Address,
+                CountryDropDown = dropDownLocation.Country,
+                CityDropDown = dropDownLocation.City,
+                LocationDropDown = dropDownLocation.Address
+            };
+            List<int> avaibleCarIds = carManager.GetCars(selectedCar).Select(c => c.Id).ToList();
             
+            //check if still available
             if (avaibleCarIds.Contains(car.Id))
             {
                 string userId = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                LocationDTO pickUpLocation = await locationManager.GetLocationByAddress(car.CountryPickUp, car.CityPickUp, car.LocationPickUp);
-                LocationDTO dropDownLocation = await locationManager.GetLocationByAddress(car.CountryDropDown, car.CityDropDown, car.LocationDropDown);
+                CarDTO originalCar = await carManager.GetCar(car.Id);
                 await _context.AddAsync(new Reservation {
                     CarId = car.Id,
-                    ReservationPrice = car.Price,
+                    ReservationPrice = ((int)Math.Abs((car.ReserveFrom - car.ReserveTo).TotalDays) + 1) * originalCar.Price,
                     ReserveFrom = car.ReserveFrom,
                     ReserveTo = car.ReserveTo,
                     PickUpLocationId = pickUpLocation.Id,
@@ -172,6 +186,63 @@ namespace BMECars.Dal.Managers
                                            DropDownLocation = r.DropDownLocation
                                        })
                                        .ToListAsync();
+        }
+
+        public async Task<BillingDataDTO> GetBillingData(int id)
+        {
+            return await _context.BillingDatas
+                                 .Where(bd => bd.Id == id)
+                                 .Select(bd => new BillingDataDTO
+                                 {
+                                     Address = bd.Address,
+                                     Id = bd.Id,
+                                     Country = bd.Country,
+                                     FirstName = bd.FirstName,
+                                     LastName = bd.LastName,
+                                     City = bd.City,
+                                     Postal = bd.Postal,
+                                     State = bd.State,
+                                     Company = bd.Company
+                                 })
+                                 .FirstOrDefaultAsync();
+        }
+
+        public async Task AddBillingData(BillingDataDTO billingData)
+        {
+            string userId = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            await _context.BillingDatas
+                          .AddAsync(new BillingData {
+                              UserId = userId,
+                              Company = billingData.Company,
+                              Address = billingData.Address,
+                              City = billingData.City,
+                              Country = billingData.Country,
+                              FirstName = billingData.FirstName,
+                              LastName = billingData.LastName,
+                              Postal = billingData.Postal,
+                              State = billingData.State
+                          });
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<BillingDataDTO>> GetBillingDatasForUser(string userId)
+        {
+            return await _context.BillingDatas
+                          .Where(bd => bd.UserId == userId)
+                          .Select(bd => new BillingDataDTO
+                          {
+                              Address = bd.Address,
+                              City = bd.City,
+                              Company = bd.Company,
+                              Country = bd.Country,
+                              FirstName = bd.FirstName,
+                              LastName = bd.LastName,
+                              Postal = bd.Postal,
+                              State = bd.State,
+                              Id = bd.Id
+                          })
+                          .ToListAsync();
         }
     }
 }

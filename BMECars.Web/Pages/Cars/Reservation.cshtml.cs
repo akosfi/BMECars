@@ -12,8 +12,8 @@ namespace BMECars.Web.Pages.Cars
     public class ReservationModel : PageModel
     {
         public CarDTO Car { get; set; }
-        public string ReserveFrom { get; set; }
-        public string ReserveTo { get; set; }
+        public DateTime ReserveFrom { get; set; }
+        public DateTime ReserveTo { get; set; }
         public LocationDTO PickUpLocation { get; set; }
         public LocationDTO DropDownLocation { get; set; }
 
@@ -26,7 +26,7 @@ namespace BMECars.Web.Pages.Cars
             carManager = _carManager;
             locationManager = _locationManager;
         }
-        public async Task OnGet(int? id, int pickUp, int dropDown, string reserveFrom, string reserveTo)
+        public async Task OnGet(int? id, int pickUp, int dropDown, DateTime reserveFrom, DateTime reserveTo)
         {
             Car = await carManager.GetCar((int)id);
             ReserveFrom = reserveFrom;

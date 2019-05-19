@@ -5,73 +5,92 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<div class="row" style="padding: 40px;">
-    <div class="col-8">
-        <h3>Payment information</h3>
-        <h5 style="padding-top: 20px; ">Billing details</h5>
-        <form>
+<h2 class="py-3">Payment information</h2>
+
+<form asp-controller="Reservations" asp-action="MakeReservation" method="post">
+    <div class="row">
+        <div class="col-8">
+            <h4 class="py-2">Billing details</h4>
+
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Previous informations</label>
+                <select class="form-control" name="BillingDataId" asp-items="Model.PreviousBillingDatas">
+                    <option value="0" selected>Add new billing information</option>
+                </select>
+            </div>
+
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
                         <label for="firstname">Firstname</label>
-                        <input type="text" class="form-control" id="firstname" placeholder="Firstname">
+                        <input type="text" class="form-control" name="Firstname" placeholder="Firstname">
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
                         <label for="lastname">Lastname</label>
-                        <input type="text" class="form-control" id="lastname" placeholder="Lastname">
+                        <input type="text" class="form-control" name="Lastname" placeholder="Lastname">
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="form-group">
                         <label for="companyname">Company name</label>
-                        <input type="text" class="form-control" id="companyname" placeholder="Company name">
+                        <input type="text" class="form-control" name="Company" placeholder="Company name">
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="form-group">
                         <label for="country">Country</label>
-                        <input type="text" class="form-control" id="country" placeholder="Country">
+                        <input type="text" class="form-control" name="Country" placeholder="Country">
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="form-group">
                         <label for="address">Address</label>
-                        <input type="text" class="form-control" id="address" placeholder="Address">
+                        <input type="text" class="form-control" name="Address" placeholder="Address">
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
                         <label for="city">City</label>
-                        <input type="text" class="form-control" id="city" placeholder="City">
+                        <input type="text" class="form-control" name="City" placeholder="City">
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
                         <label for="state">State</label>
-                        <input type="text" class="form-control" id="state" placeholder="State">
+                        <input type="text" class="form-control" name="State" placeholder="State">
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
                         <label for="postal">ZIP/Postal</label>
-                        <input type="text" class="form-control" id="postal" placeholder="Postal">
+                        <input type="text" class="form-control" name="Postal" placeholder="Postal">
                     </div>
                 </div>
             </div>
-            
-            <button type="submit" class="btn btn-success float-right">Reserve Car</button>
-        </form>
-    </div>
-    <div class="col-4">
-        <img style="width: 100%; height: auto;" src="@Model.Car.Image" alt="Alternate Text" />
-        <h4>@Model.Car.Brand @Model.Car.Year</h4>
-        <p>Plate:<span class="float-right">@Model.Car.Plate</span></p>
-        <p>Price:<span class="float-right">@Model.Car.Price</span></p>
-        <p>Pick-up:<span class="float-right">@Model.ReserveFrom</span></p>
-        <p>Release:<span class="float-right">@Model.ReserveTo</span></p>
-        <p>Total:<span class="float-right">@Model.TotalPrice</span></p>
-    </div>
-</div>
 
+        </div>
+        <div class="col-4">
+            <h4 class="py-2">Reservation Details</h4>
+            <img style="width: 100%; height: auto;" src="@Model.Car.Image" alt="Alternate Text" />
+            <h4>@Model.Car.Brand @Model.Car.Year</h4>
+            <p>Plate:<span class="float-right">@Model.Car.Plate</span></p>
+            <p>Price:<span class="float-right">@Model.Car.Price €</span></p>
+            <p>Pick-up:<span class="float-right">@Model.ReserveFrom.ToString("yyyy-MM-dd")</span></p>
+            <p>Release:<span class="float-right">@Model.ReserveTo.ToString("yyyy-MM-dd")</span></p>
+            <p>Total:<span class="float-right">@Model.TotalPrice €</span></p>
+        </div>
+    </div>
+
+    <input type="hidden" name="Id" value="@Model.Car.Id" />
+    <input type="hidden" name="PickUpLocationId" value="@Model.PickUpLocationId" />
+    <input type="hidden" name="DropDownLocationId" value="@Model.DropDownLocationId" />
+    <input type="hidden" name="ReserveFrom" value="@Model.ReserveFrom" />
+    <input type="hidden" name="ReserveTo" value="@Model.ReserveTo" />
+
+    <input class="btn btn-success float-right" type="submit" value="Reserve" />
+    <div class="clearfix"></div>
+
+
+</form>

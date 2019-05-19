@@ -5,7 +5,9 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<div class="row" style="padding: 30px 0px;">
+<h2 class="py-3">Reservation</h2>
+
+<div class="row">
     <div class="col-md-3">
         <div>
             <p><b>Pick-up Location</b></p>
@@ -13,51 +15,64 @@
             <p><b>Drop-down Location</b></p>
             <p>@Model.DropDownLocation.Country, @Model.DropDownLocation.City, @Model.DropDownLocation.Address</p>
             <p><b>Date of Pick-up</b></p>
-            <p>@Model.ReserveFrom</p>
+            <p>@Model.ReserveFrom.ToString("yyyy-MM-dd")</p>
             <p><b>Date of Release</b></p>
-            <p>@Model.ReserveTo</p>
+            <p>@Model.ReserveTo.ToString("yyyy-MM-dd")</p>
         </div>
     </div>
     <div class="col-md-5">
-        <p><b>Brand</b>
+        <p>
+            <b>Brand</b>
             <span class="float-right">@Model.Car.Brand</span>
         </p>
-        <p><b>Year</b>
+        <p>
+            <b>Year</b>
             <span class="float-right">@Model.Car.Year</span>
         </p>
-        <p><b>Category</b>
+        <p>
+            <b>Category</b>
             <span class="float-right">@Model.Car.Category</span>
         </p>
-        <p><b>Seat</b>
+        <p>
+            <b>Seat</b>
             <span class="float-right">@Model.Car.Seat</span>
         </p>
-        <p><b>Bag</b>
+        <p>
+            <b>Bag</b>
             <span class="float-right">@Model.Car.Bag</span>
         </p>
-        <p><b>Transmission</b>
+        <p>
+            <b>Transmission</b>
             <span class="float-right">@Model.Car.Transmission</span>
         </p>
-        <p><b>Price</b>
+        <p>
+            <b>Price</b>
             <span class="float-right">@Model.Car.Price</span>
         </p>
-        <p><b>Gas</b>
+        <p>
+            <b>Gas</b>
             <span class="float-right">@(Model.Car.IsFuelFull ? "Full" : "Empty")</span>
         </p>
-        <p><b>Door</b>
+        <p>
+            <b>Door</b>
             <span class="float-right">@Model.Car.Door</span>
         </p>
-        <p><b>Climate</b>
+        <p>
+            <b>Climate</b>
             <span class="float-right">@(Model.Car.Climate ? "Equipped" : "Not Equipped")</span>
         </p>
-        <p><b>Company</b>
+        <p>
+            <b>Company</b>
             <span class="float-right">@Model.Car.DealerShipName</span>
         </p>
     </div>
     <div class="col-md-4">
         <img style="width: 100%; height: auto;" src="@Model.Car.Image" alt="Alternate Text" />
-        <a href="/reservations/MakeReservation/@Model.Car.Id?pickUp=@Model.PickUpLocation.Id&dropDown=@Model.DropDownLocation.Id&reserveFrom=@Model.ReserveFrom&reserveTo=@Model.ReserveTo"
-           class="btn btn-success float-right">Payment</a>
+
     </div>
 </div>
+<a href="/cars/payment/@Model.Car.Id?PickUpLocationId=@Model.PickUpLocation.Id&DropDownLocationId=@Model.DropDownLocation.Id&ReserveFrom=@Model.ReserveFrom&ReserveTo=@Model.ReserveTo"
+   class="btn btn-success float-right">Payment</a>
+<div class="clearfix"></div>
 
 
