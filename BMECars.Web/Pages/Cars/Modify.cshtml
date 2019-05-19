@@ -6,12 +6,12 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h2>Modify</h2>
+<h2 class="py-3 m-0">Modify</h2>
 
 <form method="post" enctype="multipart/form-data">
     <input type="hidden" asp-for="InputCar.Id" value="@Model.Car.Id" />
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-md-6">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="row">
                 <div class="col-6">
@@ -101,6 +101,9 @@
                 </div>
                 <input type="hidden" asp-for="InputCar.CompanyId" value="@Model.Car.CompanyId" />
             </div>
+        </div>
+        <div class="col-md-6" style="position: relative;">
+            <img style="position: absolute; left: 50%; transform: translateX(-50%);" src="@Model.Car.Image" alt="No image of car." />
         </div>
 
     </div>      
