@@ -148,8 +148,7 @@ namespace BMECars.Dal.Managers
             }
             else
             {
-                //reservation.Accepted = ReservationStatus.Declined;
-                _context.Reservations.Remove(reservation);
+                reservation.Accepted = ReservationStatus.Declined;
             }            
 
             await _context.SaveChangesAsync();
