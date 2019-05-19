@@ -219,11 +219,12 @@ namespace BMECars.Dal.Managers
         {
             if (reservations == null) return true;
 
-            return !reservations.Where(r => (queryCar.ReserveFrom >= r.ReserveFrom && queryCar.ReserveFrom <= r.ReserveTo && IsDateValid(queryCar.ReserveFrom))
+            return !reservations.Where(r => r.Accepted != ReservationStatus.Declined && (
+                                        (queryCar.ReserveFrom >= r.ReserveFrom && queryCar.ReserveFrom <= r.ReserveTo && IsDateValid(queryCar.ReserveFrom))
                                         || (queryCar.ReserveTo >= r.ReserveFrom && queryCar.ReserveTo <= r.ReserveTo && IsDateValid(queryCar.ReserveTo))
                                         || (queryCar.ReserveFrom >= r.ReserveFrom && queryCar.ReserveTo <= r.ReserveTo && IsDateValid(queryCar.ReserveTo) && IsDateValid(queryCar.ReserveTo))
                                         || (queryCar.ReserveFrom <= r.ReserveFrom && queryCar.ReserveTo >= r.ReserveTo && IsDateValid(queryCar.ReserveFrom) && IsDateValid(queryCar.ReserveTo))
-                                        || (queryCar.ReserveFrom == r.ReserveFrom && queryCar.ReserveTo == r.ReserveTo && IsDateValid(queryCar.ReserveFrom) && IsDateValid(queryCar.ReserveTo)))
+                                        || (queryCar.ReserveFrom == r.ReserveFrom && queryCar.ReserveTo == r.ReserveTo && IsDateValid(queryCar.ReserveFrom) && IsDateValid(queryCar.ReserveTo))))
                                         .Any();
         }
 
