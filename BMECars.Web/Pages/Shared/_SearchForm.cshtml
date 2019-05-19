@@ -15,7 +15,7 @@
 
 <form method="get" action="/cars/search" style="position: relative; padding: 50px 0px;">
     <div class="row">
-        <div class="col-md-2 form-group">
+        <div class="col-md form-group">
             <label for="country">Country</label>
             <select name="CountryPickUp" required class="form-control" id="Country" onchange="onPickUpCountrySelect(this);">
                 <option value="" selected disabled="disabled">Choose Country</option>
@@ -25,19 +25,19 @@
                 }
             </select>
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md form-group">
             <label for="city">City</label>
             <select disabled name="CityPickUp" required class="form-control" id="City" onchange="onPickUpCitySelect(this);">
                 <option selected disabled="disabled">Choose City</option>
             </select>
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md form-group">
             <label for="location">Location</label>
             <select disabled name="LocationPickUp" class="form-control" id="Location">
                 <option selected disabled="disabled">Choose Location</option>
             </select>
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md form-group">
             <label for="reservefrom">Pick Up</label>
             @if (Model.ReserveFrom == new DateTime())
             {
@@ -50,7 +50,7 @@
             }
 
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md form-group">
             <label for="reserveto">Drop Down</label>
             @if (Model.ReserveTo == new DateTime())
             {
@@ -63,13 +63,13 @@
             }
 
         </div>
-        <div class="col-md-2 form-group">
-            <label for="submitbtn"></label>
-            <input type="submit" value="Submit" class="form-control btn btn-success" id="submitbtn">
-        </div>
+
     </div>
 
+
+
     <div style="position: relative;">
+
         <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
             Drop off at different location
         </a>
@@ -81,9 +81,8 @@
 
 
     <div class="collapse" id="collapseExample">
-        <h4 style="padding-top: 20px;">Drop off at different location</h4>
         <div class="row">
-            <div class="col-sm-4 col-md-2 form-group">
+            <div class="col-sm-4 col-md form-group">
                 <label for="dropcountry">Country</label>
                 <select name="CountryDropDown" class="form-control" id="CountryDropDown" onchange="onDropDownCountrySelect(this);">
                     <option value="" selected disabled="disabled">Choose Country</option>
@@ -93,24 +92,30 @@
                     }
                 </select>
             </div>
-            <div class="col-sm-4 col-md-2 form-group">
+            <div class="col-sm-4 col-md form-group">
                 <label for="dropcity">City</label>
                 <select disabled name="CityDropDown" class="form-control" id="CityDropDown" onchange="onDropDownCitySelect(this);">
                     <option selected disabled="disabled">Choose City</option>
                 </select>
             </div>
-            <div class="col-sm-4 col-md-2 form-group">
+            <div class="col-sm-4 col-md form-group">
                 <label for="droplocation">Location</label>
                 <select disabled name="LocationDropDown" class="form-control" id="LocationDropDown">
                     <option selected disabled="disabled">Choose Location</option>
                 </select>
             </div>
+            <div class="col-sm-4 col-md">
+                <!--col placeholder-->
+            </div>
+            <div class="col-sm-4 col-md">
+                <!--col placeholder-->
+            </div>
+
         </div>
     </div>
 
 
     <div class="collapse" id="collapseExample2">
-        <h4 style="padding-top: 20px;">Detailed Search</h4>
         <div class="row">
             <div class="col form-group">
                 <label for="brand">Brand</label>
@@ -194,5 +199,10 @@
                 <input name="door" value="@(Model.Door != 0 ? @Model.Door: "")" type="number" min="2" class="form-control" id="door" placeholder="Enter doors">
             </div>
         </div>
+    </div>
+
+    <div style="position: relative;">
+        <input type="submit" value="Submit" class="btn btn-danger float-right" id="submitbtn">
+        <div class="clearfix"></div>
     </div>
 </form>

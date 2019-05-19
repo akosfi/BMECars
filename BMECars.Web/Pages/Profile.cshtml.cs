@@ -85,7 +85,9 @@ namespace BMECars.Web.Pages
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            UserReservations = await _reservationManager.GetReservationsForUser(user.Id);
+            UserReservations = (await _reservationManager.GetReservationsForUser(user.Id))
+                                .OrderByDescending(r => r.ReserveFrom).ToList();
+
             UserCompanies = _companyManager.GetCompaniesForUser(user.Id);
 
             var userName = await _userManager.GetUserNameAsync(user);

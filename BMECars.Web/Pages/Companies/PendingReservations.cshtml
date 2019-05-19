@@ -34,7 +34,7 @@
                     @if (reservation.PreviousReservationEnd != null && reservation.PreviousReservationEndDate != null)
                     {
                         <p>@reservation.PreviousReservationEndDate.ToString("yyyy-MM-dd")</p>
-                        <p>@reservation.PreviousReservationEnd.Country, @reservation.PreviousReservationEnd.City, @reservation.PreviousReservationEnd.Address</p>
+                        <p>@reservation.PreviousReservationEnd.Country, @reservation.PreviousReservationEnd.City, <b>@reservation.PreviousReservationEnd.Address</b></p>
                     }
                     else
                     {
@@ -43,25 +43,25 @@
                 </td>
                 <td>
                     <p>@reservation.ReserveFrom.ToString("yyyy-MM-dd")</p>
-                    <p>@reservation.PickUpLocation.Country, @reservation.PickUpLocation.City, @reservation.PickUpLocation.Address</p>
+                    <p>@reservation.PickUpLocation.Country, @reservation.PickUpLocation.City, <b>@reservation.PickUpLocation.Address</b></p>
                 </td>
                 <td>
                     <p>@reservation.ReserveTo.ToString("yyyy-MM-dd")</p>
-                    <p>@reservation.DropDownLocation.Country, @reservation.DropDownLocation.City, @reservation.DropDownLocation.Address</p>
+                    <p>@reservation.DropDownLocation.Country, @reservation.DropDownLocation.City, <b>@reservation.DropDownLocation.Address</b></p>
                 </td>
                 <td>
                     @if (reservation.NextReservationStart != null && reservation.NextReservationStartDate != null)
                     {
                         <p>@reservation.NextReservationStartDate.ToString("yyyy-MM-dd")</p>
-                        <p>@reservation.NextReservationStart.Country, @reservation.NextReservationStart.City, @reservation.NextReservationStart.Address</p>
+                        <p>@reservation.NextReservationStart.Country, @reservation.NextReservationStart.City, <b>@reservation.NextReservationStart.Address</b></p>
                     }
                     else
                     {
                         <p>-</p>
                     }
                 </td>
-                <td><a href="/reservations/ApproveReservation/@reservation.Id?approve=true">Accept</a></td>
-                <td><a href="/reservations/ApproveReservation/@reservation.Id?approve=false">Decline</a></td>
+                <td><a class="btn btn-success" href="/reservations/ApproveReservation/@reservation.Id?approve=true">Accept</a></td>
+                <td><a class="btn btn-danger" href="/reservations/ApproveReservation/@reservation.Id?approve=false">Decline</a></td>
             </tr>
             }
         </tbody>
