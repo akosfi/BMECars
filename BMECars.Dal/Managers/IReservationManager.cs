@@ -16,6 +16,7 @@ namespace BMECars.Dal.Managers
 
         Task<List<BillingDataDTO>> GetBillingDatasForUser(string userId);
 
+        Task<List<ReservationDTO>> GetReservationsForCar(int id);
         Task<List<ReservationDTO>> GetReservationsForUser(string userId);
         Task<List<ReservationDTO>> GetPendingReservationsForCompany(int id);
     }

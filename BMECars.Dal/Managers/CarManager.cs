@@ -214,6 +214,22 @@ namespace BMECars.Dal.Managers
             await _context.SaveChangesAsync();
         }
 
+        public async Task RemoveCar(int id)
+        {
+            Car car = await _context.Cars.Where(c => c.Id == id).FirstOrDefaultAsync();
+
+            List<Reservation> reservations = await _context.Reservations.Where(r => r.CarId == car.Id).ToListAsync();
+
+            foreach(Reservation reservation in reservations)
+            {
+                _context.Reservations.Remove(reservation);
+            }
+            await _context.SaveChangesAsync();
+
+            _context.Cars.Remove(car);
+            await _context.SaveChangesAsync();
+
+        }
 
         private bool CheckDateAvailability(ICollection<Reservation> reservations, SearchDTO queryCar)
         {
@@ -266,5 +282,6 @@ namespace BMECars.Dal.Managers
             return !(dt.Year == 1 && dt.Month == 1 && dt.Day == 1);
         }
 
+        
     }
 }

@@ -244,5 +244,26 @@ namespace BMECars.Dal.Managers
                           })
                           .ToListAsync();
         }
+
+        public async Task<List<ReservationDTO>> GetReservationsForCar(int id)
+        {
+            return await _context.Reservations
+                                 .Include(r => r.Car)
+                                 .Include(r => r.DropDownLocation)
+                                 .Include(r => r.PickUpLocation)
+                                 .Where(r => r.CarId == id)
+                                 .Select(r => new ReservationDTO {
+                                     Accepted = r.Accepted,
+                                     CarId = r.CarId,
+                                     CarPlate = r.Car.Plate,
+                                     DropDownLocation = r.DropDownLocation,
+                                     PickUpLocation = r.PickUpLocation,
+                                     Id = r.Id,
+                                     ReserveFrom = r.ReserveFrom,
+                                     ReserveTo = r.ReserveTo,
+                                     ReservationPrice = r.ReservationPrice
+                                 })
+                                 .ToListAsync();
+        }
     }
 }

@@ -28,5 +28,7 @@ namespace BMECars.Dal.Managers
         ReservationInfoDTO GetReservationInfoForCar(int carId);
 
         Task AddNewCarAsync(Car c);
+
+        Task RemoveCar(int id);
     }
 }

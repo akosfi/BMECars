@@ -1,0 +1,71 @@
+﻿@page "{id:int}"
+@using BMECars.Dal.Entities
+@model BMECars.Web.Pages.Cars.RemoveModel
+@{
+    ViewData["Title"] = "Remove";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center py-4">Are you sure want to remove car with plate <a href="/cars/modify/@Model.Car.Id">@Model.Car.Plate</a>?</h1>
+
+<h3>The following reservations will be <span class="text-warning">DELETED</span>!</h3>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Reserve from</th>
+                <th scope="col">Reserve to</th>
+                <th scope="col">Drop Down Location</th>
+                <th scope="col">Pick Up Location</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reservation in Model.ReservationsForCar)
+            {
+                <tr>
+                    <td>
+                        @reservation.ReserveFrom.ToString("yyyy MM dd")
+                    </td>
+                    <td>
+                        @reservation.ReserveTo.ToString("yyyy MM dd")
+                    </td>
+                    <td>
+                        @reservation.PickUpLocation.Country, @reservation.PickUpLocation.City, @reservation.PickUpLocation.Address
+                    </td>
+                    <td>
+                        @reservation.DropDownLocation.Country, @reservation.DropDownLocation.City, @reservation.DropDownLocation.Address
+                    </td>
+                    @{
+                        var statusColor = "yellow"; //pending
+                        if (reservation.Accepted == ReservationStatus.Accepted) { statusColor = "green"; }
+                        if (reservation.Accepted == ReservationStatus.Declined) { statusColor = "red"; }
+                    }
+                    <td style="background: @statusColor">
+                        @if (reservation.Accepted == ReservationStatus.Accepted)
+                        {
+                            <span>Accepted</span>
+                        }
+                        else if (reservation.Accepted == ReservationStatus.Pending)
+                        {
+                            <span>Pending</span>
+                        }
+                        else
+                        {
+                            <span>Declined</span>
+                        }
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<a class="btn btn-danger" href="/companies/cars/@Model.Car.CompanyId">Back to cars</a>
+
+<form class="d-inline" method="post">
+    <input type="hidden" name="id" value="@Model.Car.Id" />
+    <input class="btn btn-success float-right" type="submit" value="I understood, remove car!" />
+</form>
+
+
